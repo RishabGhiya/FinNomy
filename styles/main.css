@@ -1,0 +1,2271 @@
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* CSS Variables */
+:root {
+    --color-primary-green: #00B37E;
+    --color-secondary-blue: #0B63D8;
+    --color-dark-navy: #071428;
+    --color-light-background: #F7F9FB;
+    --color-text-main: #071428;
+    --color-text-light: #ffffff;
+    --color-text-muted: #55606e;
+
+    --font-main: 'Poppins', sans-serif;
+
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --spacing-xl: 8rem;
+
+    --max-width: 1300px;
+    --nav-height: 90px;
+    /* Sleek height */
+
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 15px 40px rgba(11, 99, 216, 0.1);
+
+    --transition-speed: 0.3s;
+}
+
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+body {
+    font-family: var(--font-main);
+    color: var(--color-text-main);
+    background-color: var(--color-light-background);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all var(--transition-speed) ease;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: var(--spacing-sm);
+}
+
+h1 {
+    font-size: clamp(40px, 5vw, 56px);
+    /* Responsive 40-56px */
+    color: var(--color-dark-navy);
+}
+
+h2 {
+    font-size: clamp(32px, 4vw, 48px);
+    color: var(--color-dark-navy);
+}
+
+h3 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+p {
+    font-size: clamp(16px, 2vw, 18px);
+    /* 16-18px */
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-md);
+}
+
+.subheading {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-primary-green);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-xs);
+    display: block;
+}
+
+/* Utilities */
+.btn {
+    display: inline-block;
+    padding: 12px 32px;
+    background-color: var(--color-primary-green);
+    color: white;
+    font-weight: 600;
+    border-radius: 50px;
+    border: 2px solid var(--color-primary-green);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.btn:hover {
+    background-color: white;
+    color: var(--color-primary-green);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 179, 126, 0.3);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border-color: var(--color-secondary-blue);
+    color: var(--color-secondary-blue);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-secondary-blue);
+    color: white;
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    width: 100%;
+}
+
+/* Navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-height);
+    min-height: 90px;
+    /* Sleek height */
+    background-color: var(--color-dark-navy);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    /* Ensure vertical centering */
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+/* Logo Styling */
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+/* Image styles kept generic if images are re-added later, but removed specific overrides for now */
+.logo img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+}
+
+.nav-links {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.nav-links a {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+    padding: 5px 0;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: white;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-primary-green);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+/* Main Sections (Scroll Snap) */
+section {
+    min-height: 100vh;
+    width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-top: 60px;
+    /* Reduced specific offset */
+    padding-bottom: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Alternating Layout Grid */
+.split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    align-items: center;
+}
+
+/* Text & Visual Styles */
+.text-content {
+    /* opacity: 0; Remove to ensure visibility */
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.text-content.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.visual-content {
+    position: relative;
+    /* opacity: 0; Remove to ensure visibility */
+    transform: translateX(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.visual-content.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.illustration-placeholder {
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(135deg, rgba(11, 99, 216, 0.1), rgba(0, 179, 126, 0.05));
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    color: var(--color-secondary-blue);
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-align: center;
+    border: 1px solid rgba(11, 99, 216, 0.1);
+}
+
+/* Decorative background shapes for illustrations */
+.illustration-placeholder::before {
+    content: '';
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: var(--color-primary-green);
+    border-radius: 50%;
+    opacity: 0.1;
+    top: -30px;
+    right: -30px;
+}
+
+.illustration-placeholder::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: var(--color-secondary-blue);
+    border-radius: 50%;
+    opacity: 0.1;
+    bottom: -20px;
+    left: -20px;
+}
+
+
+/* Order Handling for Alternating Layouts handled in HTML or utility classes */
+.order-flip .text-content {
+    order: 2;
+}
+
+.order-flip .visual-content {
+    order: 1;
+    transform: translateX(-20px);
+    /* Adjust animation direction */
+}
+
+.order-flip .visual-content.animate {
+    transform: translateX(0);
+}
+
+/* Text Justification for specific sections */
+#why-finance p,
+#professional-vs-diy p,
+#about p,
+#calculators p {
+    text-align: justify;
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-primary-green);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background-color: var(--color-secondary-blue);
+    transform: translateY(-5px);
+}
+
+/* About Page Specific Styles */
+.about-page p {
+    text-align: justify;
+}
+
+/* Animations */
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-on-scroll {
+    opacity: 0;
+    /* Initially hidden, JS will remove this or add a class to trigger */
+    animation: slideUpFade 0.8s ease-out forwards;
+}
+
+/* Hover Effects for Illustrations */
+.hover-scale {
+    transition: transform 0.4s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+/* Ensure Button Consistency */
+button.btn {
+    font-family: var(--font-main);
+    /* Inherit font */
+    font-size: 16px;
+    /* Match standard link btn size if computed differs */
+    line-height: 1.6;
+    outline: none;
+}
+
+/* ... existing sections ... */
+
+/* Heading Colors for About Page */
+.about-page h1 {
+    color: var(--color-dark-navy);
+    /* Keep H1 dark or can be blue */
+}
+
+/* ... rest continues ... */
+
+/* Logo Sizing */
+/* Logo Sizing */
+.nav-logo {
+    height: 60px !important;
+    /* Reduced to fit comfortably */
+    width: auto;
+    object-fit: contain;
+    margin: 0;
+    /* Removing negative margins */
+}
+
+.footer-logo {
+    width: 350px !important;
+    max-width: 100%;
+    margin: 0 auto 0 auto;
+    /* Removed bottom margin */
+    height: 180px !important;
+    /* Increased height to 180px */
+    object-fit: contain;
+    object-position: center;
+    /* Center image content */
+    display: block;
+}
+
+/* Specific Section Styles (background variations) */
+section:nth-child(even) {
+    background-color: white;
+}
+
+/* Navbar Background */
+.navbar {
+    background-color: #222222;
+    /* Dark Charcoal Grey */
+}
+
+/* Footer Background */
+footer {
+    background-color: #000000;
+    /* Black */
+    scroll-snap-align: start;
+    color: white;
+    padding: var(--spacing-lg) 0 var(--spacing-sm);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    /* Give more space to brand column */
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+    /* Reduced from lg to sm */
+}
+
+/* ... existing footer code ... */
+
+
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    /* Changed to center alignment */
+}
+
+.footer-brand .logo {
+    font-size: 3rem;
+    /* Requested size */
+    font-weight: 700;
+    color: white;
+    margin-bottom: var(--spacing-md);
+    line-height: 1.2;
+}
+
+.footer-brand p {
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: var(--spacing-sm);
+    font-size: 14px;
+}
+
+/* Wrapper for right-side links */
+.footer-links-group {
+    display: flex;
+    gap: var(--spacing-md);
+    /* Tightly grouped */
+}
+
+.footer-links h4 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: var(--spacing-md);
+    position: relative;
+}
+
+.footer-links h4::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background-color: var(--color-primary-green);
+}
+
+.footer-links ul li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    color: var(--color-primary-green);
+}
+
+.split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    /* Reduced from spacing-lg */
+    align-items: center;
+}
+
+/* ... existing code ... */
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: var(--spacing-sm);
+    /* Reduced padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* Align to top for better multi-line handling */
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    /* Slightly smaller */
+    gap: var(--spacing-md);
+}
+
+.footer-bottom p:first-child {
+    white-space: nowrap;
+}
+
+/* Image Illustrations */
+.illustration-img {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 20px;
+}
+
+.footer-bottom p:last-child {
+    max-width: 500px;
+    margin-left: auto;
+    text-align: justify;
+    line-height: 1.4;
+    font-size: 11px;
+    /* Significantly reduced */
+}
+
+/* Specific adjustment for Hero Illustration to be bigger */
+#home .illustration-img {
+    max-height: 550px;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-primary-green);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    transform: translateY(-5px);
+    background-color: white;
+    color: var(--color-primary-green);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 968px) {
+    :root {
+        --spacing-lg: 3rem;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    .split-layout {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: var(--spacing-md);
+    }
+
+    /* Stack Vertically: Illustration Above Text */
+    .visual-content {
+        order: 1 !important;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .text-content {
+        order: 2 !important;
+    }
+
+    /* Reset animations for simpler mobile experience if desired, or keep them */
+    .text-content,
+    .visual-content {
+        transform: translateY(20px);
+        /* Uniform movement */
+    }
+
+    .navbar {
+        height: 70px;
+        /* Smaller navbar */
+    }
+
+    .nav-links {
+        display: none;
+        /* Hide desktop menu - ideally replace with burger menu later */
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-md);
+    }
+}
+
+@media (max-width: 576px) {
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    section {
+        padding-top: 80px;
+        height: auto;
+        min-height: 100vh;
+        scroll-snap-align: start;
+        padding-bottom: 40px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-links h4::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        text-align: center;
+    }
+}
+
+/* About Page Specific Styles */
+.about-page p {
+    text-align: justify;
+}
+
+/* Animations */
+/* ... (Animations CSS) ... */
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-on-scroll {
+    opacity: 0;
+    animation: slideUpFade 0.8s ease-out forwards;
+}
+
+.hover-scale {
+    transition: transform 0.4s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+/* Ensure Button Consistency */
+button.btn {
+    font-family: var(--font-main);
+    font-size: 16px;
+    line-height: 1.6;
+    outline: none;
+}
+
+
+/* Heading Colors for About Page */
+.about-page h1 {
+    color: var(--color-dark-navy);
+    /* Keep H1 dark or can be blue */
+}
+
+/* Reverting general H2 rule to avoid forcing blue on all sections */
+/* Specific headers (Mission/Vision) handled inline or via class */
+
+.about-page h2+p {
+    color: var(--color-text-muted);
+}
+
+/* Utility: Force White Background */
+.bg-white {
+    background-color: white !important;
+}
+
+/* Vision & Mission */
+.vision-mission-grid {
+    display: flex;
+    gap: var(--spacing-lg);
+    width: 100%;
+}
+
+.vm-card {
+    flex: 1;
+    padding: var(--spacing-md);
+    border-left: 4px solid var(--color-primary-green);
+    background-color: white;
+    /* Card bg white to pop against potential light bg */
+    border-radius: 0 8px 8px 0;
+    box-shadow: var(--shadow-soft);
+}
+
+.vision-card {
+    border-color: var(--color-secondary-blue);
+}
+
+.vm-card h2 {
+    font-size: 36px;
+    /* Increased 1.5x from 24px */
+    margin-bottom: 0.5rem;
+    color: var(--color-dark-navy);
+    /* Default to dark, override for Vision */
+}
+
+/* Updated Body Text Color for Mission/Vision - Reset to inherit */
+.vm-card p {
+    margin-bottom: 0;
+    /* Reverted to default color inheritance or specific overrides elsewhere */
+}
+
+/* Purpose Split */
+.purpose-split {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: flex-start;
+    padding: var(--spacing-md) 0;
+}
+
+.purpose-heading {
+    flex: 0 0 30%;
+    /* 30% width */
+}
+
+.purpose-text {
+    flex: 1;
+    /* Remainder width */
+}
+
+/* How It Works Steps */
+.step-layout {
+    margin-bottom: 0.5rem;
+}
+
+.icon-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.icon-header h3 {
+    margin-bottom: 0;
+    font-size: 28px;
+    color: var(--color-dark-navy);
+}
+
+/* Dual CTA Card Design - Reverted */
+.cta-card {
+    background-color: #F8F9FA;
+    /* Subtle light background */
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    /* Soft shadow */
+    margin: 2rem 0;
+}
+
+/* Dual CTA Split */
+.dual-cta-split {
+    display: flex;
+    width: 100%;
+    gap: var(--spacing-lg);
+}
+
+.cta-left,
+.cta-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cta-left {
+    align-items: flex-start;
+    text-align: left;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    /* Subtler divider */
+    padding-right: var(--spacing-md);
+}
+
+.cta-right {
+    align-items: flex-start;
+    text-align: left;
+    padding-left: var(--spacing-md);
+}
+
+.cta-left h2,
+.cta-right h2 {
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.3;
+    color: var(--color-dark-navy);
+}
+
+/* Hover Effects for CTA Cards */
+.cta-left,
+.cta-right {
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    /* Ensure rounded corners on hover */
+    padding: 2rem;
+    /* Ensure consistent padding handling */
+}
+
+/* Compensate for padding shift if original had different padding-right/left logic? 
+   Original had specific padding. Let's strictly add the hover state. */
+
+.cta-left:hover,
+.cta-right:hover {
+    transform: translateY(-10px);
+    background-color: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    z-index: 5;
+    /* Bring to front */
+}
+
+/* Pulse Animation for Buttons */
+@keyframes pulse-green {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 179, 126, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 179, 126, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 179, 126, 0);
+    }
+}
+
+.btn-pulse {
+    animation: pulse-green 2s infinite;
+}
+
+.btn-pulse:hover {
+    animation: none;
+}
+
+
+/* Custom 50/50 Split for Hero */
+.hero-split {
+    grid-template-columns: 1fr 1fr;
+    /* 50% / 50% */
+}
+
+@media (max-width: 968px) {
+    .hero-split {
+        grid-template-columns: 1fr;
+        /* Stack on mobile */
+    }
+
+    .dual-cta-split {
+        flex-direction: column;
+    }
+}
+
+/* Responsive Adjustments for About Page */
+@media (max-width: 768px) {
+    .vision-mission-grid {
+        flex-direction: column;
+    }
+
+    .purpose-split {
+        flex-direction: column;
+    }
+
+    .purpose-heading {
+        flex: 1;
+        margin-bottom: 1rem;
+    }
+
+    .dual-cta-split {
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .cta-left {
+        border-bottom: none;
+        padding-bottom: 2.5rem;
+    }
+
+    .cta-right {
+        padding-left: 0;
+        align-items: flex-start;
+        text-align: left;
+    }
+}
+
+/* =========================================
+   Connect Us Page: Action Cards & Modals
+   ========================================= */
+
+/* =========================================
+   Connect Us Page: Simple Split Layout
+   ========================================= */
+
+.simple-connect-body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.simple-split-wrapper {
+    display: flex;
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    /* Adjust based on navbar height */
+    padding-top: 80px;
+    /* Offset for fixed navbar */
+    box-sizing: border-box;
+}
+
+.split-col {
+    flex: 1;
+    /* 50% Width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    transition: background-color 0.3s;
+}
+
+.left-col {
+    background-color: #ffffff;
+    border-right: 1px solid #eee;
+}
+
+.right-col {
+    background-color: #F7F9FB;
+    /* Light Grey Contrast */
+}
+
+.split-content {
+    max-width: 500px;
+    text-align: center;
+}
+
+.label-text {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.icon-box {
+    margin-bottom: 2rem;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-box svg {
+    transition: transform 0.3s ease;
+}
+
+.split-col:hover .icon-box svg {
+    transform: scale(1.1);
+}
+
+.split-content h2 {
+    font-size: 36px;
+    color: var(--color-dark-navy);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.split-content .subline {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+}
+
+/* Reusing .btn-blue and .btn-green styles from previous, ensuring they exist */
+.btn-blue {
+    background-color: var(--color-dark-navy);
+    color: white;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-blue:hover {
+    background-color: #002244;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn-green {
+    background-color: var(--color-primary-green);
+    color: white;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-green:hover {
+    background-color: #009e5f;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile Responsive */
+@media (max-width: 968px) {
+    .simple-split-wrapper {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .split-col {
+        width: 100%;
+        padding: 60px 20px;
+        min-height: 50vh;
+        /* Ensure some height on mobile */
+    }
+}
+
+.left-col {
+    border-right: 1px solid #eee;
+}
+
+/* Subheading Symmetry */
+.subheading {
+    display: block;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+/* Utility Classes for Colors */
+.text-green {
+    color: var(--color-primary-green);
+}
+
+.text-blue {
+    color: var(--color-secondary-blue);
+}
+
+/* Modal Styling */
+.modal-overlay {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Dimmed background */
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-box {
+    background: white;
+    width: 75vw;
+    height: 75vh;
+    border-radius: 12px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    /* Split layout */
+    padding: 0;
+    /* Let columns handle padding */
+    overflow: hidden;
+    /* Clip contents to border radius */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.2s;
+}
+
+.close-modal-btn:hover {
+    color: red;
+}
+
+/* Modal Split Layout */
+/* Modal Split Layout */
+/* Modal Split Layout */
+.modal-left {
+    width: 30%;
+    background-color: var(--color-primary-green);
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    /* Align to top */
+    padding-top: 40px;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    transition: background-color 0.3s;
+}
+
+.left-col {
+    background-color: #ffffff;
+    border-right: 1px solid #eee;
+}
+
+.right-col {
+    background-color: #F7F9FB;
+    /* Light Grey Contrast */
+}
+
+.split-content {
+    max-width: 500px;
+    text-align: center;
+}
+
+.label-text {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.icon-box {
+    margin-bottom: 2rem;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-box svg {
+    transition: transform 0.3s ease;
+}
+
+.split-col:hover .icon-box svg {
+    transform: scale(1.1);
+}
+
+.split-content h2 {
+    font-size: 36px;
+    color: var(--color-dark-navy);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.split-content .subline {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+}
+
+/* Reusing .btn-blue and .btn-green styles from previous, ensuring they exist */
+.btn-blue {
+    background-color: var(--color-dark-navy);
+    color: white;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-blue:hover {
+    background-color: #002244;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn-green {
+    background-color: var(--color-primary-green);
+    color: white;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-green:hover {
+    background-color: #009e5f;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile Responsive */
+@media (max-width: 968px) {
+    .simple-split-wrapper {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .split-col {
+        width: 100%;
+        padding: 60px 20px;
+        min-height: 50vh;
+        /* Ensure some height on mobile */
+    }
+}
+
+.left-col {
+    border-right: 1px solid #eee;
+}
+
+/* Subheading Symmetry */
+.subheading {
+    display: block;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+/* Utility Classes for Colors */
+.text-green {
+    color: var(--color-primary-green);
+}
+
+.text-blue {
+    color: var(--color-secondary-blue);
+}
+
+.text-fin-blue {
+    color: #0B63D8;
+}
+
+.btn-fin-blue {
+    background-color: #0B63D8;
+    color: white;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-fin-blue:hover {
+    background-color: #0951b3;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn-fin-blue:disabled {
+    background-color: #ccc;
+    /* Grey */
+    cursor: not-allowed;
+    opacity: 0.7;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Specific Modal Overrides for Client (Blue) */
+#connectModalOverlay .modal-left {
+    background-color: #0B63D8 !important;
+}
+
+#connectModalOverlay .text-nomy {
+    color: #0B63D8 !important;
+}
+
+/* Modal Styling */
+.modal-overlay {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Dimmed background */
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-box {
+    background: white;
+    width: 75vw;
+    height: 75vh;
+    border-radius: 12px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    /* Split layout */
+    padding: 0;
+    /* Let columns handle padding */
+    overflow: hidden;
+    /* Clip contents to border radius */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.2s;
+}
+
+.close-modal-btn:hover {
+    color: red;
+}
+
+/* Modal Split Layout */
+/* Modal Split Layout */
+/* Modal Split Layout */
+.modal-left {
+    width: 30%;
+    background-color: var(--color-primary-green);
+    height: 100%;
+    display: flex;
+    /* MATCH RIGHT SIDE: FLEX */
+    flex-direction: column;
+    /* MATCH RIGHT SIDE: COLUMN */
+    align-items: flex-end;
+    /* Align Text Right */
+    justify-content: flex-start;
+    /* Align Top */
+    padding-top: 40px !important;
+    /* HARD RESET: Equal Top Padding */
+    padding-right: 0;
+}
+
+.modal-right {
+    width: 70%;
+    background-color: white;
+    height: 100%;
+    padding: 0;
+    padding-top: 40px !important;
+    /* HARD RESET: Equal Top Padding */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.modal-header-wrapper {
+    flex: 0 0 auto;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+.modal-header-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 4rem;
+    font-weight: 700;
+    /* HARD RESET: Content Spacing */
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    display: block !important;
+    /* Force Block to kill baseline jumping */
+
+
+    flex-shrink: 0;
+}
+
+/* Bridged Heading Specifics */
+.text-fin {
+    color: white;
+    font-weight: 800;
+    margin: 0 !important;
+}
+
+.text-nomy {
+    color: var(--color-primary-green);
+    margin: 0 !important;
+    /* Removed Transform - Relying on pure box model */
+}
+
+.text-navy {
+    color: var(--color-dark-navy);
+}
+
+.modal-subline {
+    color: #666;
+    /* Grey */
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    margin-left: 210px;
+    /* Adjusted Indent to skip 'Nomy ' (~200px) */
+    flex-shrink: 0;
+    /* Don't shrink subline */
+}
+
+/* Scrollable Form Content */
+.modal-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 40px;
+    /* Padding for the scrollable area */
+}
+
+/* Connect Form Styles */
+.form-container {
+    width: 100%;
+    /* Padding moved to modal-scroll-content */
+}
+
+.form-label {
+    display: block;
+    font-weight: 700;
+    color: #333;
+    /* Dark Grey */
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    height: 45px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding-left: 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.3s;
+}
+
+.form-textarea {
+    height: 150px;
+    padding-top: 12px;
+    resize: vertical;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    border-color: var(--color-secondary-blue);
+    outline: none;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* Input Group for Mobile */
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.prefix-box {
+    height: 45px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #555;
+}
+
+.input-group .form-input {
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 0;
+}
+
+/* Accordion Styles */
+.accordion-item {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.accordion-header {
+    background: #f9f9f9;
+    padding: 15px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion-content {
+    display: none;
+    padding: 15px;
+    background: white;
+    border-top: 1px solid #ddd;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.checkbox-label input {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+}
+
+/* Submit Button */
+.btn-submit-request {
+    width: 100%;
+    background-color: #4691FF;
+    /* FinNomy Blue */
+    color: white;
+    font-weight: 700;
+    height: 50px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.3s;
+}
+
+.btn-submit-request:disabled {
+    background-color: #ccc;
+    /* Grey */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.btn-submit-request:hover:not(:disabled) {
+    background-color: #357abd;
+}
+
+/* Validation Styles */
+.error-message {
+    color: #d9534f;
+    /* Red */
+    font-size: 12px;
+    margin-top: 4px;
+    display: none;
+    /* Hidden by default */
+}
+
+/* Consent Checkbox */
+.consent-container {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: flex-start;
+}
+
+.consent-label {
+    font-size: 0.9rem;
+    color: #333;
+    margin-left: 8px;
+    line-height: 1.4;
+    cursor: pointer;
+}
+
+.consent-checkbox {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+/* Success Screen Styles */
+.success-container {
+    display: none;
+    /* Hidden by default */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    text-align: center;
+    height: 100%;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.success-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-dark-navy);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.success-body {
+    font-size: 1rem;
+    /* approx 50% of 2rem title */
+    color: #888;
+    /* Light Grey */
+    margin-bottom: 3rem;
+    text-align: center;
+    max-width: 80%;
+}
+
+.success-cta-row {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    /* Space between buttons */
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-success-cta {
+    background-color: #4691FF;
+    /* Solid FinNomy Blue */
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-success-cta:hover {
+    background-color: #357abd;
+    /* Darker blue on hover */
+    color: white;
+}
+
+/* Partner Modal Specifics */
+.form-input:disabled {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    color: #999;
+}
+
+select[multiple] {
+    height: 120px;
+    padding: 10px;
+}
+
+/* Services Checkbox Grid */
+.services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Force 2 columns as requested */
+    gap: 20px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    max-height: 400px;
+    /* Increased height to accommodate vertical list */
+    overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.category-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-dark-navy);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.service-checkbox-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    position: relative;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.service-checkbox-item:hover {
+    background-color: #eee;
+}
+
+.service-checkbox-item input {
+    display: none;
+    /* Hide default checkbox */
+}
+
+/* Custom Checkmark */
+.checkmark {
+    width: 18px;
+    height: 18px;
+    background-color: white;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.service-checkbox-item input:checked+.checkmark {
+    background-color: var(--color-primary-green);
+    border-color: var(--color-primary-green);
+}
+
+.service-checkbox-item input:checked+.checkmark::after {
+    content: '✔';
+    font-size: 12px;
+    color: white;
+}
+
+/* Rank Badge */
+.rank-badge {
+    margin-left: auto;
+    background-color: var(--color-secondary-blue);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: none;
+    /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+}
+
+.service-checkbox-item input:checked~.rank-badge {
+    display: flex;
+}
+
+/* --- Toast Notification --- */
+.toast-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(7, 20, 40, 0.4);
+    /* Dark Navy/Blue tinted overlay */
+    backdrop-filter: blur(5px);
+    /* Stronger blur */
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.toast-backdrop.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.toast-container {
+    padding: 2rem 3rem;
+    /* Larger padding for pop-up feel */
+    color: #fff;
+    background-color: var(--color-primary-green);
+    /* Green Background */
+    border-radius: 12px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    font-weight: 500;
+    text-align: center;
+    min-width: 340px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.toast-container.show {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+
+
+/* =========================================
+   Global Responsiveness (Max-Width: 768px)
+   ========================================= */
+
+@media (max-width: 1024px) {
+
+    /* 1. Global Reset & Typography */
+    /* -------------------------------- */
+    body {
+        overflow-x: hidden;
+    }
+
+    h1 {
+        font-size: 36px !important;
+        /* Reduce Hero size */
+    }
+
+    h2 {
+        font-size: 28px !important;
+    }
+
+    section {
+        padding: 100px 20px 40px 20px !important;
+        /* Increased top padding for Navbar overlap */
+    }
+
+    .container {
+        padding: 0 20px;
+    }
+
+    /* 2. Navigation Bar (Mobile Menu) */
+    /* -------------------------------- */
+    .hamburger-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .hamburger-menu span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: white;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-links {
+        display: flex;
+        /* Override display: none */
+        position: fixed;
+        top: 0;
+        right: -100%;
+        /* Hidden by default */
+        width: 50%;
+        /* Reduced from 70% */
+        min-width: 250px;
+        /* Ensure readability on small phones */
+        height: 100vh;
+        background-color: var(--color-dark-navy);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+
+    .nav-links.active {
+        right: 0;
+        /* Slide in */
+    }
+
+    .nav-links li {
+        margin: 20px 0;
+    }
+}
+
+/* =========================================
+   Mobile Responsiveness (Max-Width: 768px)
+   ========================================= */
+@media (max-width: 1024px) {
+
+    /* 3. Footer Optimization */
+    /* -------------------------------- */
+    .footer-grid {
+        grid-template-columns: 1fr !important;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .footer-brand {
+        align-items: center !important;
+    }
+
+    .footer-links-group {
+        justify-content: center;
+    }
+
+    .footer-links ul {
+        padding-left: 0;
+        /* Fix alignment */
+    }
+
+    /* Center Social Icons */
+    .social-icons {
+        justify-content: center !important;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .footer-bottom p:last-child {
+        text-align: justify;
+        /* Justify align disclaimer as requested */
+    }
+
+    /* 4. Modals (Connect & Partner) */
+    /* -------------------------------- */
+    .modal-box {
+        /* Reverting to Flex Row (Desktop) */
+        flex-direction: row !important;
+        width: 95% !important;
+        height: 90vh !important;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-left {
+        /* Fin on Top Right of Left Box */
+        padding-top: 40px !important;
+        /* Match Right Side Top Padding */
+        padding-right: 0 !important;
+        align-items: flex-end !important;
+        /* Align Text Right */
+        justify-content: flex-start !important;
+        /* Align Top */
+        text-align: right;
+    }
+
+    .text-fin {
+        font-size: 36px !important;
+        transform: none !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+        display: block !important;
+        /* Ensure block consistency */
+    }
+
+    .modal-right {
+        /* Revert to desktop 70% */
+        padding: 40px 20px 20px 5px !important;
+        /* Top 40, Right 20, Bottom 20, Left 5 */
+    }
+
+    .modal-header-wrapper {
+        position: static !important;
+        text-align: left !important;
+        padding: 0 0 20px 0 !important;
+        /* Bottom padding only */
+        margin-top: 0 !important;
+        /* Ensure no top margin */
+        border-bottom: 1px solid #eee;
+    }
+
+    .modal-subline {
+        margin-left: 0 !important;
+        /* Mobile/Tablet: Start below "Nomy" (Flush Left) */
+        text-align: left;
+    }
+
+    .text-nomy {
+        font-size: 36px !important;
+        transform: none !important;
+        line-height: 1 !important;
+        display: block !important;
+        margin: 0 !important;
+    }
+
+    .close-modal-btn {
+        top: 10px;
+        right: 15px;
+        font-size: 28px;
+        color: #333;
+        z-index: 1002;
+    }
+
+    /* Single Column Form for Mobile */
+    .form-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* 5. Content Alignment Fixes */
+    /* -------------------------- */
+    #professional-vs-diy .text-content,
+    #professional-vs-diy ul {
+        text-align: left !important;
+    }
+}
+
+/* =========================================
+   Navbar Fade Logic (Footer Intersection)
+   ========================================= */
+.navbar-fade-out {
+    opacity: 0 !important;
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+}
+
+/* =========================================
+   Privacy Policy Modal
+   ========================================= */
+/* =========================================
+   Privacy & Terms Modals (Shared Styling)
+   ========================================= */
+.privacy-modal-box,
+.terms-modal-box {
+    background-color: #ffffff;
+    width: 90%;
+    max-width: 1000px;
+    max-height: 85vh;
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    padding: 0;
+}
+
+.privacy-header,
+.terms-header {
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid #eee;
+}
+
+.privacy-title,
+.terms-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    color: #333;
+    font-weight: 700;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.privacy-body,
+.terms-body {
+    padding: 40px 60px;
+    overflow-y: auto;
+    text-align: left;
+    color: #333;
+    line-height: 1.8;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+}
+
+.privacy-body h3,
+.terms-body h3 {
+    color: #0B63D8;
+    /* FinNomy Blue */
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+/* Remove extra space for the first heading */
+.privacy-body h3:first-child,
+.terms-body h3:first-child {
+    margin-top: 0;
+}
+
+.privacy-body p,
+.terms-body p {
+    margin-bottom: 1.5rem;
+}
+
+.privacy-body ul,
+.terms-body ul {
+    list-style: none;
+    /* Remove default bullets */
+    padding-left: 20px;
+    margin-bottom: 1.5rem;
+}
+
+.privacy-body li,
+.terms-body li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+
+.privacy-body li::before,
+.terms-body li::before {
+    content: "▪";
+    /* Custom bullet */
+    color: #0B63D8;
+    position: absolute;
+    left: 0;
+    font-size: 1.2em;
+    line-height: 1.7;
+}
+
+/* Custom Scrollbar */
+.privacy-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.privacy-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.privacy-body::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.privacy-body::-webkit-scrollbar-thumb:hover {
+    background: #bbb;
+}
+
+/* Ensure close button in privacy modal works same as others */
+.privacy-header .close-modal-btn {
+    position: static;
+    margin-left: 20px;
+    font-size: 28px;
+    color: #333;
+    transition: color 0.2s ease;
+}
+
+.privacy-header .close-modal-btn:hover {
+    color: red;
+    /* Red on hover */
+}
