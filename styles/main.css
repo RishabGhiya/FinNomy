@@ -164,6 +164,14 @@ p {
     align-items: center;
     /* Ensure vertical centering */
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent black */
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-container {
@@ -2119,9 +2127,92 @@ select[multiple] {
 
     /* 5. Content Alignment Fixes */
     /* -------------------------- */
-    #professional-vs-diy .text-content,
+    #professional-vs-diy .text-content h2,
+    #professional-vs-diy .text-content h3 {
+        text-align: center !important;
+    }
+
+    #professional-vs-diy .text-content p,
     #professional-vs-diy ul {
         text-align: left !important;
+    }
+
+    /* Modal Mobile Layout: Side-by-Side Header + Full Width Form */
+    .modal-box {
+        display: grid !important;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto 1fr;
+        height: 85vh;
+        /* Ensure fixed height for scroll */
+    }
+
+    .modal-left {
+        grid-row: 1;
+        grid-column: 1;
+        width: auto !important;
+        height: auto !important;
+        padding: 15px 5px 15px 15px !important;
+        /* Reduced Right Padding */
+        justify-content: flex-end;
+        /* Align Fin to Right */
+        align-items: center;
+        background-color: var(--color-primary-green) !important;
+        /* Keep original color logic */
+    }
+
+    #connectModalOverlay .modal-left {
+        background-color: #0B63D8 !important;
+        /* Blue override for Connect */
+    }
+
+    .modal-right {
+        display: contents !important;
+        /* Flatten the structure */
+    }
+
+    .modal-header-wrapper {
+        grid-row: 1;
+        grid-column: 2;
+        padding: 15px 15px 15px 5px !important;
+        /* Reduced Left Padding */
+        border-bottom: none !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        /* Align Nomy to Left */
+        background: white;
+    }
+
+    .modal-scroll-content {
+        grid-row: 2;
+        grid-column: 1 / span 2;
+        /* Full width */
+        overflow-y: auto !important;
+        padding: 20px !important;
+        background: white;
+        height: 100%;
+        /* Fill remaining space */
+    }
+
+    .text-fin {
+        font-size: 32px !important;
+        margin: 0 !important;
+    }
+
+    .text-nomy {
+        font-size: 32px !important;
+        margin: 0 !important;
+    }
+
+    .modal-subline {
+        font-size: 14px !important;
+        margin-top: 5px !important;
+    }
+
+    .close-modal-btn {
+        top: 10px;
+        right: 15px;
     }
 }
 
