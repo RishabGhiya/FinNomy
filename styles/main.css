@@ -639,6 +639,20 @@ footer {
         --spacing-lg: 3rem;
     }
 
+    /* Disable scroll-snap on mobile/tablet — stacked content is shorter than 100vh */
+    html {
+        scroll-snap-type: none;
+    }
+
+    section {
+        min-height: auto;
+        height: auto;
+        scroll-snap-align: none;
+        scroll-snap-stop: unset;
+        padding-top: 100px;
+        padding-bottom: 3rem;
+    }
+
     h1 {
         font-size: 36px;
     }
@@ -690,14 +704,6 @@ footer {
     .btn {
         width: 100%;
         text-align: center;
-    }
-
-    section {
-        padding-top: 80px;
-        height: auto;
-        min-height: 100vh;
-        scroll-snap-align: start;
-        padding-bottom: 40px;
     }
 
     .footer-grid {
@@ -2359,4 +2365,358 @@ select[multiple] {
 .privacy-header .close-modal-btn:hover {
     color: red;
     /* Red on hover */
+}
+
+/* Multi-Goal Strategy Engine (MGSE) Responsive Layout */
+@media (max-width: 768px) {
+    #mgseModalOverlay .sip-widget-container {
+        flex-direction: column !important;
+    }
+
+    #mgseModalOverlay .sip-widget-container>div:first-child {
+        border-right: none !important;
+        border-bottom: 1px solid #e2e8f0;
+        flex: auto !important;
+        width: 100% !important;
+    }
+
+    #mgseModalOverlay .sip-widget-container>div:last-child {
+        min-width: 0 !important;
+    }
+
+    #mgseModalOverlay .sip-widget-container>div:last-child>div:first-child {
+        flex-direction: column !important;
+    }
+}
+
+/* =========================================
+   Calculators Page – Mobile / Tablet
+   (≤ 1024px covers tablet, ≤ 768px covers phone)
+   ========================================= */
+
+/* ---- Calculator Hero ---- */
+@media (max-width: 1024px) {
+    .calculators-hero {
+        padding-top: 110px !important;
+        padding-bottom: 60px !important;
+        background-attachment: scroll !important;
+        /* parallax kills performance on mobile */
+    }
+
+    .calculators-hero h1 {
+        font-size: 28px !important;
+    }
+
+    .calculators-hero p {
+        font-size: 0.95rem !important;
+    }
+}
+
+/* ---- Calculator Card Grid ---- */
+@media (max-width: 1024px) {
+
+    .calc-cards-grid,
+    [class*="calc-grid"],
+    .calculators-section .calc-cards,
+    #calculators-list {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 20px !important;
+    }
+
+    .calc-card {
+        padding: 20px !important;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .calc-cards-grid,
+    [class*="calc-grid"],
+    .calculators-section .calc-cards,
+    #calculators-list {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* ---- Calculator Modals – General ---- */
+@media (max-width: 1024px) {
+
+    /* Full-screen modal on tablet/mobile */
+    .sip-modal-overlay,
+    .calculator-modal-overlay,
+    [id$="ModalOverlay"]:not(#connectModalOverlay):not(#partnerModalOverlay):not(#privacyModal):not(#termsModal) {
+        align-items: flex-start !important;
+        padding: 0 !important;
+    }
+
+    /* Widget container (SIP, SWP, Loan, Retirement, FHS, CFM etc.) */
+    .sip-modal-box,
+    .calculator-modal-box,
+    [id$="ModalOverlay"]:not(#connectModalOverlay):not(#partnerModalOverlay)>div:first-child {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100% !important;
+        max-height: 100vh !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* SIP-style widget containers (two-column → single column) */
+    .sip-widget-container {
+        flex-direction: column !important;
+        height: auto !important;
+        overflow-y: auto !important;
+    }
+
+    .sip-widget-container>div {
+        width: 100% !important;
+        min-width: 0 !important;
+        flex: none !important;
+        border-right: none !important;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    /* Close button always visible */
+    .sip-close-btn,
+    [id$="ModalOverlay"] .close-btn,
+    [id$="ModalOverlay"] button[onclick*="close"] {
+        top: 10px !important;
+        right: 10px !important;
+        z-index: 1010;
+    }
+
+    /* Chart canvas – cap height on mobile */
+    canvas {
+        max-height: 260px !important;
+    }
+
+    /* Sliders / range inputs */
+    input[type="range"] {
+        width: 100% !important;
+    }
+
+    /* Slider + value row stacks */
+    .slider-row,
+    .input-slider-row,
+    [class*="slider-group"] {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 6px !important;
+    }
+}
+
+/* ---- HV (High-Value) Forms inside modals ---- */
+@media (max-width: 1024px) {
+
+    /* Override inline grid-template-columns set directly on elements */
+    [style*="grid-template-columns: 1fr 1fr"],
+    [style*="grid-template-columns:1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* HV form two-column grids */
+    .form-grid,
+    .hv-form-grid,
+    [class*="hv-form"] .form-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Lead-capture form inside calculator results */
+    .lc-form-group {
+        width: 100% !important;
+    }
+
+    /* Success CTA row wraps on narrow screens */
+    .success-cta-row {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    .btn-success-cta {
+        width: 100% !important;
+        white-space: normal !important;
+    }
+}
+
+/* ---- Specific: SIP/SWP footer result links ---- */
+@media (max-width: 768px) {
+    .sip-footer-links {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    .sip-footer-links a {
+        text-align: center !important;
+    }
+}
+
+/* ---- Privacy / Terms Modal ---- */
+@media (max-width: 768px) {
+
+    .privacy-modal-box,
+    .terms-modal-box {
+        width: 100% !important;
+        max-height: 100vh !important;
+        border-radius: 0 !important;
+    }
+
+    .privacy-body,
+    .terms-body {
+        padding: 20px !important;
+    }
+}
+
+/* ---- Toast notification ---- */
+@media (max-width: 600px) {
+    .toast-container {
+        min-width: 90vw !important;
+        font-size: 0.95rem !important;
+        padding: 1.5rem !important;
+    }
+}
+
+/* =========================================
+   Surgical Responsive Overrides for Tools
+   ========================================= */
+
+@media (max-width: 1024px) {
+
+    /* 1. Force all calculator modals to full screen */
+    .sip-modal-card,
+    #mgseModalOverlay .sip-modal-card,
+    #fhsModalOverlay .sip-modal-card,
+    #cfmModalOverlay .sip-modal-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100% !important;
+        max-height: 100vh !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        overflow-y: auto !important;
+    }
+
+    /* 2. Fix the flex basis that prevents stacking */
+    .sip-inputs,
+    .sip-results {
+        flex: none !important;
+        width: 100% !important;
+        padding: 20px !important;
+        border-right: none !important;
+        border-left: none !important;
+    }
+
+    /* 3. Stack main containers and result dashboards */
+    .sip-widget-container {
+        flex-direction: column !important;
+        padding: 10px !important;
+    }
+
+    .sip-inputs,
+    .sip-results {
+        width: 100% !important;
+        border-right: none !important;
+        border-bottom: 1px solid #f3f4f6 !important;
+    }
+
+    .cfm-results-grid,
+    .fhs-results-grid,
+    #fhsModalOverlay .sip-results>div:first-child,
+    #cfmModalOverlay .cfm-results-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+
+    /* 4. Ensure charts are responsive and centered */
+    .chart-container {
+        gap: 15px !important;
+        padding: 10px !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .chart-container canvas {
+        max-width: 100% !important;
+    }
+
+    /* 5. Adjust labels and inputs in dense grids */
+    .sip-control-group {
+        padding: 10px !important;
+    }
+
+    /* 6. Fix Loan result table font sizing */
+    #loanResultsState .res-stats div[style*="display: grid"] {
+        grid-template-columns: 1fr 1fr 1fr !important;
+        font-size: 0.75rem !important;
+    }
+
+    /* 7. CFM Result Cards */
+    [style*="background: linear-gradient"] {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 600px) {
+
+    /* Shrink headers in modals */
+    .sip-header h2 {
+        font-size: 1.2rem !important;
+    }
+
+    /* Make number inputs easier to read/type */
+    .sip-number-input {
+        font-size: 1rem !important;
+    }
+
+    /* Ensure the widget container doesn't have double scrollbars */
+    .sip-modal-card {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .sip-widget-container {
+        flex: 1 !important;
+    }
+}@media (max-width: 768px) {
+    .sip-modal-card {
+        display: block !important;
+        width: 95% !important;
+        height: auto !important;
+        max-height: 90vh !important;
+        margin: 20px auto !important;
+        overflow-y: auto !important;
+    }
+
+    .sip-widget-container {
+        flex-direction: column !important;
+    }
+
+    .sip-inputs, .sip-results {
+        width: 100% !important;
+        border-right: none !important;
+        border-bottom: 1px solid #f3f4f6 !important;
+    }
+
+    /* MGSE and other content areas */
+    .sip-widget-container > div {
+        min-width: unset !important;
+        flex: 1 1 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+    /* Dashboard and Goal Cards nesting fixes */
+    #mgseNormalState > div {
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+    
+    #mgseNormalState > div > div {
+        width: 100% !important;
+        flex: 1 1 100% !important;
+        min-width: unset !important;
+    }
 }

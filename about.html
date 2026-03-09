@@ -34,7 +34,7 @@
                 <li><a href="index.html" class="nav-link-home">Home</a></li>
                 <li><a href="index.html#about" class="nav-link-about">About FinNomy</a></li>
                 <li><a href="index.html#services" class="nav-link-services">Services</a></li>
-                <li><a href="index.html#calculators" class="nav-link-calculators">Calculators</a></li>
+                <li><a href="calculators.html" class="nav-link-calculators">Calculators</a></li>
                 <li><a href="index.html#insights" class="nav-link-insights">Insights</a></li>
                 <li><a href="connect_us.html" class="nav-link-connect">Connect Us</a></li>
             </ul>
@@ -55,6 +55,8 @@
                         best financial choices for your future.</p>
                     <p style="margin-bottom: 0;">With FinNomy, your financial journey becomes smarter, smoother, and
                         unmistakably more reliable.</p>
+                    <button class="btn btn-fin-blue" onclick="openConnectModal()"
+                        style="margin-top: 1.5rem; align-self: flex-start;">Connect Us</button>
                 </div>
             </div>
             <div class="visual-content animate-on-scroll"
@@ -230,7 +232,7 @@
                         <li><a href="index.html" class="footer-link-home">Home</a></li>
                         <li><a href="about.html" class="footer-link-about">About Us</a></li>
                         <li><a href="index.html#services" class="footer-link-services">Services</a></li>
-                        <li><a href="index.html#calculators" class="footer-link-calculators">Calculators</a></li>
+                        <li><a href="calculators.html" class="footer-link-calculators">Calculators</a></li>
                     </ul>
                 </div>
 
@@ -715,7 +717,7 @@
         </div> <!-- End modal-box -->
     </div> <!-- End partnerModalOverlay -->
     <!-- Privacy Policy Modal -->
-    <div id="privacyModalOverlay" class="modal-overlay" style="display: none;">
+    <div id="privacyModal" class="modal-overlay" style="display: none;">
         <div class="privacy-modal-box">
             <div class="privacy-header">
                 <h2 class="privacy-title">Privacy Policy</h2>
@@ -938,7 +940,7 @@
     </div>
 
     <!-- Terms and Conditions Modal (Twin of Privacy Modal) -->
-    <div id="termsModalOverlay" class="modal-overlay" style="display: none;">
+    <div id="termsModal" class="modal-overlay" style="display: none;">
         <div class="terms-modal-box">
             <div class="terms-header">
                 <h2 class="terms-title">Terms & Conditions</h2>
