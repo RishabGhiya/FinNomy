@@ -4195,10 +4195,10 @@ window.sendDashboardReport = function (calcType) {
             calculatorData.label_1 = "Loan Balance";
             calculatorData.val_1 = "₹" + fmt(document.getElementById('loanInputBalance').value);
             calculatorData.label_2 = "Interest Saved";
-            calculatorData.val_2 = "₹" + fmt(document.getElementById('loanResNewInterest').innerText || "0");
+            calculatorData.val_2 = "₹" + fmt(document.getElementById('loanResInterestSaved').innerText || "0");
             calculatorData.label_3 = "New Tenure";
             calculatorData.val_3 = document.getElementById('loanResNewTenureVal').innerText;
-            calculatorData.advisor_fix = "Prepay Extra: ₹" + fmt(document.getElementById('loanInputExtraEmi').value || "0");
+            calculatorData.advisor_fix = "Prepaying ₹" + fmt(document.getElementById('loanInputExtraEmi').value || "0") + " " + document.getElementById('loanExtraEmiFreq').value + " saves you significant interest.";
         } else if (calcType === 'fhs') {
             calculatorData.calculator_name = "Financial Health Score 🏥";
             calculatorData.label_1 = "Health Evaluated";
@@ -4222,17 +4222,34 @@ window.sendDashboardReport = function (calcType) {
 
         // Generate specific input summaries for the standard calculators
         if (calcType === 'sip') {
-            calculatorData.inputs_summary = `Monthly SIP: ₹${fmt(document.getElementById('sipInputInvest').value)} | Tenure: ${document.getElementById('sipInputYears').value} Yrs | Expected Return: ${document.getElementById('sipInputRate').value}% p.a.`;
-            if (document.getElementById('sipToggleStepUp').checked) calculatorData.inputs_summary += ` | Annual Step-Up: ${document.getElementById('sipInputStepUp').value}%`;
-            if (document.getElementById('sipToggleInflation').checked) calculatorData.inputs_summary += ` | Inflation Adj: ${document.getElementById('sipInputInflation').value}%`;
+            calculatorData.inputs_summary = `Monthly SIP: ₹${fmt(document.getElementById('inputInvestment').value)} | Tenure: ${document.getElementById('inputYears').value} Yrs | Expected Return: ${document.getElementById('inputRate').value}% p.a.`;
+            if (document.getElementById('checkStepUp') && document.getElementById('checkStepUp').checked) {
+                calculatorData.inputs_summary += ` | Annual Step-Up: ${document.getElementById('inputStepUp').value}%`;
+            }
+            if (document.getElementById('checkInflation') && document.getElementById('checkInflation').checked) {
+                calculatorData.inputs_summary += ` | Inflation Adj: ${document.getElementById('inputInflation').value}%`;
+            }
         } else if (calcType === 'swp') {
             calculatorData.inputs_summary = `Investment: ₹${fmt(document.getElementById('swpInputInvest').value)} | Monthly SWP: ₹${fmt(document.getElementById('swpInputWithdrawal').value)} | Tenure: ${document.getElementById('swpInputYears').value} Yrs | Exp Return: ${document.getElementById('swpInputRate').value}% p.a.`;
+            if (document.getElementById('swpCheckStepUp') && document.getElementById('swpCheckStepUp').checked) {
+                calculatorData.inputs_summary += ` | Annual Step-Up: ${document.getElementById('swpInputStepUp').value}%`;
+            }
         } else if (calcType === 'ret') {
             calculatorData.inputs_summary = `Current Age: ${document.getElementById('retInputCurrentAge').value} | Ret Age: ${document.getElementById('retInputRetirementAge').value} | Life Exp: ${document.getElementById('retInputLifeExpectancy').value} | Monthly Expenses: ₹${fmt(document.getElementById('retInputExpenses').value)}`;
         } else if (calcType === 'mgse') {
             calculatorData.inputs_summary = `Goals Set: Custom Profile | Current Monthly SIP: ₹${fmt(document.getElementById('mgseCurrentSip').value)} | Existing Corpus: ₹${fmt(document.getElementById('mgseCurrentCorpus').value)}`;
         } else if (calcType === 'loan') {
-            calculatorData.inputs_summary = `Loan Balance: ₹${fmt(document.getElementById('loanInputBalance').value)} | Interest Rate: ${document.getElementById('loanInputRate').value}% | Remaining Tenure: ${document.getElementById('loanInputTenure').value} Mo | Extra Prepay: ₹${fmt(document.getElementById('loanInputExtraEmi').value)}`;
+            let freq = document.getElementById('loanExtraEmiFreq').value;
+            let type = document.getElementById('loanPrepayBenefit').value === 'tenure' ? 'Reduce Tenure' : 'Reduce EMI';
+            let extraStr = `Extra Prepay: ₹${fmt(document.getElementById('loanInputExtraEmi').value)} (${freq})`;
+            calculatorData.inputs_summary = `Loan Balance: ₹${fmt(document.getElementById('loanInputBalance').value)} | Rate: ${document.getElementById('loanInputRate').value}% | Tenure: ${document.getElementById('loanInputTenure').value} Mo | ${extraStr} | Benefit: ${type}`;
+
+            if (document.getElementById('loanTogglePenalty').checked) {
+                calculatorData.inputs_summary += ` | Penalty: ${document.getElementById('loanInputPenalty').value}%`;
+            }
+            if (document.getElementById('loanToggleStepUp').checked) {
+                calculatorData.inputs_summary += ` | Annual Step-Up: ${document.getElementById('loanInputStepUp').value}%`;
+            }
         } else if (calcType === 'fhs') {
             calculatorData.inputs_summary = "11-Pillar Assessment completed via FinNomy Questionnaire.";
         }
