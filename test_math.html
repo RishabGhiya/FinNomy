@@ -1,0 +1,53 @@
+<script>
+    let swpAdvTime = 20;
+    let swpAdvGoal = 50000000;
+    let swpAdvWithdrawal = 1200000;
+    let swpAdvSavings = 0;
+    let swpAdvReturn = 12;
+    let swpAdvInflation = 6;
+    let swpAdvStepUpSip = 10;
+    let swpAdvStepUpSwp = 10;
+    let isSwpAdvInflation = true;
+    let isSwpAdvStepUpSip = true;
+    let isSwpAdvStepUpSwp = true;
+
+    let months = swpAdvTime * 12;
+    let monthlyRate = swpAdvReturn / 1200;
+
+    function simulateCashflow(startingSip) {
+        let balance = swpAdvSavings;
+        let currentSip = startingSip;
+        let currentWithdrawal = swpAdvWithdrawal;
+        let totalInvested = swpAdvSavings;
+        let totalWithdrawn = 0;
+
+        for (let m = 1; m <= months; m++) {
+            balance += currentSip;
+            totalInvested += currentSip;
+            balance += (balance * monthlyRate);
+
+            if (m % 12 === 0) {
+                if (balance >= currentWithdrawal) {
+                    balance -= currentWithdrawal;
+                    totalWithdrawn += currentWithdrawal;
+                } else {
+                    totalWithdrawn += balance;
+                    balance = 0;
+                }
+
+                let infRate = isSwpAdvInflation ? swpAdvInflation : 0;
+                let stepRate = isSwpAdvStepUpSwp ? swpAdvStepUpSwp : 0;
+                let swpGrowth = (((1 + (stepRate / 100)) * (1 + (infRate / 100))) - 1);
+
+                currentWithdrawal = currentWithdrawal * (1 + swpGrowth);
+
+                if (isSwpAdvStepUpSip) {
+                    currentSip = currentSip * (1 + (swpAdvStepUpSip / 100));
+                }
+            }
+        }
+        return { finalBalance: balance, totalInvested, totalWithdrawn, startingSip };
+    }
+
+    document.write("<h1>Total Withdrawn: " + simulateCashflow(50000).totalWithdrawn + "</h1>");
+</script>
