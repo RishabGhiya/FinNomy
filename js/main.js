@@ -4290,7 +4290,7 @@ window.sendDashboardReport = function (calcType) {
         } else if (calcType === 'ret') {
             calculatorData.inputs_summary = `Current Age: ${document.getElementById('retInputCurrentAge').value} | Ret Age: ${document.getElementById('retInputRetirementAge').value} | Life Exp: ${document.getElementById('retInputLifeExpectancy').value} | Monthly Expenses: ₹${fmt(document.getElementById('retInputExpenses').value)}`;
         } else if (calcType === 'mgse') {
-            calculatorData.inputs_summary = `Goals Set: Custom Profile | Current Monthly SIP: ₹${fmt(document.getElementById('mgseCurrentSip').value)} | Existing Corpus: ₹${fmt(document.getElementById('mgseCurrentCorpus').value)}`;
+            calculatorData.inputs_summary = `Monthly Income: ₹${fmt(document.getElementById('mgseIncome').value)} | Monthly Expenses: ₹${fmt(document.getElementById('mgseExpenses').value)} | Expected Returns: ${document.getElementById('mgseReturns').value}% | Inflation: ${document.getElementById('mgseInflation').value}% | Annual Step-Up: ${document.getElementById('mgseStepup').value}%`;
         } else if (calcType === 'loan') {
             let freq = document.getElementById('loanExtraEmiFreq').value;
             let type = document.getElementById('loanPrepayBenefit').value === 'tenure' ? 'Reduce Tenure' : 'Reduce EMI';
