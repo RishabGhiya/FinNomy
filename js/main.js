@@ -4139,6 +4139,7 @@ window.sendDashboardReport = function (calcType) {
         user_email: userEmail,
         user_phone: userPhone,
         calculator_name: "",
+        website_url: window.location.href, // Captures current URL for the return button
         label_1: "Metric 1", val_1: "0",
         label_2: "Metric 2", val_2: "0",
         label_3: "Metric 3", val_3: "0",
@@ -4177,14 +4178,14 @@ window.sendDashboardReport = function (calcType) {
                 calculatorData.val_3 = "₹" + fmt(document.getElementById('sipResTotalWealth').innerText);
             }
         } else if (calcType === 'swp') {
-            const isAdvance = document.getElementById('swpCheckSuperAdvance') && document.getElementById('swpCheckSuperAdvance').checked;
+            const isAdvance = document.getElementById('checkSwpSuperAdvance') && document.getElementById('checkSwpSuperAdvance').checked;
             calculatorData.calculator_name = isAdvance ? "Advanced SWP & Goal Seek 💎" : "SWP Wisdom 💎";
 
             if (isAdvance) {
                 calculatorData.label_1 = "Target Goal Amount";
                 calculatorData.val_1 = "₹" + fmt(document.getElementById('swpAdvInputGoal').value);
                 calculatorData.label_2 = "Monthly SIP Needed";
-                calculatorData.val_2 = document.getElementById('swpAdvResSipNeededVal').innerText;
+                calculatorData.val_2 = "₹" + fmt(document.getElementById('resSwpAdvRequiredSip').innerText);
                 calculatorData.label_3 = "Protected SWP Corpus";
                 calculatorData.val_3 = "₹" + fmt(document.getElementById('resSwpAdvFinalCorpus').innerText);
             } else {
@@ -4265,7 +4266,7 @@ window.sendDashboardReport = function (calcType) {
                 calculatorData.inputs_summary += ` | Inflation Adj: ${document.getElementById('inputInflation').value}%`;
             }
         } else if (calcType === 'swp') {
-            const isAdvance = document.getElementById('swpCheckSuperAdvance') && document.getElementById('swpCheckSuperAdvance').checked;
+            const isAdvance = document.getElementById('checkSwpSuperAdvance') && document.getElementById('checkSwpSuperAdvance').checked;
 
             if (isAdvance) {
                 calculatorData.inputs_summary = `Target Goal: ₹${fmt(document.getElementById('swpAdvInputGoal').value)} | Horizon: ${document.getElementById('swpAdvInputTime').value} Yrs | Exp Return: ${document.getElementById('swpAdvInputReturn').value}% p.a. | Annual Withdraw: ₹${fmt(document.getElementById('swpAdvInputWithdrawal').value)} | Saved: ₹${fmt(document.getElementById('swpAdvInputSavings').value)}`;
