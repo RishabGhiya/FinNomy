@@ -4158,21 +4158,43 @@ window.sendDashboardReport = function (calcType) {
         };
 
         if (calcType === 'sip') {
-            calculatorData.calculator_name = "Magic of SIP ✨";
-            calculatorData.label_1 = "Total Investment";
-            calculatorData.val_1 = "₹" + fmt(document.getElementById('sipResTotalInvest').innerText);
-            calculatorData.label_2 = "Returns Earned";
-            calculatorData.val_2 = "₹" + fmt(document.getElementById('sipResReturnsEarned').innerText);
-            calculatorData.label_3 = "Total Estimated Wealth";
-            calculatorData.val_3 = "₹" + fmt(document.getElementById('sipResTotalWealth').innerText);
+            const isAdvance = document.getElementById('checkSuperAdvance') && document.getElementById('checkSuperAdvance').checked;
+            calculatorData.calculator_name = isAdvance ? "SIP Target Goal Planner ✨" : "Magic of SIP ✨";
+
+            if (isAdvance) {
+                calculatorData.label_1 = "Target Goal Amount";
+                calculatorData.val_1 = "₹" + fmt(document.getElementById('inputGoalAmount').value);
+                calculatorData.label_2 = "Monthly SIP Required";
+                calculatorData.val_2 = document.getElementById('resMonthlySipVal').innerText;
+                calculatorData.label_3 = "Total Value Generated";
+                calculatorData.val_3 = "₹" + fmt(document.getElementById('sipResTotalWealth').innerText);
+            } else {
+                calculatorData.label_1 = "Total Investment";
+                calculatorData.val_1 = "₹" + fmt(document.getElementById('sipResTotalInvest').innerText);
+                calculatorData.label_2 = "Returns Earned";
+                calculatorData.val_2 = "₹" + fmt(document.getElementById('sipResReturnsEarned').innerText);
+                calculatorData.label_3 = "Total Estimated Wealth";
+                calculatorData.val_3 = "₹" + fmt(document.getElementById('sipResTotalWealth').innerText);
+            }
         } else if (calcType === 'swp') {
-            calculatorData.calculator_name = "SWP Wisdom 💎";
-            calculatorData.label_1 = "Total Investment";
-            calculatorData.val_1 = "₹" + fmt(document.getElementById('swpResTotalInvest').innerText);
-            calculatorData.label_2 = "Total Withdrawals";
-            calculatorData.val_2 = "₹" + fmt(document.getElementById('swpResReturnsEarned').innerText);
-            calculatorData.label_3 = "Final Balance";
-            calculatorData.val_3 = "₹" + fmt(document.getElementById('swpResFinalBalance').innerText);
+            const isAdvance = document.getElementById('swpCheckSuperAdvance') && document.getElementById('swpCheckSuperAdvance').checked;
+            calculatorData.calculator_name = isAdvance ? "Advanced SWP & Goal Seek 💎" : "SWP Wisdom 💎";
+
+            if (isAdvance) {
+                calculatorData.label_1 = "Target Goal Amount";
+                calculatorData.val_1 = "₹" + fmt(document.getElementById('swpAdvInputGoal').value);
+                calculatorData.label_2 = "Monthly SIP Needed";
+                calculatorData.val_2 = document.getElementById('swpAdvResSipNeededVal').innerText;
+                calculatorData.label_3 = "Protected SWP Corpus";
+                calculatorData.val_3 = "₹" + fmt(document.getElementById('resSwpAdvFinalCorpus').innerText);
+            } else {
+                calculatorData.label_1 = "Total Investment";
+                calculatorData.val_1 = "₹" + fmt(document.getElementById('swpResTotalInvest').innerText);
+                calculatorData.label_2 = "Total Withdrawals";
+                calculatorData.val_2 = "₹" + fmt(document.getElementById('swpResReturnsEarned').innerText);
+                calculatorData.label_3 = "Final Balance";
+                calculatorData.val_3 = "₹" + fmt(document.getElementById('swpResFinalBalance').innerText);
+            }
         } else if (calcType === 'ret') {
             calculatorData.calculator_name = "Retirement Journey 🚀";
             calculatorData.label_1 = "Total Corpus Required";
@@ -4180,15 +4202,15 @@ window.sendDashboardReport = function (calcType) {
             calculatorData.label_2 = "Monthly SIP Required";
             calculatorData.val_2 = "₹" + fmt(document.getElementById('retResRequiredSIP').innerText);
             calculatorData.label_3 = "Wealth at Retirement";
-            calculatorData.val_3 = "₹" + fmt(document.getElementById('retResTotalCorpus').innerText);
+            calculatorData.val_3 = "₹" + fmt(document.getElementById('retResTotalCorpus').innerText); // Kept similar as existing logic
         } else if (calcType === 'mgse') {
             calculatorData.calculator_name = "Multi-Goal Roadmap 🗺️";
             calculatorData.label_1 = "Total SIP Required";
             calculatorData.val_1 = "₹" + fmt(document.getElementById('mgseTotalRequiredSip').innerText);
             calculatorData.label_2 = "Goal Funding Health";
             calculatorData.val_2 = document.getElementById('mgseHealthPercentage').innerText;
-            calculatorData.label_3 = "Protected SWP Corpus";
-            calculatorData.val_3 = "₹" + fmt(document.getElementById('resSwpAdvFinalCorpus').innerText);
+            calculatorData.label_3 = "Gap Identification";
+            calculatorData.val_3 = document.getElementById('mgseIsDeficit').innerText.trim() === 'true' ? "Shortfall Deficit ⚠️" : "Fully Funded ✅";
             calculatorData.advisor_fix = document.getElementById('mgseFinnomyFixText').innerText;
         } else if (calcType === 'loan') {
             calculatorData.calculator_name = "Loan Prepayment Strategy ⚡";
@@ -4201,28 +4223,41 @@ window.sendDashboardReport = function (calcType) {
             calculatorData.advisor_fix = "Prepaying ₹" + fmt(document.getElementById('loanInputExtraEmi').value || "0") + " " + document.getElementById('loanExtraEmiFreq').value + " saves you significant interest.";
         } else if (calcType === 'fhs') {
             calculatorData.calculator_name = "Financial Health Score 🏥";
-            calculatorData.label_1 = "Health Evaluated";
-            calculatorData.val_1 = "Complete";
+            calculatorData.label_1 = "Total Income Tracked";
+            calculatorData.val_1 = "₹" + fmt(document.getElementById('fhsIncomeAmount').value);
             calculatorData.label_2 = "FinNomy Score";
             calculatorData.val_2 = document.getElementById('fhsScoreDisplay').innerText + " / 100";
             calculatorData.label_3 = "Health Status";
             calculatorData.val_3 = document.getElementById('fhsStatusBadge').innerText;
-            calculatorData.advisor_fix = "Review your 11-pillar action plan on the website to improve your score.";
+            calculatorData.advisor_fix = "Review your highly prioritized 11-pillar action plan on the website to improve your score from " + document.getElementById('fhsStatusBadge').innerText + " to Excellent.";
         } else if (calcType === 'cfm') {
             calculatorData.calculator_name = "Financial Mistakes Leak Analysis ⚠️";
-            calculatorData.label_1 = "Lazy Money Leak";
-            calculatorData.val_1 = "Identified";
-            calculatorData.label_2 = "Cost of Delay";
-            calculatorData.val_2 = "Calculated";
-            calculatorData.label_3 = "Action Plan";
-            calculatorData.val_3 = "Ready";
-            calculatorData.advisor_fix = "Stop the leaks and redirect funds to wealth creation.";
-            calculatorData.inputs_summary = "Financial Health Check performed based on dynamic questions.";
+            calculatorData.label_1 = "Lazy Money Leak Identified";
+            const lazyLeak = document.getElementById('cfmResLeak1Val');
+            calculatorData.val_1 = lazyLeak ? lazyLeak.innerText : "Optimized";
+
+            calculatorData.label_2 = "Late Tax Action Leak";
+            const taxLeak = document.getElementById('cfmResLeak2Val');
+            calculatorData.val_2 = taxLeak ? taxLeak.innerText : "Optimized";
+
+            calculatorData.label_3 = "Cost of Delay";
+            const delayLeak = document.getElementById('cfmResLeak3Val');
+            calculatorData.val_3 = delayLeak ? delayLeak.innerText : "Optimized";
+
+            calculatorData.advisor_fix = "Your current wealth destruction leaks are quantified above. Plug these leaks immediately to generate alpha without additional earnings.";
+            calculatorData.inputs_summary = "Financial Mistakes Leak analysis completed via FinNomy Assessment parameters.";
         }
 
         // Generate specific input summaries for the standard calculators
         if (calcType === 'sip') {
-            calculatorData.inputs_summary = `Monthly SIP: ₹${fmt(document.getElementById('inputInvestment').value)} | Tenure: ${document.getElementById('inputYears').value} Yrs | Expected Return: ${document.getElementById('inputRate').value}% p.a.`;
+            const isAdvance = document.getElementById('checkSuperAdvance') && document.getElementById('checkSuperAdvance').checked;
+
+            if (isAdvance) {
+                calculatorData.inputs_summary = `Target Goal: ₹${fmt(document.getElementById('inputGoalAmount').value)} | Expected Return: ${document.getElementById('inputRate').value}% p.a. | Time Period: ${document.getElementById('inputYears').value} Yrs`;
+            } else {
+                calculatorData.inputs_summary = `Monthly SIP: ₹${fmt(document.getElementById('inputInvestment').value)} | Tenure: ${document.getElementById('inputYears').value} Yrs | Expected Return: ${document.getElementById('inputRate').value}% p.a.`;
+            }
+
             if (document.getElementById('checkStepUp') && document.getElementById('checkStepUp').checked) {
                 calculatorData.inputs_summary += ` | Annual Step-Up: ${document.getElementById('inputStepUp').value}%`;
             }
@@ -4230,9 +4265,26 @@ window.sendDashboardReport = function (calcType) {
                 calculatorData.inputs_summary += ` | Inflation Adj: ${document.getElementById('inputInflation').value}%`;
             }
         } else if (calcType === 'swp') {
-            calculatorData.inputs_summary = `Investment: ₹${fmt(document.getElementById('swpInputInvest').value)} | Monthly SWP: ₹${fmt(document.getElementById('swpInputWithdrawal').value)} | Tenure: ${document.getElementById('swpInputYears').value} Yrs | Exp Return: ${document.getElementById('swpInputRate').value}% p.a.`;
-            if (document.getElementById('swpCheckStepUp') && document.getElementById('swpCheckStepUp').checked) {
-                calculatorData.inputs_summary += ` | Annual Step-Up: ${document.getElementById('swpInputStepUp').value}%`;
+            const isAdvance = document.getElementById('swpCheckSuperAdvance') && document.getElementById('swpCheckSuperAdvance').checked;
+
+            if (isAdvance) {
+                calculatorData.inputs_summary = `Target Goal: ₹${fmt(document.getElementById('swpAdvInputGoal').value)} | Horizon: ${document.getElementById('swpAdvInputTime').value} Yrs | Exp Return: ${document.getElementById('swpAdvInputReturn').value}% p.a. | Annual Withdraw: ₹${fmt(document.getElementById('swpAdvInputWithdrawal').value)} | Saved: ₹${fmt(document.getElementById('swpAdvInputSavings').value)}`;
+
+                if (document.getElementById('swpAdvCheckInflation') && document.getElementById('swpAdvCheckInflation').checked) {
+                    calculatorData.inputs_summary += ` | Inflation: ${document.getElementById('swpAdvInputInflation').value}%`;
+                }
+                if (document.getElementById('swpAdvCheckStepUpSip') && document.getElementById('swpAdvCheckStepUpSip').checked) {
+                    calculatorData.inputs_summary += ` | SIP Step-Up: ${document.getElementById('swpAdvInputStepUpSip').value}%`;
+                }
+                if (document.getElementById('swpAdvCheckStepUpSwp') && document.getElementById('swpAdvCheckStepUpSwp').checked) {
+                    calculatorData.inputs_summary += ` | SWP Step-Up: ${document.getElementById('swpAdvInputStepUpSwp').value}%`;
+                }
+
+            } else {
+                calculatorData.inputs_summary = `Investment: ₹${fmt(document.getElementById('swpInputInvest').value)} | Monthly SWP: ₹${fmt(document.getElementById('swpInputWithdrawal').value)} | Tenure: ${document.getElementById('swpInputYears').value} Yrs | Exp Return: ${document.getElementById('swpInputRate').value}% p.a.`;
+                if (document.getElementById('swpCheckStepUp') && document.getElementById('swpCheckStepUp').checked) {
+                    calculatorData.inputs_summary += ` | Annual Step-Up: ${document.getElementById('swpInputStepUp').value}%`;
+                }
             }
         } else if (calcType === 'ret') {
             calculatorData.inputs_summary = `Current Age: ${document.getElementById('retInputCurrentAge').value} | Ret Age: ${document.getElementById('retInputRetirementAge').value} | Life Exp: ${document.getElementById('retInputLifeExpectancy').value} | Monthly Expenses: ₹${fmt(document.getElementById('retInputExpenses').value)}`;
