@@ -4084,12 +4084,12 @@ window.submitCalculatorLead = function (calcType) {
 };
 
 // --- EmailJS Dashboard Report Logic ---
-window.sendDashboardReport = function(calcType) {
+window.sendDashboardReport = function (calcType) {
     const btn = document.getElementById(`btn${calcType.charAt(0).toUpperCase() + calcType.slice(1)}Report`);
     const feedback = document.getElementById(`${calcType}EmailFeedback`);
     const emailInput = document.getElementById(`${calcType}Email`);
     const userEmail = emailInput ? emailInput.value.trim() : "";
-    
+
     if (!userEmail || !userEmail.includes('@')) {
         if (feedback) {
             feedback.style.display = 'block';
@@ -4109,41 +4109,101 @@ window.sendDashboardReport = function(calcType) {
         user_name: userEmail.split('@')[0], // Fallback name
         user_email: userEmail,
         calculator_name: "",
-        total_investment: "0",
-        returns_earned: "0",
-        total_wealth: "0",
+        label_1: "Metric 1", val_1: "0",
+        label_2: "Metric 2", val_2: "0",
+        label_3: "Metric 3", val_3: "0",
+        inputs_summary: "",
         advisor_fix: ""
     };
 
     try {
+        const fmt = (val) => {
+            if (!val) return "0";
+            const numText = String(val).replace(/[^0-9.-]+/g, "");
+            const num = parseFloat(numText);
+            if (isNaN(num)) return String(val).trim();
+            return num.toLocaleString('en-IN');
+        };
+
         if (calcType === 'sip') {
             calculatorData.calculator_name = "Magic of SIP ✨";
-            calculatorData.total_investment = document.getElementById('sipResTotalInvest').innerText.replace(/[₹,]/g, '');
-            calculatorData.returns_earned = document.getElementById('sipResReturnsEarned').innerText.replace(/[₹,]/g, '');
-            calculatorData.total_wealth = document.getElementById('sipResTotalWealth').innerText.replace(/[₹,]/g, '');
+            calculatorData.label_1 = "Total Investment";
+            calculatorData.val_1 = "₹" + fmt(document.getElementById('sipResTotalInvest').innerText);
+            calculatorData.label_2 = "Returns Earned";
+            calculatorData.val_2 = "₹" + fmt(document.getElementById('sipResReturnsEarned').innerText);
+            calculatorData.label_3 = "Total Estimated Wealth";
+            calculatorData.val_3 = "₹" + fmt(document.getElementById('sipResTotalWealth').innerText);
         } else if (calcType === 'swp') {
             calculatorData.calculator_name = "SWP Wisdom 💎";
-            calculatorData.total_investment = document.getElementById('swpResTotalInvest').innerText.replace(/[₹,]/g, '');
-            calculatorData.returns_earned = document.getElementById('swpResReturnsEarned').innerText.replace(/[₹,]/g, '');
-            calculatorData.total_wealth = document.getElementById('swpResFinalBalance').innerText.replace(/[₹,]/g, '');
+            calculatorData.label_1 = "Total Investment";
+            calculatorData.val_1 = "₹" + fmt(document.getElementById('swpResTotalInvest').innerText);
+            calculatorData.label_2 = "Total Withdrawals";
+            calculatorData.val_2 = "₹" + fmt(document.getElementById('swpResReturnsEarned').innerText);
+            calculatorData.label_3 = "Final Balance";
+            calculatorData.val_3 = "₹" + fmt(document.getElementById('swpResFinalBalance').innerText);
         } else if (calcType === 'ret') {
             calculatorData.calculator_name = "Retirement Journey 🚀";
-            calculatorData.total_investment = document.getElementById('retResTotalCorpus').innerText.replace(/[₹,]/g, '');
-            calculatorData.returns_earned = document.getElementById('retResRequiredSIP').innerText.replace(/[₹,]/g, ''); // Using SIP as second stat
-            calculatorData.total_wealth = document.getElementById('retResTotalCorpus').innerText.replace(/[₹,]/g, '');
+            calculatorData.label_1 = "Total Corpus Required";
+            calculatorData.val_1 = "₹" + fmt(document.getElementById('retResTotalCorpus').innerText);
+            calculatorData.label_2 = "Monthly SIP Required";
+            calculatorData.val_2 = "₹" + fmt(document.getElementById('retResRequiredSIP').innerText);
+            calculatorData.label_3 = "Wealth at Retirement";
+            calculatorData.val_3 = "₹" + fmt(document.getElementById('retResTotalCorpus').innerText);
         } else if (calcType === 'mgse') {
             calculatorData.calculator_name = "Multi-Goal Roadmap 🗺️";
-            calculatorData.total_investment = document.getElementById('mgseTotalRequiredSip').innerText.replace(/[₹,]/g, '');
-            calculatorData.returns_earned = document.getElementById('mgseHealthPercentage').innerText;
-            calculatorData.total_wealth = document.getElementById('resSwpAdvFinalCorpus').innerText.replace(/[₹,]/g, '');
+            calculatorData.label_1 = "Total SIP Required";
+            calculatorData.val_1 = "₹" + fmt(document.getElementById('mgseTotalRequiredSip').innerText);
+            calculatorData.label_2 = "Goal Funding Health";
+            calculatorData.val_2 = document.getElementById('mgseHealthPercentage').innerText;
+            calculatorData.label_3 = "Protected SWP Corpus";
+            calculatorData.val_3 = "₹" + fmt(document.getElementById('resSwpAdvFinalCorpus').innerText);
             calculatorData.advisor_fix = document.getElementById('mgseFinnomyFixText').innerText;
+        } else if (calcType === 'loan') {
+            calculatorData.calculator_name = "Loan Prepayment Strategy ⚡";
+            calculatorData.label_1 = "Loan Balance";
+            calculatorData.val_1 = "₹" + fmt(document.getElementById('loanInputBalance').value);
+            calculatorData.label_2 = "Interest Saved";
+            calculatorData.val_2 = "₹" + fmt(document.getElementById('loanResNewInterest').innerText || "0");
+            calculatorData.label_3 = "New Tenure";
+            calculatorData.val_3 = document.getElementById('loanResNewTenureVal').innerText;
+            calculatorData.advisor_fix = "Prepay Extra: ₹" + fmt(document.getElementById('loanInputExtraEmi').value || "0");
+        } else if (calcType === 'fhs') {
+            calculatorData.calculator_name = "Financial Health Score 🏥";
+            calculatorData.label_1 = "Health Evaluated";
+            calculatorData.val_1 = "Complete";
+            calculatorData.label_2 = "FinNomy Score";
+            calculatorData.val_2 = document.getElementById('fhsScoreDisplay').innerText + " / 100";
+            calculatorData.label_3 = "Health Status";
+            calculatorData.val_3 = document.getElementById('fhsStatusBadge').innerText;
+            calculatorData.advisor_fix = "Review your 11-pillar action plan on the website to improve your score.";
+        } else if (calcType === 'cfm') {
+            calculatorData.calculator_name = "Financial Mistakes Leak Analysis ⚠️";
+            calculatorData.label_1 = "Lazy Money Leak";
+            calculatorData.val_1 = "Identified";
+            calculatorData.label_2 = "Cost of Delay";
+            calculatorData.val_2 = "Calculated";
+            calculatorData.label_3 = "Action Plan";
+            calculatorData.val_3 = "Ready";
+            calculatorData.advisor_fix = "Stop the leaks and redirect funds to wealth creation.";
+            calculatorData.inputs_summary = "Financial Health Check performed based on dynamic questions.";
         }
 
-        // Add Indian Comma formatting back for the email display
-        const fmt = (num) => parseFloat(num).toLocaleString('en-IN');
-        calculatorData.total_investment = fmt(calculatorData.total_investment);
-        calculatorData.returns_earned = calculatorData.returns_earned.includes('%') ? calculatorData.returns_earned : fmt(calculatorData.returns_earned);
-        calculatorData.total_wealth = fmt(calculatorData.total_wealth);
+        // Generate specific input summaries for the standard calculators
+        if (calcType === 'sip') {
+            calculatorData.inputs_summary = `Monthly SIP: ₹${fmt(document.getElementById('sipInputInvest').value)} | Tenure: ${document.getElementById('sipInputYears').value} Yrs | Expected Return: ${document.getElementById('sipInputRate').value}% p.a.`;
+            if (document.getElementById('sipToggleStepUp').checked) calculatorData.inputs_summary += ` | Annual Step-Up: ${document.getElementById('sipInputStepUp').value}%`;
+            if (document.getElementById('sipToggleInflation').checked) calculatorData.inputs_summary += ` | Inflation Adj: ${document.getElementById('sipInputInflation').value}%`;
+        } else if (calcType === 'swp') {
+            calculatorData.inputs_summary = `Investment: ₹${fmt(document.getElementById('swpInputInvest').value)} | Monthly SWP: ₹${fmt(document.getElementById('swpInputWithdrawal').value)} | Tenure: ${document.getElementById('swpInputYears').value} Yrs | Exp Return: ${document.getElementById('swpInputRate').value}% p.a.`;
+        } else if (calcType === 'ret') {
+            calculatorData.inputs_summary = `Current Age: ${document.getElementById('retInputCurrentAge').value} | Ret Age: ${document.getElementById('retInputRetirementAge').value} | Life Exp: ${document.getElementById('retInputLifeExpectancy').value} | Monthly Expenses: ₹${fmt(document.getElementById('retInputExpenses').value)}`;
+        } else if (calcType === 'mgse') {
+            calculatorData.inputs_summary = `Goals Set: Custom Profile | Current Monthly SIP: ₹${fmt(document.getElementById('mgseCurrentSip').value)} | Existing Corpus: ₹${fmt(document.getElementById('mgseCurrentCorpus').value)}`;
+        } else if (calcType === 'loan') {
+            calculatorData.inputs_summary = `Loan Balance: ₹${fmt(document.getElementById('loanInputBalance').value)} | Interest Rate: ${document.getElementById('loanInputRate').value}% | Remaining Tenure: ${document.getElementById('loanInputTenure').value} Mo | Extra Prepay: ₹${fmt(document.getElementById('loanInputExtraEmi').value)}`;
+        } else if (calcType === 'fhs') {
+            calculatorData.inputs_summary = "11-Pillar Assessment completed via FinNomy Questionnaire.";
+        }
 
     } catch (e) {
         console.error("Error collecting calculator data:", e);

@@ -3336,6 +3336,20 @@
                         </div>
                     </div>
 
+                    <!-- Email Report Section -->
+                    <div class="sip-email-capture">
+                        <h4>Loan Prepayment Dashboard</h4>
+                        <p>Get your optimized loan payoff report directly in your inbox.</p>
+                        <div class="sip-email-input-group">
+                            <input type="email" id="loanEmail" class="sip-email-input" placeholder="Enter your email">
+                            <button onclick="sendDashboardReport('loan')" id="btnLoanReport" class="btn-send-report">
+                                📩 Send Dashboard
+                            </button>
+                        </div>
+                        <div id="loanEmailFeedback"
+                            style="display:none; margin-top:10px; font-size: 0.85rem; font-weight: 600;"></div>
+                    </div>
+
                     <!-- Super Advance Mode Placeholder -->
                     <div id="loanResSuperAdvance"
                         style="display: none; padding: 40px; text-align: center; background: #f9fafb; border-radius: 20px; border: 2px dashed #e5e7eb; height: 100%; flex-direction: column; justify-content: center; align-items: center;">
@@ -4225,6 +4239,20 @@
                         </div>
                     </div>
 
+                    <!-- Email Report Section -->
+                    <div class="sip-email-capture" style="margin-top: 25px;">
+                        <h4>Financial Health Dashboard</h4>
+                        <p>Get your complete 11-pillar health score and action plan in your inbox.</p>
+                        <div class="sip-email-input-group">
+                            <input type="email" id="fhsEmail" class="sip-email-input" placeholder="Enter your email">
+                            <button onclick="sendDashboardReport('fhs')" id="btnFhsReport" class="btn-send-report">
+                                📩 Send Dashboard
+                            </button>
+                        </div>
+                        <div id="fhsEmailFeedback"
+                            style="display:none; margin-top:10px; font-size: 0.85rem; font-weight: 600;"></div>
+                    </div>
+
                     <!-- Lead Capture Form (Save My Progress) -->
                     <div class="lead-capture-form" id="leadCapture-FHS"
                         style="margin-top: 25px; padding: 20px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; text-align: left; width: 100%;">
@@ -4581,6 +4609,20 @@
                             <p id="cfmTextEmi" style="margin: 0; font-size: 0.95rem; color: #7c2d12; line-height: 1.6;">
                                 ...</p>
                         </div>
+                    </div>
+
+                    <!-- Email Report Section -->
+                    <div class="sip-email-capture" style="margin-top: 25px;">
+                        <h4>Financial Mistakes Dashboard</h4>
+                        <p>Get your complete financial leak analysis sent directly to your inbox.</p>
+                        <div class="sip-email-input-group">
+                            <input type="email" id="cfmEmail" class="sip-email-input" placeholder="Enter your email">
+                            <button onclick="sendDashboardReport('cfm')" id="btnCfmReport" class="btn-send-report">
+                                📩 Send Dashboard
+                            </button>
+                        </div>
+                        <div id="cfmEmailFeedback"
+                            style="display:none; margin-top:10px; font-size: 0.85rem; font-weight: 600;"></div>
                     </div>
 
                     <!-- Lead Capture Form (Save My Progress) -->
