@@ -4230,7 +4230,15 @@ window.sendDashboardReport = function (calcType) {
             calculatorData.val_2 = document.getElementById('fhsScoreDisplay').innerText + " / 100";
             calculatorData.label_3 = "Health Status";
             calculatorData.val_3 = document.getElementById('fhsStatusBadge').innerText;
-            calculatorData.advisor_fix = "Review your highly prioritized 11-pillar action plan on the website to improve your score from " + document.getElementById('fhsStatusBadge').innerText + " to Excellent.";
+
+            // Extract the actual action plan list
+            const actionPlanElement = document.getElementById('fhsActionList');
+            if (actionPlanElement) {
+                // We use innerHTML to preserve the bullet points and bold colors in the email
+                calculatorData.advisor_fix = "<strong>Your Financial Health Action Plan:</strong><br><br>" + actionPlanElement.innerHTML;
+            } else {
+                calculatorData.advisor_fix = "Review your highly prioritized 11-pillar action plan on the website to improve your score from " + document.getElementById('fhsStatusBadge').innerText + " to Excellent.";
+            }
         } else if (calcType === 'cfm') {
             calculatorData.calculator_name = "Financial Mistakes Leak Analysis ⚠️";
             calculatorData.label_1 = "Lazy Money Leak Identified";
