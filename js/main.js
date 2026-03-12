@@ -4168,14 +4168,14 @@ window.sendDashboardReport = function (calcType) {
                 calculatorData.label_2 = "Monthly SIP Required";
                 calculatorData.val_2 = document.getElementById('resMonthlySipVal').innerText;
                 calculatorData.label_3 = "Total Value Generated";
-                calculatorData.val_3 = "₹" + fmt(document.getElementById('sipResTotalWealth').innerText);
+                calculatorData.val_3 = "₹" + fmt(document.getElementById('resTotalValueBottom').innerText);
             } else {
                 calculatorData.label_1 = "Total Investment";
-                calculatorData.val_1 = "₹" + fmt(document.getElementById('sipResTotalInvest').innerText);
+                calculatorData.val_1 = "₹" + fmt(document.getElementById('resInvested').innerText);
                 calculatorData.label_2 = "Returns Earned";
-                calculatorData.val_2 = "₹" + fmt(document.getElementById('sipResReturnsEarned').innerText);
+                calculatorData.val_2 = "₹" + fmt(document.getElementById('resGained').innerText);
                 calculatorData.label_3 = "Total Estimated Wealth";
-                calculatorData.val_3 = "₹" + fmt(document.getElementById('sipResTotalWealth').innerText);
+                calculatorData.val_3 = "₹" + fmt(document.getElementById('resTotalValueBottom').innerText);
             }
         } else if (calcType === 'swp') {
             const isAdvance = document.getElementById('checkSwpSuperAdvance') && document.getElementById('checkSwpSuperAdvance').checked;
