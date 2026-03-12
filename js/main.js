@@ -4143,7 +4143,9 @@ window.sendDashboardReport = function (calcType) {
         label_2: "Metric 2", val_2: "0",
         label_3: "Metric 3", val_3: "0",
         inputs_summary: "",
-        advisor_fix: ""
+        advisor_fix: "",
+        advisor_display: "none",
+        inputs_display: "none"
     };
 
     try {
@@ -4234,6 +4236,10 @@ window.sendDashboardReport = function (calcType) {
         } else if (calcType === 'fhs') {
             calculatorData.inputs_summary = "11-Pillar Assessment completed via FinNomy Questionnaire.";
         }
+
+        // Set display toggles for EmailJS (since it doesn't support complex Handlebars #if)
+        calculatorData.advisor_display = calculatorData.advisor_fix ? "block" : "none";
+        calculatorData.inputs_display = calculatorData.inputs_summary ? "block" : "none";
 
     } catch (e) {
         console.error("Error collecting calculator data:", e);
