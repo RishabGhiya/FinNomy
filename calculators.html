@@ -1689,6 +1689,22 @@
                                 <div class="stat-label">Returns Earned</div>
                                 <div class="stat-val total-blue" id="swpResReturnsEarned">₹0</div>
                             </div>
+
+                            <!-- Email Report Section -->
+                            <div class="sip-email-capture">
+                                <h4>SWP Wisdom Dashboard</h4>
+                                <p>Get your detailed withdrawal & balance report directly in your inbox.</p>
+                                <div class="sip-email-input-group">
+                                    <input type="email" id="swpEmail" class="sip-email-input"
+                                        placeholder="Enter your email">
+                                    <button onclick="sendDashboardReport('swp')" id="btnSwpReport"
+                                        class="btn-send-report">
+                                        📩 Send Dashboard
+                                    </button>
+                                </div>
+                                <div id="swpEmailFeedback"
+                                    style="display:none; margin-top:10px; font-size: 0.85rem; font-weight: 600;"></div>
+                            </div>
                         </div>
                     </div>
 
@@ -1726,6 +1742,22 @@
                                 </div>
                                 <div class="stat-val" id="resSwpAdvFinalCorpus"
                                     style="color: #166534; font-weight: 700;">₹0</div>
+                            </div>
+
+                            <!-- Email Report Section -->
+                            <div class="sip-email-capture">
+                                <h4>FinNomy Multi-Goal Dashboard</h4>
+                                <p>Get your full goal roadmap and prioritization fix in your inbox.</p>
+                                <div class="sip-email-input-group">
+                                    <input type="email" id="mgseEmail" class="sip-email-input"
+                                        placeholder="Enter your email">
+                                    <button onclick="sendDashboardReport('mgse')" id="btnMgseReport"
+                                        class="btn-send-report">
+                                        📩 Send Dashboard
+                                    </button>
+                                </div>
+                                <div id="mgseEmailFeedback"
+                                    style="display:none; margin-top:10px; font-size: 0.85rem; font-weight: 600;"></div>
                             </div>
                         </div>
 
@@ -2399,6 +2431,70 @@
         .total-row {
             align-items: flex-end;
             margin-top: 10px;
+        }
+
+        /* Email Report UI */
+        .sip-email-capture {
+            margin-top: 25px;
+            padding: 20px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .sip-email-capture h4 {
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+            color: #1e293b;
+        }
+
+        .sip-email-capture p {
+            margin: 0 0 15px 0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .sip-email-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .sip-email-input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .sip-email-input:focus {
+            border-color: #00B37E;
+            box-shadow: 0 0 0 3px rgba(0, 179, 126, 0.1);
+        }
+
+        .btn-send-report {
+            background: #00B37E;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-send-report:hover {
+            background: #059669;
+        }
+
+        .btn-send-report:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
         }
 
         /* Easter Egg */
@@ -3600,6 +3696,21 @@
                                 Your current expenses of ₹50,000 will inflate to ₹1.8 Lakhs/month in 30 years. You need
                                 a corpus of ₹5.4 Crores to sustain this lifestyle.
                             </p>
+                        </div>
+
+                        <!-- Email Report Section -->
+                        <div class="sip-email-capture">
+                            <h4>Retirement Planner Dashboard</h4>
+                            <p>Get your full retirement corpus projection directly in your inbox.</p>
+                            <div class="sip-email-input-group">
+                                <input type="email" id="retEmail" class="sip-email-input"
+                                    placeholder="Enter your email">
+                                <button onclick="sendDashboardReport('ret')" id="btnRetReport" class="btn-send-report">
+                                    📩 Send Dashboard
+                                </button>
+                            </div>
+                            <div id="retEmailFeedback"
+                                style="display:none; margin-top:10px; font-size: 0.85rem; font-weight: 600;"></div>
                         </div>
                     </div>
 
@@ -4870,6 +4981,13 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        (function () {
+            // Initialize EmailJS with Public Key
+            emailjs.init("7K1hu5g_of5UBHzaG");
+        })();
+    </script>
     <script src="js/main.js"></script>
     <script src="js/mgse.js"></script>
     <script>

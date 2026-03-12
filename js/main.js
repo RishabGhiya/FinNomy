@@ -4082,3 +4082,97 @@ window.submitCalculatorLead = function (calcType) {
             btn.disabled = false;
         });
 };
+
+// --- EmailJS Dashboard Report Logic ---
+window.sendDashboardReport = function(calcType) {
+    const btn = document.getElementById(`btn${calcType.charAt(0).toUpperCase() + calcType.slice(1)}Report`);
+    const feedback = document.getElementById(`${calcType}EmailFeedback`);
+    const emailInput = document.getElementById(`${calcType}Email`);
+    const userEmail = emailInput ? emailInput.value.trim() : "";
+    
+    if (!userEmail || !userEmail.includes('@')) {
+        if (feedback) {
+            feedback.style.display = 'block';
+            feedback.style.color = '#dc2626';
+            feedback.innerText = "Please enter a valid email address.";
+        }
+        return;
+    }
+
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = "⏳ Sending...";
+    if (feedback) feedback.style.display = 'none';
+
+    // Collect data based on calculator type
+    let calculatorData = {
+        user_name: userEmail.split('@')[0], // Fallback name
+        user_email: userEmail,
+        calculator_name: "",
+        total_investment: "0",
+        returns_earned: "0",
+        total_wealth: "0",
+        advisor_fix: ""
+    };
+
+    try {
+        if (calcType === 'sip') {
+            calculatorData.calculator_name = "Magic of SIP ✨";
+            calculatorData.total_investment = document.getElementById('sipResTotalInvest').innerText.replace(/[₹,]/g, '');
+            calculatorData.returns_earned = document.getElementById('sipResReturnsEarned').innerText.replace(/[₹,]/g, '');
+            calculatorData.total_wealth = document.getElementById('sipResTotalWealth').innerText.replace(/[₹,]/g, '');
+        } else if (calcType === 'swp') {
+            calculatorData.calculator_name = "SWP Wisdom 💎";
+            calculatorData.total_investment = document.getElementById('swpResTotalInvest').innerText.replace(/[₹,]/g, '');
+            calculatorData.returns_earned = document.getElementById('swpResReturnsEarned').innerText.replace(/[₹,]/g, '');
+            calculatorData.total_wealth = document.getElementById('swpResFinalBalance').innerText.replace(/[₹,]/g, '');
+        } else if (calcType === 'ret') {
+            calculatorData.calculator_name = "Retirement Journey 🚀";
+            calculatorData.total_investment = document.getElementById('retResTotalCorpus').innerText.replace(/[₹,]/g, '');
+            calculatorData.returns_earned = document.getElementById('retResRequiredSIP').innerText.replace(/[₹,]/g, ''); // Using SIP as second stat
+            calculatorData.total_wealth = document.getElementById('retResTotalCorpus').innerText.replace(/[₹,]/g, '');
+        } else if (calcType === 'mgse') {
+            calculatorData.calculator_name = "Multi-Goal Roadmap 🗺️";
+            calculatorData.total_investment = document.getElementById('mgseTotalRequiredSip').innerText.replace(/[₹,]/g, '');
+            calculatorData.returns_earned = document.getElementById('mgseHealthPercentage').innerText;
+            calculatorData.total_wealth = document.getElementById('resSwpAdvFinalCorpus').innerText.replace(/[₹,]/g, '');
+            calculatorData.advisor_fix = document.getElementById('mgseFinnomyFixText').innerText;
+        }
+
+        // Add Indian Comma formatting back for the email display
+        const fmt = (num) => parseFloat(num).toLocaleString('en-IN');
+        calculatorData.total_investment = fmt(calculatorData.total_investment);
+        calculatorData.returns_earned = calculatorData.returns_earned.includes('%') ? calculatorData.returns_earned : fmt(calculatorData.returns_earned);
+        calculatorData.total_wealth = fmt(calculatorData.total_wealth);
+
+    } catch (e) {
+        console.error("Error collecting calculator data:", e);
+    }
+
+    emailjs.send("service_finnomy", "template_finnomy", calculatorData)
+        .then(() => {
+            btn.innerHTML = "✅ Sent!";
+            if (feedback) {
+                feedback.style.display = 'block';
+                feedback.style.color = '#059669';
+                feedback.innerText = "Dashboard sent successfully!";
+            }
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 5000);
+        })
+        .catch((error) => {
+            console.error("EmailJS Error:", error);
+            btn.innerHTML = "❌ Failed";
+            if (feedback) {
+                feedback.style.display = 'block';
+                feedback.style.color = '#dc2626';
+                feedback.innerText = "Error sending report. Please try again.";
+            }
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 3000);
+        });
+};
