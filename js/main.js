@@ -4093,15 +4093,37 @@ window.sendDashboardReport = function (calcType) {
     const emailInput = document.getElementById(`lcEmail-${ucType}`);
     const phoneInput = document.getElementById(`lcPhone-${ucType}`);
 
+    // Helper function to show/hide error spans directly next to inputs
+    const toggleError = (inputEl, isInvalid) => {
+        if (!inputEl) return;
+        const errSpan = inputEl.nextElementSibling;
+        if (isInvalid) {
+            inputEl.style.borderColor = '#dc2626';
+            if (errSpan && errSpan.classList.contains('lc-error')) errSpan.style.display = 'block';
+        } else {
+            inputEl.style.borderColor = '#e2e8f0';
+            if (errSpan && errSpan.classList.contains('lc-error')) errSpan.style.display = 'none';
+        }
+    };
+
     const userName = nameInput ? nameInput.value.trim() : "";
     const userEmail = emailInput ? emailInput.value.trim() : "";
     const userPhone = phoneInput ? phoneInput.value.trim() : "";
 
-    if (!userName || !userEmail || !userEmail.includes('@') || (phoneInput && userPhone.length < 10)) {
+    let hasError = false;
+
+    // Validate Name
+    if (!userName) { hasError = true; toggleError(nameInput, true); } else { toggleError(nameInput, false); }
+    // Validate Email
+    if (!userEmail || !userEmail.includes('@')) { hasError = true; toggleError(emailInput, true); } else { toggleError(emailInput, false); }
+    // Validate Phone (optional on some forms, but if present must be 10 digits)
+    if (phoneInput && userPhone.length < 10) { hasError = true; toggleError(phoneInput, true); } else { toggleError(phoneInput, false); }
+
+    if (hasError) {
         if (feedback) {
             feedback.style.display = 'block';
             feedback.style.color = '#dc2626';
-            feedback.innerText = "Please fill all fields correctly.";
+            feedback.innerText = "Please fill all required fields correctly.";
         }
         return;
     }
