@@ -4085,16 +4085,23 @@ window.submitCalculatorLead = function (calcType) {
 
 // --- EmailJS Dashboard Report Logic ---
 window.sendDashboardReport = function (calcType) {
-    const btn = document.getElementById(`btn${calcType.charAt(0).toUpperCase() + calcType.slice(1)}Report`);
-    const feedback = document.getElementById(`${calcType}EmailFeedback`);
-    const emailInput = document.getElementById(`${calcType}Email`);
-    const userEmail = emailInput ? emailInput.value.trim() : "";
+    const ucType = calcType.toUpperCase();
+    const btn = document.getElementById(`lcBtn-${ucType}`);
+    const feedback = document.getElementById(`lcSuccess-${ucType}`);
 
-    if (!userEmail || !userEmail.includes('@')) {
+    const nameInput = document.getElementById(`lcName-${ucType}`);
+    const emailInput = document.getElementById(`lcEmail-${ucType}`);
+    const phoneInput = document.getElementById(`lcPhone-${ucType}`);
+
+    const userName = nameInput ? nameInput.value.trim() : "";
+    const userEmail = emailInput ? emailInput.value.trim() : "";
+    const userPhone = phoneInput ? phoneInput.value.trim() : "";
+
+    if (!userName || !userEmail || !userEmail.includes('@') || (phoneInput && userPhone.length < 10)) {
         if (feedback) {
             feedback.style.display = 'block';
             feedback.style.color = '#dc2626';
-            feedback.innerText = "Please enter a valid email address.";
+            feedback.innerText = "Please fill all fields correctly.";
         }
         return;
     }
@@ -4106,8 +4113,9 @@ window.sendDashboardReport = function (calcType) {
 
     // Collect data based on calculator type
     let calculatorData = {
-        user_name: userEmail.split('@')[0], // Fallback name
+        user_name: userName || userEmail.split('@')[0], // Fallback name
         user_email: userEmail,
+        user_phone: userPhone,
         calculator_name: "",
         label_1: "Metric 1", val_1: "0",
         label_2: "Metric 2", val_2: "0",
