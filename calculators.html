@@ -1131,6 +1131,22 @@
                                 <div class="stat-label" id="lblTotal">Expected Total Value</div>
                                 <div class="stat-val total-blue" id="resTotalValueBottom">₹0</div>
                             </div>
+
+                            <!-- Email Report Section -->
+                            <div class="sip-email-capture">
+                                <h4>Magic of SIP Dashboard</h4>
+                                <p>Get your detailed SIP wealth report directly in your inbox.</p>
+                                <div class="sip-email-input-group">
+                                    <input type="email" id="sipEmail" class="sip-email-input"
+                                        placeholder="Enter your email">
+                                    <button onclick="sendDashboardReport('sip')" id="btnSipReport"
+                                        class="btn-send-report">
+                                        📩 Send Dashboard
+                                    </button>
+                                </div>
+                                <div id="sipEmailFeedback"
+                                    style="display:none; margin-top:10px; font-size: 0.85rem; font-weight: 600;"></div>
+                            </div>
                         </div>
 
                         <!-- Goal vs Reality Specific Results (Reality Check) -->
