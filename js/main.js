@@ -4183,15 +4183,18 @@ window.sendDashboardReport = function (calcTypeRaw) {
 
         if (calcType === 'sip') {
             const isAdvance = document.getElementById('checkSuperAdvance') && document.getElementById('checkSuperAdvance').checked;
+            const isGoalReality = document.getElementById('sipCheckGoalReality') && document.getElementById('sipCheckGoalReality').checked;
+
             calculatorData.calculator_name = isAdvance ? "SIP Target Goal Planner ✨" : "Magic of SIP ✨";
 
+            // Standard Metrics for Top Slots
             if (isAdvance) {
-                calculatorData.label_1 = "Target Goal Amount";
-                calculatorData.val_1 = "₹" + fmt(safeVal('inputGoalAmount'));
-                calculatorData.label_2 = "Monthly SIP Required";
-                calculatorData.val_2 = safeGet('resMonthlySipVal');
-                calculatorData.label_3 = "Total Value Generated";
-                calculatorData.val_3 = "₹" + fmt(safeGet('resTotalValueBottom'));
+                calculatorData.label_1 = "Extra SIP Needed";
+                calculatorData.val_1 = "₹" + fmt(safeGet('resExtraSipNeeded') || safeGet('resMonthlySipVal'));
+                calculatorData.label_2 = "Shortfall (Gap)";
+                calculatorData.val_2 = "₹" + fmt(safeGet('resShortfall'));
+                calculatorData.label_3 = "Projected Corpus";
+                calculatorData.val_3 = "₹" + fmt(safeGet('resProjectedCorpus'));
             } else {
                 calculatorData.label_1 = "Total Investment";
                 calculatorData.val_1 = "₹" + fmt(safeGet('resInvested'));
@@ -4200,17 +4203,62 @@ window.sendDashboardReport = function (calcTypeRaw) {
                 calculatorData.label_3 = "Total Estimated Wealth";
                 calculatorData.val_3 = "₹" + fmt(safeGet('resTotalValueBottom'));
             }
+
+            // Comprehensive Results for Advisor Section (as requested)
+            let fullResults = "<strong>Dashboard Summary:</strong><br>";
+            fullResults += `<strong>Amount Invested:</strong> ₹${fmt(safeGet('resInvested'))}<br>`;
+            fullResults += `<strong>Estimated Returns:</strong> ₹${fmt(safeGet('resGained'))}<br>`;
+            if (document.getElementById('checkInflation') && document.getElementById('checkInflation').checked) {
+                fullResults += `<strong>Inflation Adjusted Value:</strong> ₹${fmt(safeGet('resInflationVal'))}<br>`;
+            }
+            fullResults += `<strong>Future Target Value:</strong> ₹${fmt(safeGet('resTotalValueBottom'))}<br>`;
+
+            if (isAdvance) {
+                fullResults += `<strong>Extra SIP Needed Today:</strong> ₹${fmt(safeGet('resExtraSipNeeded'))}<br>`;
+                fullResults += `<strong>Projected Corpus:</strong> ₹${fmt(safeGet('resProjectedCorpus'))}<br>`;
+                fullResults += `<strong>Target Goal (Future Value):</strong> ₹${fmt(safeGet('resTargetGoal'))}<br>`;
+                fullResults += `<strong>Shortfall (Gap):</strong> ₹${fmt(safeGet('resShortfall'))}<br>`;
+            }
+            calculatorData.advisor_fix = fullResults;
+
+            // Generate SIP Input Summary (Request #2)
+            let inputs = [];
+            if (isAdvance) {
+                inputs.push(`Target Goal: ₹${fmt(safeVal('inputGoalAmount'))}`);
+                inputs.push(`Tenure: ${safeVal('inputYears')} Yrs`);
+                inputs.push(`Return: ${safeVal('inputRate')}%`);
+                if (isGoalReality) {
+                    inputs.push(`Existing SIP: ₹${fmt(safeVal('inputInvestment'))}`);
+                    inputs.push(`Current PF Value: ₹${fmt(safeVal('inputCurrentPortfolio'))}`);
+                }
+            } else {
+                inputs.push(`Monthly SIP: ₹${fmt(safeVal('inputInvestment'))}`);
+                inputs.push(`Tenure: ${safeVal('inputYears')} Yrs`);
+                inputs.push(`Return: ${safeVal('inputRate')}%`);
+            }
+            if (document.getElementById('checkStepUp') && document.getElementById('checkStepUp').checked) inputs.push(`Step-Up: ${safeVal('inputStepUp')}%`);
+            if (document.getElementById('checkInflation') && document.getElementById('checkInflation').checked) inputs.push(`Inflation: ${safeVal('inputInflation')}%`);
+
+            calculatorData.inputs_summary = inputs.join(" | ");
+
         } else if (calcType === 'swp') {
             const isAdvance = document.getElementById('checkSwpSuperAdvance') && document.getElementById('checkSwpSuperAdvance').checked;
             calculatorData.calculator_name = isAdvance ? "Advanced SWP & Goal Seek 💎" : "SWP Wisdom 💎";
 
             if (isAdvance) {
-                calculatorData.label_1 = "Target Goal Amount";
-                calculatorData.val_1 = "₹" + fmt(safeVal('swpAdvInputGoal'));
-                calculatorData.label_2 = "Monthly SIP Needed";
-                calculatorData.val_2 = "₹" + fmt(safeGet('resSwpAdvRequiredSip'));
-                calculatorData.label_3 = "Protected SWP Corpus";
+                calculatorData.label_1 = "Monthly SIP Needed";
+                calculatorData.val_1 = "₹" + fmt(safeGet('resSwpAdvRequiredSip'));
+                calculatorData.label_2 = "Protected SWP Corpus";
+                calculatorData.val_2 = "₹" + fmt(safeGet('resSwpAdvFinalCorpus'));
+                calculatorData.label_3 = "Total Value Generated";
                 calculatorData.val_3 = "₹" + fmt(safeGet('resSwpAdvFinalCorpus'));
+
+                let res = "<strong>SWP Strategy Overview:</strong><br>";
+                res += `Required Monthly SIP: ₹${fmt(safeGet('resSwpAdvRequiredSip'))}<br>`;
+                res += `Total Amount Invested: ₹${fmt(safeGet('resSwpAdvTotalInvested'))}<br>`;
+                res += `Total Amount Withdrawn: ₹${fmt(safeGet('resSwpAdvTotalWithdrawn'))}<br>`;
+                res += `Final Corpus Value: ₹${fmt(safeGet('resSwpAdvFinalCorpus'))}<br>`;
+                calculatorData.advisor_fix = res;
             } else {
                 calculatorData.label_1 = "Total Withdrawals";
                 calculatorData.val_1 = "₹" + fmt(safeGet('swpResTotalWithdrawal'));
@@ -4218,88 +4266,104 @@ window.sendDashboardReport = function (calcTypeRaw) {
                 calculatorData.val_2 = "₹" + fmt(safeGet('swpResReturnsEarned'));
                 calculatorData.label_3 = "Final Balance";
                 calculatorData.val_3 = "₹" + fmt(safeGet('swpResFinalBalanceBottom'));
+
+                let res = "<strong>SWP Metrics:</strong><br>";
+                res += `Total Withdrawal: ₹${fmt(safeGet('swpResTotalWithdrawal'))}<br>`;
+                res += `Returns Earned: ₹${fmt(safeGet('swpResReturnsEarned'))}<br>`;
+                if (document.getElementById('checkSwpInflation') && document.getElementById('checkSwpInflation').checked) {
+                    res += `Inflation Adjustment: ₹${fmt(safeGet('swpResInflationImpact'))}<br>`;
+                }
+                res += `Final Balance: ₹${fmt(safeGet('swpResFinalBalanceBottom'))}<br>`;
+                calculatorData.advisor_fix = res;
             }
+
+            let swpInp = [];
+            if (isAdvance) {
+                swpInp.push(`Target Goal: ₹${fmt(safeVal('swpAdvInputGoal'))}`);
+                swpInp.push(`Horizon: ${safeVal('swpAdvInputTime')} Yrs`);
+                swpInp.push(`Return: ${safeVal('swpAdvInputReturn')}%`);
+                swpInp.push(`Annual Withdraw: ₹${fmt(safeVal('swpAdvInputWithdrawal'))}`);
+            } else {
+                swpInp.push(`Initial: ₹${fmt(safeVal('swpInputInvestment'))}`);
+                swpInp.push(`Monthly SWP: ₹${fmt(safeVal('swpInputWithdrawal'))}`);
+                swpInp.push(`Years: ${safeVal('swpInputYears')}`);
+                swpInp.push(`Return: ${safeVal('swpInputRate')}%`);
+            }
+            calculatorData.inputs_summary = swpInp.join(" | ");
         } else if (calcType === 'ret') {
             calculatorData.calculator_name = "Retirement Journey 🚀";
             calculatorData.label_1 = "Total Corpus Required";
             calculatorData.val_1 = "₹" + fmt(safeGet('retResTotalCorpus'));
             calculatorData.label_2 = "Monthly SIP Required";
             calculatorData.val_2 = "₹" + fmt(safeGet('retResRequiredSIP'));
-            calculatorData.label_3 = "Wealth at Retirement";
-            calculatorData.val_3 = "₹" + fmt(safeGet('retResTotalCorpus'));
+            calculatorData.label_3 = "Future Monthly Expense";
+            calculatorData.val_3 = "₹" + fmt(safeGet('retResFutureExp'));
+
+            let res = "<strong>Retirement Assessment:</strong><br>";
+            res += `Required Corpus: ₹${fmt(safeGet('retResTotalCorpus'))}<br>`;
+            res += `Future Monthly Expense (Inflated): ₹${fmt(safeGet('retResFutureExp'))}<br>`;
+            res += `Projected Savings (FV): ₹${fmt(safeGet('retResProjSavings'))}<br>`;
+            res += `Required Monthly SIP: ₹${fmt(safeGet('retResRequiredSIP'))}<br><br>`;
+            res += `<em>${safeGet('retGoalAnalysis')}</em>`;
+            calculatorData.advisor_fix = res;
+
+            calculatorData.inputs_summary = `Age: ${safeVal('retInputAge')} | Ret Age: ${safeVal('retInputRetireAge')} | Monthly Exp: ₹${fmt(safeVal('retInputExpenses'))} | Savings: ₹${fmt(safeVal('retInputSavings'))} | ROI: ${safeVal('retInputPreROI')}%`;
+
         } else if (calcType === 'mgse') {
             calculatorData.calculator_name = "Multi-Goal Roadmap 🗺️";
-            calculatorData.label_1 = "Total SIP Required";
+            calculatorData.label_1 = "Total Monthly SIP";
             calculatorData.val_1 = "₹" + fmt(safeGet('mgseTotalRequiredSip'));
-            calculatorData.label_2 = "Goal Funding Health";
+            calculatorData.label_2 = "Funding Health";
             calculatorData.val_2 = safeGet('mgseHealthPercentage');
-            calculatorData.label_3 = "Gap Identification";
+            calculatorData.label_3 = "Status";
             calculatorData.val_3 = safeGet('mgseIsDeficit').trim() === 'true' ? "Shortfall Deficit ⚠️" : "Fully Funded ✅";
-            calculatorData.advisor_fix = safeGet('mgseFinnomyFixText');
+
+            let res = "<strong>Goal Funding Analysis:</strong><br>";
+            res += `Total Monthly SIP Needed: ₹${fmt(safeGet('mgseTotalRequiredSip'))}<br>`;
+            res += `Health Score: ${safeGet('mgseHealthPercentage')}<br><br>`;
+            res += safeGet('mgseFinnomyFixText');
+            calculatorData.advisor_fix = res;
+            calculatorData.inputs_summary = `Income: ₹${fmt(safeVal('mgseIncome'))} | Expense: ₹${fmt(safeVal('mgseExpenses'))} | ROI: ${safeVal('mgseReturns')}%`;
+
         } else if (calcType === 'loan') {
             calculatorData.calculator_name = "Loan Prepayment Strategy ⚡";
-            calculatorData.label_1 = "Loan Balance";
-            calculatorData.val_1 = "₹" + fmt(safeVal('loanInputBalance'));
-            calculatorData.label_2 = "Interest Saved";
-            calculatorData.val_2 = "₹" + fmt(safeGet('loanResInterestSaved') || "0");
-            calculatorData.label_3 = "New Tenure";
-            calculatorData.val_3 = safeGet('loanResNewTenureVal');
-            calculatorData.advisor_fix = "Prepaying ₹" + fmt(safeVal('loanInputExtraEmi') || "0") + " " + safeVal('loanExtraEmiFreq') + " saves you significant interest.";
+            calculatorData.label_1 = "Interest Saved";
+            calculatorData.val_1 = "₹" + fmt(safeGet('loanResInterestSaved') || "0");
+            calculatorData.label_2 = "New Tenure";
+            calculatorData.val_2 = safeGet('loanResNewTenureVal');
+            calculatorData.label_3 = "Current Balance";
+            calculatorData.val_3 = "₹" + fmt(safeVal('loanInputBalance'));
+
+            calculatorData.advisor_fix = `<strong>Benefit Summary:</strong><br>By prepaying ₹${fmt(safeVal('loanInputExtraEmi'))} every ${safeVal('loanExtraEmiFreq')}, you save ₹${fmt(safeGet('loanResInterestSaved'))} in interest and finish your loan in ${safeGet('loanResNewTenureVal')}.`;
+            calculatorData.inputs_summary = `Balance: ₹${fmt(safeVal('loanInputBalance'))} | ROI: ${safeVal('loanInputRate')}% | Tenure: ${safeVal('loanInputTenure')} Mo`;
+
         } else if (calcType === 'fhs') {
             calculatorData.calculator_name = "Financial Health Score 🏥";
-            calculatorData.label_1 = "Total Income Tracked";
-            calculatorData.val_1 = "₹" + fmt(safeVal('fhsInputIncome'));
-            calculatorData.label_2 = "FinNomy Score";
-            calculatorData.val_2 = safeGet('fhsScoreDisplay') + " / 100";
-            calculatorData.label_3 = "Health Status";
-            calculatorData.val_3 = safeGet('fhsStatusBadge');
+            calculatorData.label_1 = "FinNomy Score";
+            calculatorData.val_1 = safeGet('fhsScoreDisplay') + " / 100";
+            calculatorData.label_2 = "Health Status";
+            calculatorData.val_2 = safeGet('fhsStatusBadge');
+            calculatorData.label_3 = "Assessment Mode";
+            calculatorData.val_3 = "Full 11-Pillar Audit";
 
             const actionPlanElement = document.getElementById('fhsActionList');
             if (actionPlanElement) {
-                calculatorData.advisor_fix = "<strong>Your Financial Health Action Plan:</strong><br><br>" + actionPlanElement.innerHTML;
-            } else {
-                calculatorData.advisor_fix = "Review your highly prioritized 11-pillar action plan on the website to improve your score from " + safeGet('fhsStatusBadge') + " to Excellent.";
+                calculatorData.advisor_fix = "<strong>Action Plan:</strong><br><br>" + actionPlanElement.innerHTML;
             }
+            calculatorData.inputs_summary = "Financial Health Audit completed.";
         } else if (calcType === 'cfm') {
-            calculatorData.calculator_name = "Financial Mistakes Leak Analysis ⚠️";
-            calculatorData.label_1 = "Lazy Money Leak Identified";
-            calculatorData.val_1 = safeGet('cfmResLeak1Val') || "Optimized";
-            calculatorData.label_2 = "Late Tax Action Leak";
-            calculatorData.val_2 = safeGet('cfmResLeak2Val') || "Optimized";
-            calculatorData.label_3 = "Cost of Delay";
-            calculatorData.val_3 = safeGet('cfmResLeak3Val') || "Optimized";
-            calculatorData.advisor_fix = "Your current wealth destruction leaks are quantified above. Plug these leaks immediately to generate alpha without additional earnings.";
-            calculatorData.inputs_summary = "Financial Mistakes Leak analysis completed via FinNomy Assessment parameters.";
+            calculatorData.calculator_name = "Mistakes Analysis ⚠️";
+            calculatorData.label_1 = "Lazy Money Leak";
+            calculatorData.val_1 = safeGet('cfmResLeak1Val') || "N/A";
+            calculatorData.label_2 = "Tax Delay Leak";
+            calculatorData.val_2 = safeGet('cfmResLeak2Val') || "N/A";
+            calculatorData.label_3 = "Wealth Delay Cost";
+            calculatorData.val_3 = safeGet('cfmResLeak3Val') || "N/A";
+            calculatorData.advisor_fix = "Plug these leaks immediately to accelerate wealth creation.";
+            calculatorData.inputs_summary = "Leak analysis based on personal assessments.";
         }
 
-        // Generate input summaries
-        if (calcType === 'sip') {
-            const isAdvance = document.getElementById('checkSuperAdvance') && document.getElementById('checkSuperAdvance').checked;
-            if (isAdvance) {
-                calculatorData.inputs_summary = `Target Goal: ₹${fmt(safeVal('inputGoalAmount'))} | Expected Return: ${safeVal('inputRate')}% | Time: ${safeVal('inputYears')} Yrs`;
-            } else {
-                calculatorData.inputs_summary = `Monthly SIP: ₹${fmt(safeVal('inputInvestment'))} | Tenure: ${safeVal('inputYears')} Yrs | Return: ${safeVal('inputRate')}%`;
-            }
-            if (document.getElementById('checkStepUp') && document.getElementById('checkStepUp').checked) {
-                calculatorData.inputs_summary += ` | Step-Up: ${safeVal('inputStepUp')}%`;
-            }
-        } else if (calcType === 'swp') {
-            const isAdvance = document.getElementById('checkSwpSuperAdvance') && document.getElementById('checkSwpSuperAdvance').checked;
-            if (isAdvance) {
-                calculatorData.inputs_summary = `Target Goal: ₹${fmt(safeVal('swpAdvInputGoal'))} | Horizon: ${safeVal('swpAdvInputTime')} Yrs | Return: ${safeVal('swpAdvInputReturn')}% | Annual Withdraw: ₹${fmt(safeVal('swpAdvInputWithdrawal'))}`;
-            } else {
-                calculatorData.inputs_summary = `Investment: ₹${fmt(safeVal('swpInputInvestment'))} | Monthly SWP: ₹${fmt(safeVal('swpInputWithdrawal'))} | Tenure: ${safeVal('swpInputYears')} Yrs | Return: ${safeVal('swpInputRate')}%`;
-            }
-        } else if (calcType === 'ret') {
-            calculatorData.inputs_summary = `Age: ${safeVal('retInputAge')} | Ret Age: ${safeVal('retInputRetireAge')} | Life: ${safeVal('retInputLife')} | Expenses: ₹${fmt(safeVal('retInputExpenses'))}`;
-        } else if (calcType === 'mgse') {
-            calculatorData.inputs_summary = `Income: ₹${fmt(safeVal('mgseIncome'))} | Expenses: ₹${fmt(safeVal('mgseExpenses'))} | Returns: ${safeVal('mgseReturns')}% | Inflation: ${safeVal('mgseInflation')}%`;
-        } else if (calcType === 'loan') {
-            calculatorData.inputs_summary = `Balance: ₹${fmt(safeVal('loanInputBalance'))} | Rate: ${safeVal('loanInputRate')}% | Tenure: ${safeVal('loanInputTenure')} Mo | Extra: ₹${fmt(safeVal('loanInputExtraEmi'))}`;
-        } else if (calcType === 'fhs') {
-            calculatorData.inputs_summary = "11-Pillar Assessment completed via FinNomy Questionnaire.";
-        }
-
+        // Result visibility
         calculatorData.advisor_display = calculatorData.advisor_fix ? "block" : "none";
         calculatorData.inputs_display = calculatorData.inputs_summary ? "block" : "none";
 
@@ -4334,3 +4398,4 @@ window.sendDashboardReport = function (calcTypeRaw) {
             }, 3000);
         });
 };
+
