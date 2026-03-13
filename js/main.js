@@ -4084,10 +4084,13 @@ window.submitCalculatorLead = function (calcType) {
 };
 
 // --- EmailJS Dashboard Report Logic ---
-window.sendDashboardReport = function (calcType) {
+window.sendDashboardReport = function (calcTypeRaw) {
+    let calcType = String(calcTypeRaw).toLowerCase();
+    if (calcType === 'retirement') calcType = 'ret';
+
     const ucType = calcType.toUpperCase();
-    const btn = document.getElementById(`lcBtn-${ucType}`);
-    const feedback = document.getElementById(`lcSuccess-${ucType}`);
+    const btn = document.getElementById(`lcBtn-${ucType === 'RET' ? 'RETIREMENT' : ucType}`);
+    const feedback = document.getElementById(`lcSuccess-${ucType === 'RET' ? 'RETIREMENT' : ucType}`);
 
     const nameInput = document.getElementById(`lcName-${ucType}`);
     const emailInput = document.getElementById(`lcEmail-${ucType}`);
@@ -4225,7 +4228,7 @@ window.sendDashboardReport = function (calcType) {
         } else if (calcType === 'fhs') {
             calculatorData.calculator_name = "Financial Health Score 🏥";
             calculatorData.label_1 = "Total Income Tracked";
-            calculatorData.val_1 = "₹" + fmt(document.getElementById('fhsIncomeAmount').value);
+            calculatorData.val_1 = "₹" + fmt(document.getElementById('fhsInputIncome').value);
             calculatorData.label_2 = "FinNomy Score";
             calculatorData.val_2 = document.getElementById('fhsScoreDisplay').innerText + " / 100";
             calculatorData.label_3 = "Health Status";
@@ -4290,13 +4293,13 @@ window.sendDashboardReport = function (calcType) {
                 }
 
             } else {
-                calculatorData.inputs_summary = `Investment: ₹${fmt(document.getElementById('swpInputInvest').value)} | Monthly SWP: ₹${fmt(document.getElementById('swpInputWithdrawal').value)} | Tenure: ${document.getElementById('swpInputYears').value} Yrs | Exp Return: ${document.getElementById('swpInputRate').value}% p.a.`;
+                calculatorData.inputs_summary = `Investment: ₹${fmt(document.getElementById('swpInputInvestment').value)} | Monthly SWP: ₹${fmt(document.getElementById('swpInputWithdrawal').value)} | Tenure: ${document.getElementById('swpInputYears').value} Yrs | Exp Return: ${document.getElementById('swpInputRate').value}% p.a.`;
                 if (document.getElementById('swpCheckStepUp') && document.getElementById('swpCheckStepUp').checked) {
                     calculatorData.inputs_summary += ` | Annual Step-Up: ${document.getElementById('swpInputStepUp').value}%`;
                 }
             }
         } else if (calcType === 'ret') {
-            calculatorData.inputs_summary = `Current Age: ${document.getElementById('retInputCurrentAge').value} | Ret Age: ${document.getElementById('retInputRetirementAge').value} | Life Exp: ${document.getElementById('retInputLifeExpectancy').value} | Monthly Expenses: ₹${fmt(document.getElementById('retInputExpenses').value)}`;
+            calculatorData.inputs_summary = `Current Age: ${document.getElementById('retInputAge').value} | Ret Age: ${document.getElementById('retInputRetireAge').value} | Life Exp: ${document.getElementById('retInputLife').value} | Monthly Expenses: ₹${fmt(document.getElementById('retInputExpenses').value)}`;
         } else if (calcType === 'mgse') {
             calculatorData.inputs_summary = `Monthly Income: ₹${fmt(document.getElementById('mgseIncome').value)} | Monthly Expenses: ₹${fmt(document.getElementById('mgseExpenses').value)} | Expected Returns: ${document.getElementById('mgseReturns').value}% | Inflation: ${document.getElementById('mgseInflation').value}% | Annual Step-Up: ${document.getElementById('mgseStepup').value}%`;
         } else if (calcType === 'loan') {
