@@ -4204,21 +4204,26 @@ window.sendDashboardReport = function (calcTypeRaw) {
                 calculatorData.val_3 = "₹" + fmt(safeGet('resTotalValueBottom'));
             }
 
-            // Comprehensive Results for Advisor Section (as requested)
+            // Comprehensive Results for Advisor Section (Request #4)
             let fullResults = "<strong>Dashboard Summary:</strong><br>";
-            fullResults += `<strong>Amount Invested:</strong> ₹${fmt(safeGet('resInvested'))}<br>`;
-            fullResults += `<strong>Estimated Returns:</strong> ₹${fmt(safeGet('resGained'))}<br>`;
-            if (document.getElementById('checkInflation') && document.getElementById('checkInflation').checked) {
-                fullResults += `<strong>Inflation Adjusted Value:</strong> ₹${fmt(safeGet('resInflationVal'))}<br>`;
-            }
-            fullResults += `<strong>Future Target Value:</strong> ₹${fmt(safeGet('resTotalValueBottom'))}<br>`;
-
-            if (isAdvance) {
-                fullResults += `<strong>Extra SIP Needed Today:</strong> ₹${fmt(safeGet('resExtraSipNeeded'))}<br>`;
-                fullResults += `<strong>Projected Corpus:</strong> ₹${fmt(safeGet('resProjectedCorpus'))}<br>`;
+            if (!isAdvance) {
+                if (document.getElementById('checkInflation') && document.getElementById('checkInflation').checked) {
+                    fullResults += `<strong>Inflation Adjusted Value:</strong> ₹${fmt(safeGet('resInflationVal'))}<br>`;
+                }
+            } else {
+                fullResults += `<strong>Amount Invested:</strong> ₹${fmt(safeGet('resInvested'))}<br>`;
+                fullResults += `<strong>Estimated Returns:</strong> ₹${fmt(safeGet('resGained'))}<br>`;
+                if (document.getElementById('checkInflation') && document.getElementById('checkInflation').checked) {
+                    fullResults += `<strong>Inflation Adjusted Value:</strong> ₹${fmt(safeGet('resInflationVal'))}<br>`;
+                }
+                fullResults += `<strong>Future Target Value:</strong> ₹${fmt(safeGet('resTotalValueBottom'))}<br>`;
                 fullResults += `<strong>Target Goal (Future Value):</strong> ₹${fmt(safeGet('resTargetGoal'))}<br>`;
-                fullResults += `<strong>Shortfall (Gap):</strong> ₹${fmt(safeGet('resShortfall'))}<br>`;
             }
+
+            // Append FinNomy Advice if present (Global #4)
+            const sipAdvice = safeGet('sipGoalAnalysis') || safeGet('resSipSummaryText');
+            if (sipAdvice) fullResults += `<br><em>Advice: ${sipAdvice}</em>`;
+
             calculatorData.advisor_fix = fullResults;
 
             // Generate SIP Input Summary (Request #2)
@@ -4250,14 +4255,14 @@ window.sendDashboardReport = function (calcTypeRaw) {
                 calculatorData.val_1 = "₹" + fmt(safeGet('resSwpAdvRequiredSip'));
                 calculatorData.label_2 = "Protected SWP Corpus";
                 calculatorData.val_2 = "₹" + fmt(safeGet('resSwpAdvFinalCorpus'));
-                calculatorData.label_3 = "Total Value Generated";
-                calculatorData.val_3 = "₹" + fmt(safeGet('resSwpAdvFinalCorpus'));
+                calculatorData.label_3 = "Total Amount Withdrawn";
+                calculatorData.val_3 = "₹" + fmt(safeGet('resSwpAdvTotalWithdrawn'));
 
-                let res = "<strong>SWP Strategy Overview:</strong><br>";
-                res += `Required Monthly SIP: ₹${fmt(safeGet('resSwpAdvRequiredSip'))}<br>`;
-                res += `Total Amount Invested: ₹${fmt(safeGet('resSwpAdvTotalInvested'))}<br>`;
-                res += `Total Amount Withdrawn: ₹${fmt(safeGet('resSwpAdvTotalWithdrawn'))}<br>`;
-                res += `Final Corpus Value: ₹${fmt(safeGet('resSwpAdvFinalCorpus'))}<br>`;
+                let res = "<strong>Dashboard Summary:</strong><br>";
+                res += `<strong>Total Amount Invested:</strong> ₹${fmt(safeGet('resSwpAdvTotalInvested'))}<br>`;
+                // Appending advice (Request #4)
+                const swpAdvice = safeGet('resSwpAdvSummaryText');
+                if (swpAdvice) res += `<br><em>Advice: ${swpAdvice}</em>`;
                 calculatorData.advisor_fix = res;
             } else {
                 calculatorData.label_1 = "Total Withdrawals";
@@ -4267,13 +4272,10 @@ window.sendDashboardReport = function (calcTypeRaw) {
                 calculatorData.label_3 = "Final Balance";
                 calculatorData.val_3 = "₹" + fmt(safeGet('swpResFinalBalanceBottom'));
 
-                let res = "<strong>SWP Metrics:</strong><br>";
-                res += `Total Withdrawal: ₹${fmt(safeGet('swpResTotalWithdrawal'))}<br>`;
-                res += `Returns Earned: ₹${fmt(safeGet('swpResReturnsEarned'))}<br>`;
+                let res = "<strong>Dashboard Summary:</strong><br>";
                 if (document.getElementById('checkSwpInflation') && document.getElementById('checkSwpInflation').checked) {
-                    res += `Inflation Adjustment: ₹${fmt(safeGet('swpResInflationImpact'))}<br>`;
+                    res += `<strong>Inflation Adjustment:</strong> ₹${fmt(safeGet('swpResInflationImpact'))}<br>`;
                 }
-                res += `Final Balance: ₹${fmt(safeGet('swpResFinalBalanceBottom'))}<br>`;
                 calculatorData.advisor_fix = res;
             }
 
@@ -4282,12 +4284,22 @@ window.sendDashboardReport = function (calcTypeRaw) {
                 swpInp.push(`Target Goal: ₹${fmt(safeVal('swpAdvInputGoal'))}`);
                 swpInp.push(`Horizon: ${safeVal('swpAdvInputTime')} Yrs`);
                 swpInp.push(`Return: ${safeVal('swpAdvInputReturn')}%`);
-                swpInp.push(`Annual Withdraw: ₹${fmt(safeVal('swpAdvInputWithdrawal'))}`);
+                swpInp.push(`Annual SWP: ₹${fmt(safeVal('swpAdvInputWithdrawal'))}`);
+                swpInp.push(`Existing Savings: ₹${fmt(safeVal('swpAdvInputSavings'))}`);
+                if (document.getElementById('swpAdvCheckInflation') && document.getElementById('swpAdvCheckInflation').checked) {
+                    swpInp.push(`Inflation: ${safeVal('swpAdvInputInflation')}%`);
+                }
+                if (document.getElementById('swpAdvCheckStepUpSip') && document.getElementById('swpAdvCheckStepUpSip').checked) {
+                    swpInp.push(`SIP Step-up: ${safeVal('swpAdvInputStepUpSip')}%`);
+                }
             } else {
                 swpInp.push(`Initial: ₹${fmt(safeVal('swpInputInvestment'))}`);
                 swpInp.push(`Monthly SWP: ₹${fmt(safeVal('swpInputWithdrawal'))}`);
-                swpInp.push(`Years: ${safeVal('swpInputYears')}`);
+                swpInp.push(`Horizon: ${safeVal('swpInputYears')} Yrs`);
                 swpInp.push(`Return: ${safeVal('swpInputRate')}%`);
+                if (document.getElementById('swpCheckInflation') && document.getElementById('swpCheckInflation').checked) {
+                    swpInp.push(`Inflation: ${safeVal('swpInputInflation')}%`);
+                }
             }
             calculatorData.inputs_summary = swpInp.join(" | ");
         } else if (calcType === 'ret') {
@@ -4299,11 +4311,8 @@ window.sendDashboardReport = function (calcTypeRaw) {
             calculatorData.label_3 = "Future Monthly Expense";
             calculatorData.val_3 = "₹" + fmt(safeGet('retResFutureExp'));
 
-            let res = "<strong>Retirement Assessment:</strong><br>";
-            res += `Required Corpus: ₹${fmt(safeGet('retResTotalCorpus'))}<br>`;
-            res += `Future Monthly Expense (Inflated): ₹${fmt(safeGet('retResFutureExp'))}<br>`;
-            res += `Projected Savings (FV): ₹${fmt(safeGet('retResProjSavings'))}<br>`;
-            res += `Required Monthly SIP: ₹${fmt(safeGet('retResRequiredSIP'))}<br><br>`;
+            let res = "<strong>Dashboard Summary:</strong><br>";
+            res += `Projected Savings (FV): ₹${fmt(safeGet('retResProjSavings'))}<br><br>`;
             res += `<em>${safeGet('retGoalAnalysis')}</em>`;
             calculatorData.advisor_fix = res;
 
@@ -4318,9 +4327,7 @@ window.sendDashboardReport = function (calcTypeRaw) {
             calculatorData.label_3 = "Status";
             calculatorData.val_3 = safeGet('mgseIsDeficit').trim() === 'true' ? "Shortfall Deficit ⚠️" : "Fully Funded ✅";
 
-            let res = "<strong>Goal Funding Analysis:</strong><br>";
-            res += `Total Monthly SIP Needed: ₹${fmt(safeGet('mgseTotalRequiredSip'))}<br>`;
-            res += `Health Score: ${safeGet('mgseHealthPercentage')}<br><br>`;
+            let res = "<strong>Dashboard Summary:</strong><br>";
             res += safeGet('mgseFinnomyFixText');
             calculatorData.advisor_fix = res;
             calculatorData.inputs_summary = `Income: ₹${fmt(safeVal('mgseIncome'))} | Expense: ₹${fmt(safeVal('mgseExpenses'))} | ROI: ${safeVal('mgseReturns')}%`;
