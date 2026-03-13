@@ -4089,12 +4089,20 @@ window.sendDashboardReport = function (calcTypeRaw) {
     if (calcType === 'retirement') calcType = 'ret';
 
     const ucType = calcType.toUpperCase();
-    const btn = document.getElementById(`lcBtn-${ucType === 'RET' ? 'RETIREMENT' : ucType}`);
-    const feedback = document.getElementById(`lcSuccess-${ucType === 'RET' ? 'RETIREMENT' : ucType}`);
+    // Special handling for Retirement IDs which are inconsistently named in HTML
+    const idPrefix = (ucType === 'RET') ? 'RETIREMENT' : ucType;
 
-    const nameInput = document.getElementById(`lcName-${ucType}`);
-    const emailInput = document.getElementById(`lcEmail-${ucType}`);
-    const phoneInput = document.getElementById(`lcPhone-${ucType}`);
+    const btn = document.getElementById(`lcBtn-${idPrefix}`);
+    const feedback = document.getElementById(`lcSuccess-${idPrefix}`);
+
+    const nameInput = document.getElementById(`lcName-${idPrefix}`);
+    const emailInput = document.getElementById(`lcEmail-${idPrefix}`);
+    const phoneInput = document.getElementById(`lcPhone-${idPrefix}`);
+
+    if (!btn) {
+        console.error("Critical: Send button not found for", calcType);
+        return;
+    }
 
     // Helper function to show/hide error spans directly next to inputs
     const toggleError = (inputEl, isInvalid) => {
@@ -4120,7 +4128,7 @@ window.sendDashboardReport = function (calcTypeRaw) {
     // Validate Email
     if (!userEmail || !userEmail.includes('@')) { hasError = true; toggleError(emailInput, true); } else { toggleError(emailInput, false); }
     // Validate Phone (optional on some forms, but if present must be 10 digits)
-    if (phoneInput && userPhone.length < 10) { hasError = true; toggleError(phoneInput, true); } else { toggleError(phoneInput, false); }
+    if (phoneInput && userPhone.length > 0 && userPhone.length < 10) { hasError = true; toggleError(phoneInput, true); } else { toggleError(phoneInput, false); }
 
     if (hasError) {
         if (feedback) {
@@ -4138,14 +4146,14 @@ window.sendDashboardReport = function (calcTypeRaw) {
 
     // Collect data based on calculator type
     let calculatorData = {
-        user_name: userName || userEmail.split('@')[0], // Fallback name
+        user_name: userName || userEmail.split('@')[0],
         user_email: userEmail,
         user_phone: userPhone,
         calculator_name: "",
-        website_url: window.location.href, // Captures current URL for the return button
-        label_1: "Metric 1", val_1: "0",
-        label_2: "Metric 2", val_2: "0",
-        label_3: "Metric 3", val_3: "0",
+        website_url: window.location.href,
+        label_1: "", val_1: "0",
+        label_2: "", val_2: "0",
+        label_3: "", val_3: "0",
         inputs_summary: "",
         advisor_fix: "",
         advisor_display: "none",
@@ -4154,11 +4162,23 @@ window.sendDashboardReport = function (calcTypeRaw) {
 
     try {
         const fmt = (val) => {
-            if (!val) return "0";
+            if (val === undefined || val === null || val === "") return "0";
             const numText = String(val).replace(/[^0-9.-]+/g, "");
             const num = parseFloat(numText);
-            if (isNaN(num)) return String(val).trim();
+            if (isNaN(num)) return String(val).trim() || "0";
             return num.toLocaleString('en-IN');
+        };
+
+        const safeGet = (id, prop = 'innerText') => {
+            const el = document.getElementById(id);
+            if (!el) return "";
+            return el[prop] || "";
+        };
+
+        const safeVal = (id) => {
+            const el = document.getElementById(id);
+            if (!el) return "0";
+            return el.value || "0";
         };
 
         if (calcType === 'sip') {
@@ -4167,18 +4187,18 @@ window.sendDashboardReport = function (calcTypeRaw) {
 
             if (isAdvance) {
                 calculatorData.label_1 = "Target Goal Amount";
-                calculatorData.val_1 = "₹" + fmt(document.getElementById('inputGoalAmount').value);
+                calculatorData.val_1 = "₹" + fmt(safeVal('inputGoalAmount'));
                 calculatorData.label_2 = "Monthly SIP Required";
-                calculatorData.val_2 = document.getElementById('resMonthlySipVal').innerText;
+                calculatorData.val_2 = safeGet('resMonthlySipVal');
                 calculatorData.label_3 = "Total Value Generated";
-                calculatorData.val_3 = "₹" + fmt(document.getElementById('resTotalValueBottom').innerText);
+                calculatorData.val_3 = "₹" + fmt(safeGet('resTotalValueBottom'));
             } else {
                 calculatorData.label_1 = "Total Investment";
-                calculatorData.val_1 = "₹" + fmt(document.getElementById('resInvested').innerText);
+                calculatorData.val_1 = "₹" + fmt(safeGet('resInvested'));
                 calculatorData.label_2 = "Returns Earned";
-                calculatorData.val_2 = "₹" + fmt(document.getElementById('resGained').innerText);
+                calculatorData.val_2 = "₹" + fmt(safeGet('resGained'));
                 calculatorData.label_3 = "Total Estimated Wealth";
-                calculatorData.val_3 = "₹" + fmt(document.getElementById('resTotalValueBottom').innerText);
+                calculatorData.val_3 = "₹" + fmt(safeGet('resTotalValueBottom'));
             }
         } else if (calcType === 'swp') {
             const isAdvance = document.getElementById('checkSwpSuperAdvance') && document.getElementById('checkSwpSuperAdvance').checked;
@@ -4186,139 +4206,100 @@ window.sendDashboardReport = function (calcTypeRaw) {
 
             if (isAdvance) {
                 calculatorData.label_1 = "Target Goal Amount";
-                calculatorData.val_1 = "₹" + fmt(document.getElementById('swpAdvInputGoal').value);
+                calculatorData.val_1 = "₹" + fmt(safeVal('swpAdvInputGoal'));
                 calculatorData.label_2 = "Monthly SIP Needed";
-                calculatorData.val_2 = "₹" + fmt(document.getElementById('resSwpAdvRequiredSip').innerText);
+                calculatorData.val_2 = "₹" + fmt(safeGet('resSwpAdvRequiredSip'));
                 calculatorData.label_3 = "Protected SWP Corpus";
-                calculatorData.val_3 = "₹" + fmt(document.getElementById('resSwpAdvFinalCorpus').innerText);
+                calculatorData.val_3 = "₹" + fmt(safeGet('resSwpAdvFinalCorpus'));
             } else {
-                calculatorData.label_1 = "Total Investment";
-                calculatorData.val_1 = "₹" + fmt(document.getElementById('swpResTotalInvest').innerText);
-                calculatorData.label_2 = "Total Withdrawals";
-                calculatorData.val_2 = "₹" + fmt(document.getElementById('swpResReturnsEarned').innerText);
+                calculatorData.label_1 = "Total Withdrawals";
+                calculatorData.val_1 = "₹" + fmt(safeGet('swpResTotalWithdrawal'));
+                calculatorData.label_2 = "Returns Earned";
+                calculatorData.val_2 = "₹" + fmt(safeGet('swpResReturnsEarned'));
                 calculatorData.label_3 = "Final Balance";
-                calculatorData.val_3 = "₹" + fmt(document.getElementById('swpResFinalBalance').innerText);
+                calculatorData.val_3 = "₹" + fmt(safeGet('swpResFinalBalanceBottom'));
             }
         } else if (calcType === 'ret') {
             calculatorData.calculator_name = "Retirement Journey 🚀";
             calculatorData.label_1 = "Total Corpus Required";
-            calculatorData.val_1 = "₹" + fmt(document.getElementById('retResTotalCorpus').innerText);
+            calculatorData.val_1 = "₹" + fmt(safeGet('retResTotalCorpus'));
             calculatorData.label_2 = "Monthly SIP Required";
-            calculatorData.val_2 = "₹" + fmt(document.getElementById('retResRequiredSIP').innerText);
+            calculatorData.val_2 = "₹" + fmt(safeGet('retResRequiredSIP'));
             calculatorData.label_3 = "Wealth at Retirement";
-            calculatorData.val_3 = "₹" + fmt(document.getElementById('retResTotalCorpus').innerText); // Kept similar as existing logic
+            calculatorData.val_3 = "₹" + fmt(safeGet('retResTotalCorpus'));
         } else if (calcType === 'mgse') {
             calculatorData.calculator_name = "Multi-Goal Roadmap 🗺️";
             calculatorData.label_1 = "Total SIP Required";
-            calculatorData.val_1 = "₹" + fmt(document.getElementById('mgseTotalRequiredSip').innerText);
+            calculatorData.val_1 = "₹" + fmt(safeGet('mgseTotalRequiredSip'));
             calculatorData.label_2 = "Goal Funding Health";
-            calculatorData.val_2 = document.getElementById('mgseHealthPercentage').innerText;
+            calculatorData.val_2 = safeGet('mgseHealthPercentage');
             calculatorData.label_3 = "Gap Identification";
-            calculatorData.val_3 = document.getElementById('mgseIsDeficit').innerText.trim() === 'true' ? "Shortfall Deficit ⚠️" : "Fully Funded ✅";
-            calculatorData.advisor_fix = document.getElementById('mgseFinnomyFixText').innerText;
+            calculatorData.val_3 = safeGet('mgseIsDeficit').trim() === 'true' ? "Shortfall Deficit ⚠️" : "Fully Funded ✅";
+            calculatorData.advisor_fix = safeGet('mgseFinnomyFixText');
         } else if (calcType === 'loan') {
             calculatorData.calculator_name = "Loan Prepayment Strategy ⚡";
             calculatorData.label_1 = "Loan Balance";
-            calculatorData.val_1 = "₹" + fmt(document.getElementById('loanInputBalance').value);
+            calculatorData.val_1 = "₹" + fmt(safeVal('loanInputBalance'));
             calculatorData.label_2 = "Interest Saved";
-            calculatorData.val_2 = "₹" + fmt(document.getElementById('loanResInterestSaved').innerText || "0");
+            calculatorData.val_2 = "₹" + fmt(safeGet('loanResInterestSaved') || "0");
             calculatorData.label_3 = "New Tenure";
-            calculatorData.val_3 = document.getElementById('loanResNewTenureVal').innerText;
-            calculatorData.advisor_fix = "Prepaying ₹" + fmt(document.getElementById('loanInputExtraEmi').value || "0") + " " + document.getElementById('loanExtraEmiFreq').value + " saves you significant interest.";
+            calculatorData.val_3 = safeGet('loanResNewTenureVal');
+            calculatorData.advisor_fix = "Prepaying ₹" + fmt(safeVal('loanInputExtraEmi') || "0") + " " + safeVal('loanExtraEmiFreq') + " saves you significant interest.";
         } else if (calcType === 'fhs') {
             calculatorData.calculator_name = "Financial Health Score 🏥";
             calculatorData.label_1 = "Total Income Tracked";
-            calculatorData.val_1 = "₹" + fmt(document.getElementById('fhsInputIncome').value);
+            calculatorData.val_1 = "₹" + fmt(safeVal('fhsInputIncome'));
             calculatorData.label_2 = "FinNomy Score";
-            calculatorData.val_2 = document.getElementById('fhsScoreDisplay').innerText + " / 100";
+            calculatorData.val_2 = safeGet('fhsScoreDisplay') + " / 100";
             calculatorData.label_3 = "Health Status";
-            calculatorData.val_3 = document.getElementById('fhsStatusBadge').innerText;
+            calculatorData.val_3 = safeGet('fhsStatusBadge');
 
-            // Extract the actual action plan list
             const actionPlanElement = document.getElementById('fhsActionList');
             if (actionPlanElement) {
-                // We use innerHTML to preserve the bullet points and bold colors in the email
                 calculatorData.advisor_fix = "<strong>Your Financial Health Action Plan:</strong><br><br>" + actionPlanElement.innerHTML;
             } else {
-                calculatorData.advisor_fix = "Review your highly prioritized 11-pillar action plan on the website to improve your score from " + document.getElementById('fhsStatusBadge').innerText + " to Excellent.";
+                calculatorData.advisor_fix = "Review your highly prioritized 11-pillar action plan on the website to improve your score from " + safeGet('fhsStatusBadge') + " to Excellent.";
             }
         } else if (calcType === 'cfm') {
             calculatorData.calculator_name = "Financial Mistakes Leak Analysis ⚠️";
             calculatorData.label_1 = "Lazy Money Leak Identified";
-            const lazyLeak = document.getElementById('cfmResLeak1Val');
-            calculatorData.val_1 = lazyLeak ? lazyLeak.innerText : "Optimized";
-
+            calculatorData.val_1 = safeGet('cfmResLeak1Val') || "Optimized";
             calculatorData.label_2 = "Late Tax Action Leak";
-            const taxLeak = document.getElementById('cfmResLeak2Val');
-            calculatorData.val_2 = taxLeak ? taxLeak.innerText : "Optimized";
-
+            calculatorData.val_2 = safeGet('cfmResLeak2Val') || "Optimized";
             calculatorData.label_3 = "Cost of Delay";
-            const delayLeak = document.getElementById('cfmResLeak3Val');
-            calculatorData.val_3 = delayLeak ? delayLeak.innerText : "Optimized";
-
+            calculatorData.val_3 = safeGet('cfmResLeak3Val') || "Optimized";
             calculatorData.advisor_fix = "Your current wealth destruction leaks are quantified above. Plug these leaks immediately to generate alpha without additional earnings.";
             calculatorData.inputs_summary = "Financial Mistakes Leak analysis completed via FinNomy Assessment parameters.";
         }
 
-        // Generate specific input summaries for the standard calculators
+        // Generate input summaries
         if (calcType === 'sip') {
             const isAdvance = document.getElementById('checkSuperAdvance') && document.getElementById('checkSuperAdvance').checked;
-
             if (isAdvance) {
-                calculatorData.inputs_summary = `Target Goal: ₹${fmt(document.getElementById('inputGoalAmount').value)} | Expected Return: ${document.getElementById('inputRate').value}% p.a. | Time Period: ${document.getElementById('inputYears').value} Yrs`;
+                calculatorData.inputs_summary = `Target Goal: ₹${fmt(safeVal('inputGoalAmount'))} | Expected Return: ${safeVal('inputRate')}% | Time: ${safeVal('inputYears')} Yrs`;
             } else {
-                calculatorData.inputs_summary = `Monthly SIP: ₹${fmt(document.getElementById('inputInvestment').value)} | Tenure: ${document.getElementById('inputYears').value} Yrs | Expected Return: ${document.getElementById('inputRate').value}% p.a.`;
+                calculatorData.inputs_summary = `Monthly SIP: ₹${fmt(safeVal('inputInvestment'))} | Tenure: ${safeVal('inputYears')} Yrs | Return: ${safeVal('inputRate')}%`;
             }
-
             if (document.getElementById('checkStepUp') && document.getElementById('checkStepUp').checked) {
-                calculatorData.inputs_summary += ` | Annual Step-Up: ${document.getElementById('inputStepUp').value}%`;
-            }
-            if (document.getElementById('checkInflation') && document.getElementById('checkInflation').checked) {
-                calculatorData.inputs_summary += ` | Inflation Adj: ${document.getElementById('inputInflation').value}%`;
+                calculatorData.inputs_summary += ` | Step-Up: ${safeVal('inputStepUp')}%`;
             }
         } else if (calcType === 'swp') {
             const isAdvance = document.getElementById('checkSwpSuperAdvance') && document.getElementById('checkSwpSuperAdvance').checked;
-
             if (isAdvance) {
-                calculatorData.inputs_summary = `Target Goal: ₹${fmt(document.getElementById('swpAdvInputGoal').value)} | Horizon: ${document.getElementById('swpAdvInputTime').value} Yrs | Exp Return: ${document.getElementById('swpAdvInputReturn').value}% p.a. | Annual Withdraw: ₹${fmt(document.getElementById('swpAdvInputWithdrawal').value)} | Saved: ₹${fmt(document.getElementById('swpAdvInputSavings').value)}`;
-
-                if (document.getElementById('swpAdvCheckInflation') && document.getElementById('swpAdvCheckInflation').checked) {
-                    calculatorData.inputs_summary += ` | Inflation: ${document.getElementById('swpAdvInputInflation').value}%`;
-                }
-                if (document.getElementById('swpAdvCheckStepUpSip') && document.getElementById('swpAdvCheckStepUpSip').checked) {
-                    calculatorData.inputs_summary += ` | SIP Step-Up: ${document.getElementById('swpAdvInputStepUpSip').value}%`;
-                }
-                if (document.getElementById('swpAdvCheckStepUpSwp') && document.getElementById('swpAdvCheckStepUpSwp').checked) {
-                    calculatorData.inputs_summary += ` | SWP Step-Up: ${document.getElementById('swpAdvInputStepUpSwp').value}%`;
-                }
-
+                calculatorData.inputs_summary = `Target Goal: ₹${fmt(safeVal('swpAdvInputGoal'))} | Horizon: ${safeVal('swpAdvInputTime')} Yrs | Return: ${safeVal('swpAdvInputReturn')}% | Annual Withdraw: ₹${fmt(safeVal('swpAdvInputWithdrawal'))}`;
             } else {
-                calculatorData.inputs_summary = `Investment: ₹${fmt(document.getElementById('swpInputInvestment').value)} | Monthly SWP: ₹${fmt(document.getElementById('swpInputWithdrawal').value)} | Tenure: ${document.getElementById('swpInputYears').value} Yrs | Exp Return: ${document.getElementById('swpInputRate').value}% p.a.`;
-                if (document.getElementById('swpCheckStepUp') && document.getElementById('swpCheckStepUp').checked) {
-                    calculatorData.inputs_summary += ` | Annual Step-Up: ${document.getElementById('swpInputStepUp').value}%`;
-                }
+                calculatorData.inputs_summary = `Investment: ₹${fmt(safeVal('swpInputInvestment'))} | Monthly SWP: ₹${fmt(safeVal('swpInputWithdrawal'))} | Tenure: ${safeVal('swpInputYears')} Yrs | Return: ${safeVal('swpInputRate')}%`;
             }
         } else if (calcType === 'ret') {
-            calculatorData.inputs_summary = `Current Age: ${document.getElementById('retInputAge').value} | Ret Age: ${document.getElementById('retInputRetireAge').value} | Life Exp: ${document.getElementById('retInputLife').value} | Monthly Expenses: ₹${fmt(document.getElementById('retInputExpenses').value)}`;
+            calculatorData.inputs_summary = `Age: ${safeVal('retInputAge')} | Ret Age: ${safeVal('retInputRetireAge')} | Life: ${safeVal('retInputLife')} | Expenses: ₹${fmt(safeVal('retInputExpenses'))}`;
         } else if (calcType === 'mgse') {
-            calculatorData.inputs_summary = `Monthly Income: ₹${fmt(document.getElementById('mgseIncome').value)} | Monthly Expenses: ₹${fmt(document.getElementById('mgseExpenses').value)} | Expected Returns: ${document.getElementById('mgseReturns').value}% | Inflation: ${document.getElementById('mgseInflation').value}% | Annual Step-Up: ${document.getElementById('mgseStepup').value}%`;
+            calculatorData.inputs_summary = `Income: ₹${fmt(safeVal('mgseIncome'))} | Expenses: ₹${fmt(safeVal('mgseExpenses'))} | Returns: ${safeVal('mgseReturns')}% | Inflation: ${safeVal('mgseInflation')}%`;
         } else if (calcType === 'loan') {
-            let freq = document.getElementById('loanExtraEmiFreq').value;
-            let type = document.getElementById('loanPrepayBenefit').value === 'tenure' ? 'Reduce Tenure' : 'Reduce EMI';
-            let extraStr = `Extra Prepay: ₹${fmt(document.getElementById('loanInputExtraEmi').value)} (${freq})`;
-            calculatorData.inputs_summary = `Loan Balance: ₹${fmt(document.getElementById('loanInputBalance').value)} | Rate: ${document.getElementById('loanInputRate').value}% | Tenure: ${document.getElementById('loanInputTenure').value} Mo | ${extraStr} | Benefit: ${type}`;
-
-            if (document.getElementById('loanTogglePenalty').checked) {
-                calculatorData.inputs_summary += ` | Penalty: ${document.getElementById('loanInputPenalty').value}%`;
-            }
-            if (document.getElementById('loanToggleStepUp').checked) {
-                calculatorData.inputs_summary += ` | Annual Step-Up: ${document.getElementById('loanInputStepUp').value}%`;
-            }
+            calculatorData.inputs_summary = `Balance: ₹${fmt(safeVal('loanInputBalance'))} | Rate: ${safeVal('loanInputRate')}% | Tenure: ${safeVal('loanInputTenure')} Mo | Extra: ₹${fmt(safeVal('loanInputExtraEmi'))}`;
         } else if (calcType === 'fhs') {
             calculatorData.inputs_summary = "11-Pillar Assessment completed via FinNomy Questionnaire.";
         }
 
-        // Set display toggles for EmailJS (since it doesn't support complex Handlebars #if)
         calculatorData.advisor_display = calculatorData.advisor_fix ? "block" : "none";
         calculatorData.inputs_display = calculatorData.inputs_summary ? "block" : "none";
 
