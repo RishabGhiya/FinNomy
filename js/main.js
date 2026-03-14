@@ -4304,19 +4304,42 @@ window.sendDashboardReport = function (calcTypeRaw) {
             calculatorData.inputs_summary = swpInp.join(" | ");
         } else if (calcType === 'ret') {
             calculatorData.calculator_name = "Retirement Journey 🚀";
-            calculatorData.label_1 = "Total Corpus Required";
+
+            // Top 3 Slots
+            calculatorData.label_1 = "Corpus Required";
             calculatorData.val_1 = "₹" + fmt(safeGet('retResTotalCorpus'));
             calculatorData.label_2 = "Monthly SIP Required";
             calculatorData.val_2 = "₹" + fmt(safeGet('retResRequiredSIP'));
             calculatorData.label_3 = "Future Monthly Expense";
             calculatorData.val_3 = "₹" + fmt(safeGet('retResFutureExp'));
 
+            // Detailed Dashboard Summary (Request #4 - Non Redundant)
             let res = "<strong>Dashboard Summary:</strong><br>";
-            res += `Projected Savings (FV): ₹${fmt(safeGet('retResProjSavings'))}<br><br>`;
-            res += `<em>${safeGet('retGoalAnalysis')}</em>`;
+            res += `<strong>Projected Savings (FV):</strong> ₹${fmt(safeGet('retResProjSavings'))}<br>`;
+
+            // Advice integration
+            const retAdvice = safeGet('retGoalAnalysis');
+            if (retAdvice) res += `<br><em>Advice: ${retAdvice}</em>`;
             calculatorData.advisor_fix = res;
 
-            calculatorData.inputs_summary = `Age: ${safeVal('retInputAge')} | Ret Age: ${safeVal('retInputRetireAge')} | Monthly Exp: ₹${fmt(safeVal('retInputExpenses'))} | Savings: ₹${fmt(safeVal('retInputSavings'))} | ROI: ${safeVal('retInputPreROI')}%`;
+            // Capture all inputs (Request #2)
+            let retInp = [];
+            retInp.push(`Age: ${safeVal('retInputAge')}`);
+            retInp.push(`Ret Age: ${safeVal('retInputRetireAge')}`);
+            retInp.push(`Exp: ₹${fmt(safeVal('retInputExpenses'))}`);
+            retInp.push(`Savings: ₹${fmt(safeVal('retInputSavings'))}`);
+            retInp.push(`Pre ROI: ${safeVal('retInputPreROI')}%`);
+            retInp.push(`Post ROI: ${safeVal('retInputPostROI')}%`);
+            retInp.push(`Life: ${safeVal('retInputLife')} Yrs`);
+
+            if (document.getElementById('retCheckInflation') && document.getElementById('retCheckInflation').checked) {
+                retInp.push(`Inflation: ${safeVal('retInputInflation')}%`);
+            }
+            if (document.getElementById('retCheckStepUp') && document.getElementById('retCheckStepUp').checked) {
+                retInp.push(`Step-up: ${safeVal('retInputStepUp')}%`);
+            }
+
+            calculatorData.inputs_summary = retInp.join(" | ");
 
         } else if (calcType === 'mgse') {
             calculatorData.calculator_name = "Multi-Goal Roadmap 🗺️";
@@ -4334,15 +4357,41 @@ window.sendDashboardReport = function (calcTypeRaw) {
 
         } else if (calcType === 'loan') {
             calculatorData.calculator_name = "Loan Prepayment Strategy ⚡";
+
+            // Top 3 Slots
             calculatorData.label_1 = "Interest Saved";
             calculatorData.val_1 = "₹" + fmt(safeGet('loanResInterestSaved') || "0");
             calculatorData.label_2 = "New Tenure";
             calculatorData.val_2 = safeGet('loanResNewTenureVal');
-            calculatorData.label_3 = "Current Balance";
-            calculatorData.val_3 = "₹" + fmt(safeVal('loanInputBalance'));
+            calculatorData.label_3 = "Optimized Interest";
+            calculatorData.val_3 = "₹" + fmt(safeGet('loanResNewInterest'));
 
-            calculatorData.advisor_fix = `<strong>Benefit Summary:</strong><br>By prepaying ₹${fmt(safeVal('loanInputExtraEmi'))} every ${safeVal('loanExtraEmiFreq')}, you save ₹${fmt(safeGet('loanResInterestSaved'))} in interest and finish your loan in ${safeGet('loanResNewTenureVal')}.`;
-            calculatorData.inputs_summary = `Balance: ₹${fmt(safeVal('loanInputBalance'))} | ROI: ${safeVal('loanInputRate')}% | Tenure: ${safeVal('loanInputTenure')} Mo`;
+            // Detailed Dashboard Summary (Non Redundant)
+            let res = "<strong>Dashboard Summary:</strong><br>";
+            res += `<strong>Smart Monthly EMI:</strong> ₹${fmt(safeGet('loanResNewEMI'))}<br>`;
+            res += `<strong>Loan Ends By:</strong> ${safeGet('loanResNewEndDate')}<br>`;
+
+            // Integrated Advice
+            const loanBenefit = `By prepaying ₹${fmt(safeVal('loanInputExtraEmi'))} every ${safeVal('loanExtraEmiFreq')}, you save significantly on interest and finish your loan in ${safeGet('loanResNewTenureVal')}.`;
+            res += `<br><em>Advice: ${loanBenefit}</em>`;
+            calculatorData.advisor_fix = res;
+
+            // Capture all inputs
+            let loanInp = [];
+            loanInp.push(`Bal: ₹${fmt(safeVal('loanInputBalance'))}`);
+            loanInp.push(`ROI: ${safeVal('loanInputRate')}%`);
+            loanInp.push(`Tenure: ${safeVal('loanInputTenure')} Mo`);
+            loanInp.push(`Extra: ₹${fmt(safeVal('loanInputExtraEmi'))} (${safeVal('loanExtraEmiFreq')})`);
+            loanInp.push(`Benefit: ${safeVal('loanPrepayBenefit')}`);
+
+            if (document.getElementById('loanTogglePenalty') && document.getElementById('loanTogglePenalty').checked) {
+                loanInp.push(`Penalty: ${safeVal('loanInputPenalty')}%`);
+            }
+            if (document.getElementById('loanToggleStepUp') && document.getElementById('loanToggleStepUp').checked) {
+                loanInp.push(`Step-up: ${safeVal('loanInputStepUp')}%`);
+            }
+
+            calculatorData.inputs_summary = loanInp.join(" | ");
 
         } else if (calcType === 'fhs') {
             calculatorData.calculator_name = "Financial Health Score 🏥";
