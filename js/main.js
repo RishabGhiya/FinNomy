@@ -3146,7 +3146,8 @@ function calculateRetirement() {
     const hasStepUp = document.getElementById('retCheckStepUp').checked;
     const stepUpRate = (parseFloat(document.getElementById('retInputStepUp').value) || 10) / 100;
 
-    const isSuperAdvance = document.getElementById('checkRetSuperAdvance').checked;
+    const checkRetSuper = document.getElementById('checkRetSuperAdvance');
+    const isSuperAdvance = checkRetSuper ? checkRetSuper.checked : false;
 
     // Validation
     if (retAge <= age) return;
@@ -3314,6 +3315,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (id === 'retCheckInflation') {
                     const ctrl = document.getElementById('retInflationControl');
                     if (ctrl) ctrl.style.display = el.checked ? 'block' : 'none';
+                }
+                if (id === 'checkRetSuperAdvance') {
+                    const nrm = document.getElementById('retResNormalState');
+                    const adv = document.getElementById('retResSuperAdvance');
+                    if (nrm) nrm.style.display = el.checked ? 'none' : 'block';
+                    if (adv) adv.style.display = el.checked ? 'flex' : 'none';
                 }
                 calculateRetirement();
             });
