@@ -435,7 +435,7 @@ function calculateAndRenderMgse() {
             <strong>Action:</strong> If you increase the time horizon of "${lowerPriority.name}" by 2 years, the freed-up SIP will automatically secure this goal!`;
         } else {
             const stepUpBoost = Math.ceil((gap / primaryShortfall.reqSip) * 10);
-            fixText = `<span style="color: #1e40af; font-weight: 700;">TACTICAL BOOST:</span> To reach 100% funding for "${primaryShortfall.name}", try increasing your Annual Step-Up by <strong>+${Math.min(5, stepUpBoost)}%</strong> or increase your monthly take-home by ${formatMgseCurr(gap)}.`;
+            fixText = `<span style="color: #1e40af; font-weight: 700;">Action:</span> To reach 100% funding for "${primaryShortfall.name}", try increasing your Annual Step-Up by <strong>+${Math.min(5, stepUpBoost)}%</strong> or increase your monthly take-home by ${formatMgseCurr(gap)}.`;
         }
     } else {
         fixText = `Your goals are largely covered, but minor adjustments in your expected returns or time horizons could push your portfolio to 100% health.`;

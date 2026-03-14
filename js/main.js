@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    handleDeepLink();
+
 
     // --- Global Number Input Formatter (Indian Commas) ---
     const numberInputs = document.querySelectorAll('.sip-number-input, input[type="number"]');
@@ -3146,8 +3148,7 @@ function calculateRetirement() {
     const hasStepUp = document.getElementById('retCheckStepUp').checked;
     const stepUpRate = (parseFloat(document.getElementById('retInputStepUp').value) || 10) / 100;
 
-    const checkRetSuper = document.getElementById('checkRetSuperAdvance');
-    const isSuperAdvance = checkRetSuper ? checkRetSuper.checked : false;
+
 
     // Validation
     if (retAge <= age) return;
@@ -3218,7 +3219,7 @@ function calculateRetirement() {
         sip: requiredSIP,
         gap: gap,
         yearsToRetire: yearsToRetire,
-        isSuperAdvance: isSuperAdvance
+        isSuperAdvance: false
     });
 }
 
@@ -3234,15 +3235,7 @@ function updateRetirementUI(data) {
     const normalRes = document.getElementById('retResNormalState');
     const superAdvRes = document.getElementById('retResSuperAdvance');
 
-    // 1. Handle Super Advance Toggle
-    if (data.isSuperAdvance) {
-        if (hvForm) hvForm.style.display = 'none';
-        if (normalRes) normalRes.style.display = 'none';
-        if (superAdvRes) superAdvRes.style.display = 'flex';
-        return; // Work finished for Super Advance
-    } else {
-        if (superAdvRes) superAdvRes.style.display = 'none';
-    }
+    if (superAdvRes) superAdvRes.style.display = 'none';
 
     // 2. High Value Lead Check
     if (data.currentExp > 100000 || data.corpus > 150000000) {
@@ -3317,10 +3310,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (ctrl) ctrl.style.display = el.checked ? 'block' : 'none';
                 }
                 if (id === 'checkRetSuperAdvance') {
-                    const nrm = document.getElementById('retResNormalState');
-                    const adv = document.getElementById('retResSuperAdvance');
-                    if (nrm) nrm.style.display = el.checked ? 'none' : 'block';
-                    if (adv) adv.style.display = el.checked ? 'flex' : 'none';
+                    // Logic removed
                 }
                 calculateRetirement();
             });
@@ -3563,33 +3553,33 @@ function calculateFHS() {
         `;
     } else {
         // Build conversational summary based on weak pillars
-        let summaryText = "<p style='margin-bottom: 12px; font-weight: 500;'>Here is what you need to focus on to improve your financial health:</p><ul style='margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px;'>";
+        let summaryText = "<p style='margin-bottom: 12px; font-weight: 500;'>Here is what you need to focus on to improve your financial health:</p><ul style='margin: 0; padding-left: 20px;'>";
 
         const weakIds = actions.map(a => a.id);
 
         // Immediate Risks
         if (weakIds.includes('ef') || weakIds.includes('hc')) {
-            summaryText += "<li><strong style='color: #EF4444;'>Secure your foundation:</strong> You urgently need to build a cash emergency fund and ensure you have adequate health insurance coverage to protect against unexpected medical shocks.</li>";
+            summaryText += "<li style='margin-bottom: 10px;'><strong style='color: #EF4444;'>Secure your foundation:</strong> You urgently need to build a cash emergency fund and ensure you have adequate health insurance coverage to protect against unexpected medical shocks.</li>";
         }
 
         // Debt Issues
         if (weakIds.includes('dti') || weakIds.includes('sol') || weakIds.includes('ns')) {
-            summaryText += "<li><strong style='color: #F97316;'>Reduce your debt burden:</strong> Your mandatory expenses and EMIs are consuming too much of your income. Focus aggressively on prepaying high-interest debt to free up monthly cash flow.</li>";
+            summaryText += "<li style='margin-bottom: 10px;'><strong style='color: #F97316;'>Reduce your debt burden:</strong> Your mandatory expenses and EMIs are consuming too much of your income. Focus aggressively on prepaying high-interest debt to free up monthly cash flow.</li>";
         }
 
         // Wealth & Accumulation
         if (weakIds.includes('sr') || weakIds.includes('aw')) {
-            summaryText += "<li><strong style='color: #F59E0B;'>Accelerate your wealth:</strong> Your accumulation is slightly behind schedule. Tighten your discretionary spending aiming to push your savings rate above 20-30% of your take-home pay.</li>";
+            summaryText += "<li style='margin-bottom: 10px;'><strong style='color: #F59E0B;'>Accelerate your wealth:</strong> Your accumulation is slightly behind schedule. Tighten your discretionary spending aiming to push your savings rate above 20-30% of your take-home pay.</li>";
         }
 
         // Asset Allocation
         if (weakIds.includes('pw') || weakIds.includes('eq') || weakIds.includes('re')) {
-            summaryText += "<li><strong style='color: #3B82F6;'>Optimize capital allocation:</strong> Ensure you aren't holding too much idle cash or locking all your net worth into illiquid physical real estate. Channel funds into compounding assets like equities.</li>";
+            summaryText += "<li style='margin-bottom: 10px;'><strong style='color: #3B82F6;'>Optimize capital allocation:</strong> Ensure you aren't holding too much idle cash or locking all your net worth into illiquid physical real estate. Channel funds into compounding assets like equities.</li>";
         }
 
         // Independence
         if (weakIds.includes('fire')) {
-            summaryText += "<li><strong style='color: #8B5CF6;'>Build passive income:</strong> Ultimately, your goal is financial independence. Focus on building passive streams (like dividends or rental yields) until they can fully cover your baseline living expenses.</li>";
+            summaryText += "<li style='margin-bottom: 10px;'><strong style='color: #8B5CF6;'>Build passive income:</strong> Ultimately, your goal is financial independence. Focus on building passive streams (like dividends or rental yields) until they can fully cover your baseline living expenses.</li>";
         }
 
         summaryText += "</ul>";
@@ -4158,6 +4148,7 @@ window.sendDashboardReport = function (calcTypeRaw) {
         user_phone: userPhone,
         calculator_name: "",
         website_url: window.location.href,
+        return_url: window.location.href.split('?')[0] + "?calc=" + calcType,
         label_1: "", val_1: "0",
         label_2: "", val_2: "0",
         label_3: "", val_3: "0",
@@ -4314,7 +4305,7 @@ window.sendDashboardReport = function (calcTypeRaw) {
 
             // Top 3 Slots
             calculatorData.label_1 = "Corpus Required";
-            calculatorData.val_1 = "₹" + fmt(safeGet('retResTotalCorpus'));
+            calculatorData.val_1 = safeGet('retResTotalCorpus');
             calculatorData.label_2 = "Monthly SIP Required";
             calculatorData.val_2 = "₹" + fmt(safeGet('retResRequiredSIP'));
             calculatorData.label_3 = "Future Monthly Expense";
@@ -4350,17 +4341,80 @@ window.sendDashboardReport = function (calcTypeRaw) {
 
         } else if (calcType === 'mgse') {
             calculatorData.calculator_name = "Multi-Goal Roadmap 🗺️";
-            calculatorData.label_1 = "Total Monthly SIP";
-            calculatorData.val_1 = "₹" + fmt(safeGet('mgseTotalRequiredSip'));
-            calculatorData.label_2 = "Funding Health";
-            calculatorData.val_2 = safeGet('mgseHealthPercentage');
-            calculatorData.label_3 = "Status";
-            calculatorData.val_3 = safeGet('mgseIsDeficit').trim() === 'true' ? "Shortfall Deficit ⚠️" : "Fully Funded ✅";
 
-            let res = "<strong>Dashboard Summary:</strong><br>";
-            res += safeGet('mgseFinnomyFixText');
-            calculatorData.advisor_fix = res;
-            calculatorData.inputs_summary = `Income: ₹${fmt(safeVal('mgseIncome'))} | Expense: ₹${fmt(safeVal('mgseExpenses'))} | ROI: ${safeVal('mgseReturns')}%`;
+            // Calculate totals from global mgseGoals array
+            const activeGoals = (typeof mgseGoals !== 'undefined') ? mgseGoals.filter(g => g.active) : [];
+            const totalToday = activeGoals.reduce((sum, g) => sum + g.cost, 0);
+            const totalFuture = Math.round(activeGoals.reduce((sum, g) => sum + g.fv, 0));
+            const health = document.getElementById('mgseHealthPercentage') ? document.getElementById('mgseHealthPercentage').innerText : "0% Funded";
+
+            // Top 3 Slates: reconfigured per user request
+            calculatorData.label_1 = "Total Goal Cost (Today)";
+            calculatorData.val_1 = "₹" + fmt(totalToday);
+            calculatorData.label_2 = "Total Goal Cost (Future)";
+            calculatorData.val_2 = "₹" + fmt(totalFuture);
+            calculatorData.label_3 = "Portfolio Health";
+            calculatorData.val_3 = health;
+
+            // Detailed Goal Breakdown Table
+            let reportHtml = "<div style='font-family: sans-serif; line-height: 1.6;'>";
+            reportHtml += "<h3 style='color: #1e3a8a; margin-bottom: 15px;'>Detailed Goal Strategy & Allocation:</h3>";
+
+            if (typeof mgseGoals !== 'undefined' && mgseGoals.length > 0) {
+                mgseGoals.forEach((g, index) => {
+                    const statusColor = g.fundedPerc >= 99.9 ? '#10b981' : (g.fundedPerc > 0 ? '#f59e0b' : '#ef4444');
+                    const isPaused = !g.active;
+
+                    reportHtml += `
+                        <div style="background: ${isPaused ? '#f9fafb' : '#ffffff'}; border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; margin-bottom: 15px; ${isPaused ? 'opacity: 0.7;' : ''}">
+                            <div style="border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 10px; display: flex; justify-content: space-between;">
+                                <strong style="color: #1e293b; font-size: 1rem;"><span style="padding-right: 20px;">${index + 1}.</span> ${g.name} ${isPaused ? '(Paused)' : ''}</strong>
+                                <span style="color: ${statusColor}; font-weight: 800; font-size: 0.9rem;">${g.fundedPerc.toFixed(0)}% Funded</span>
+                            </div>
+                            
+                            <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse;">
+                                <tr>
+                                    <td style="color: #64748b; padding: 4px 0; width: 45%;">Today's Cost:</td>
+                                    <td style="font-weight: 700; color: #1e293b; padding: 4px 0;">₹${fmt(g.cost)}</td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #64748b; padding: 4px 0;">Target Horizon:</td>
+                                    <td style="font-weight: 700; color: #1e293b; padding: 4px 0;">${g.years} Years</td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #64748b; padding: 4px 0;">Future Target:</td>
+                                    <td style="font-weight: 700; color: #1e293b; padding: 4px 0;">₹${fmt(g.fv)}</td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #64748b; padding: 4px 0;">Priority:</td>
+                                    <td style="font-weight: 700; color: #1e293b; padding: 4px 0;">${g.priority}</td>
+                                </tr>
+                                <tr style="background: #f8fafc;">
+                                    <td style="color: #1e40af; padding: 6px 4px; border-radius: 4px 0 0 4px; font-weight: 600;">System Allocated:</td>
+                                    <td style="color: #1e40af; padding: 6px 4px; border-radius: 0 4px 4px 0; font-weight: 800;">₹${fmt(g.allocatedSip)} /mo</td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #64748b; padding: 4px 0;">Ideal Required:</td>
+                                    <td style="font-weight: 600; color: #475569; padding: 4px 0;">₹${fmt(g.reqSip)} /mo</td>
+                                </tr>
+                            </table>
+                        </div>
+                    `;
+                });
+            } else {
+                reportHtml += `<div style="padding: 20px; text-align: center; color: #94a3b8; border: 1px dashed #cbd5e1; border-radius: 8px;">No goals added to the engine yet.</div>`;
+            }
+
+            // Append Advisor Fix
+            reportHtml += "<div style='background: #eff6ff; padding: 15px; border-radius: 8px; border: 1px solid #bfdbfe; margin-top: 10px;'>";
+            reportHtml += "<strong style='color: #1e3a8a;'>FinNomy Fix:</strong><br>";
+            reportHtml += safeGet('mgseFinnomyFixText');
+            reportHtml += "</div></div>";
+
+            calculatorData.advisor_fix = reportHtml;
+
+            // Updated Inputs Summary including Inflation and Step-up
+            calculatorData.inputs_summary = `Income: ₹${fmt(safeVal('mgseIncome'))} | Exp: ₹${fmt(safeVal('mgseExpenses'))} | ROI: ${safeVal('mgseReturns')}% | Inflation: ${safeVal('mgseInflation')}% | Step-up: ${safeVal('mgseStepup')}%`;
 
         } else if (calcType === 'loan') {
             calculatorData.calculator_name = "Loan Prepayment Strategy ⚡";
@@ -4409,21 +4463,81 @@ window.sendDashboardReport = function (calcTypeRaw) {
             calculatorData.label_3 = "Assessment Mode";
             calculatorData.val_3 = "Full 11-Pillar Audit";
 
-            const actionPlanElement = document.getElementById('fhsActionList');
+            const actionPlanElement = document.getElementById('fhsActionPlanContainer');
             if (actionPlanElement) {
-                calculatorData.advisor_fix = "<strong>Action Plan:</strong><br><br>" + actionPlanElement.innerHTML;
+                calculatorData.advisor_fix = "<strong>Your Personalized Action Plan:</strong><br><br>" + actionPlanElement.innerHTML;
             }
-            calculatorData.inputs_summary = "Financial Health Audit completed.";
+
+            // Capture all 11-Pillar Inputs
+            let fhsInp = [];
+            fhsInp.push(`Age: ${safeVal('fhsInputAge')} Yrs`);
+            fhsInp.push(`Income: ₹${fmt(safeVal('fhsInputIncome'))}`);
+            fhsInp.push(`Expenses: ₹${fmt(safeVal('fhsInputExpenses'))}`);
+            fhsInp.push(`EMI: ₹${fmt(safeVal('fhsInputEmi'))}`);
+            fhsInp.push(`Passive Inc: ₹${fmt(safeVal('fhsInputPassiveIncome'))}`);
+            fhsInp.push(`Liquid: ₹${fmt(safeVal('fhsInputLiquid'))}`);
+            fhsInp.push(`Invested: ₹${fmt(safeVal('fhsInputInvested'))}`);
+            fhsInp.push(`Equity: ₹${fmt(safeVal('fhsInputEquity'))}`);
+            fhsInp.push(`Real Estate: ₹${fmt(safeVal('fhsInputRealEstate'))}`);
+            fhsInp.push(`Debt: ₹${fmt(safeVal('fhsInputDebt'))}`);
+            calculatorData.inputs_summary = fhsInp.join(" | ");
         } else if (calcType === 'cfm') {
             calculatorData.calculator_name = "Mistakes Analysis ⚠️";
-            calculatorData.label_1 = "Lazy Money Leak";
-            calculatorData.val_1 = safeGet('cfmResLeak1Val') || "N/A";
-            calculatorData.label_2 = "Tax Delay Leak";
-            calculatorData.val_2 = safeGet('cfmResLeak2Val') || "N/A";
-            calculatorData.label_3 = "Wealth Delay Cost";
-            calculatorData.val_3 = safeGet('cfmResLeak3Val') || "N/A";
-            calculatorData.advisor_fix = "Plug these leaks immediately to accelerate wealth creation.";
-            calculatorData.inputs_summary = "Leak analysis based on personal assessments.";
+
+            // Extract "Big Numbers" from the dynamic UI text for the slates
+            const extractVal = (text) => {
+                const match = text.match(/₹[\d,LCr.]+/);
+                return match ? match[0] : "₹0";
+            };
+
+            const lazyVal = extractVal(safeGet('cfmTextLazy'));
+            const leakVal = extractVal(safeGet('cfmTextLeak'));
+            const lateVal = extractVal(safeGet('cfmTextLate'));
+            const emiVal = extractVal(safeGet('cfmTextEmi'));
+
+            // Top Slates: Focus on most impactful "Wealth Leaks"
+            calculatorData.label_1 = "Habit Opportunity Cost";
+            calculatorData.val_1 = leakVal;
+            calculatorData.label_2 = "Procrastination Penalty";
+            calculatorData.val_2 = lateVal;
+            calculatorData.label_3 = "Hidden EMI Fees";
+            calculatorData.val_3 = emiVal;
+
+            let reportHtml = "<div style='font-family: sans-serif; line-height: 1.6;'>";
+            reportHtml += "<h3 style='color: #991b1b;'>Your Deep-Dive Analysis:</h3>";
+
+            reportHtml += "<div style='margin-bottom: 20px; border-left: 4px solid #fecaca; padding: 5px 15px;'>";
+            reportHtml += "<strong style='color: #b91c1c;'>1. The 'Lazy Money' Trap</strong><br>" + safeGet('cfmTextLazy');
+            reportHtml += "</div>";
+
+            reportHtml += "<div style='margin-bottom: 20px; border-left: 4px solid #fed7aa; padding: 5px 15px;'>";
+            reportHtml += "<strong style='color: #c2410c;'>2. The 'Small Daily Leak'</strong><br>" + safeGet('cfmTextLeak');
+            reportHtml += "</div>";
+
+            reportHtml += "<div style='margin-bottom: 20px; border-left: 4px solid #fecaca; padding: 5px 15px;'>";
+            reportHtml += "<strong style='color: #b91c1c;'>3. Yearly Cost of Delay</strong><br>" + safeGet('cfmTextLate');
+            reportHtml += "</div>";
+
+            reportHtml += "<div style='margin-bottom: 20px; border-left: 4px solid #fed7aa; padding: 5px 15px;'>";
+            reportHtml += "<strong style='color: #c2410c;'>4. The 'No-Cost' Trap</strong><br>" + safeGet('cfmTextEmi');
+            reportHtml += "</div>";
+
+            reportHtml += "</div>";
+
+            calculatorData.advisor_fix = reportHtml;
+
+            // Capture all CFM Inputs
+            let cfmInp = [];
+            cfmInp.push(`Age: ${safeVal('cfmInputAge')} Yrs`);
+            cfmInp.push(`Income: ₹${fmt(safeVal('cfmInputIncome'))}`);
+            cfmInp.push(`Idle Cash: ₹${fmt(safeVal('cfmInputIdleCash'))}`);
+            cfmInp.push(`Daily Leak: ₹${fmt(safeVal('cfmInputDailySpend'))}`);
+            cfmInp.push(`SIP Target: ₹${fmt(safeVal('cfmInputSip'))}`);
+            cfmInp.push(`Gadget: ₹${fmt(safeVal('cfmInputGadget'))}`);
+            cfmInp.push(`Discount Lost: ₹${fmt(safeVal('cfmInputDiscount'))}`);
+            cfmInp.push(`Processing Fee: ₹${fmt(safeVal('cfmInputFee'))}`);
+
+            calculatorData.inputs_summary = cfmInp.join(" | ");
         }
 
         // Result visibility
@@ -4462,3 +4576,48 @@ window.sendDashboardReport = function (calcTypeRaw) {
         });
 };
 
+// Global navigation for calculator modals
+function returnToCalculatorInputs(btn) {
+    const modal = btn.closest('.sip-modal-card');
+    if (modal) {
+        const widgetContainer = modal.querySelector('.sip-widget-container');
+        if (widgetContainer) {
+            widgetContainer.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+}
+
+
+// Handle Deep-Linking to open specific calculator modals from URL parameters
+function handleDeepLink() {
+    const params = new URLSearchParams(window.location.search);
+    const calc = params.get('calc');
+    if (!calc) return;
+
+    // Small delay to ensure all scripts and DOM are ready
+    setTimeout(() => {
+        switch (calc.toLowerCase()) {
+            case 'sip':
+                if (typeof openSipCalculator === 'function') openSipCalculator();
+                break;
+            case 'swp':
+                if (typeof openSwpModal === 'function') openSwpModal();
+                break;
+            case 'loan':
+                if (typeof openLoanModal === 'function') openLoanModal();
+                break;
+            case 'retirement':
+                if (typeof openRetirementModal === 'function') openRetirementModal();
+                break;
+            case 'fhs':
+                if (typeof openFhsModal === 'function') openFhsModal();
+                break;
+            case 'cfm':
+                if (typeof openCfmModal === 'function') openCfmModal();
+                break;
+            case 'mgse':
+                if (typeof openMgseModal === 'function') openMgseModal();
+                break;
+        }
+    }, 500);
+}
