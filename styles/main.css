@@ -1781,7 +1781,7 @@ select[multiple] {
 }
 
 /* Services Checkbox Grid */
-.services-grid {
+.services-checkbox-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     /* Force 2 columns as requested */
@@ -1796,7 +1796,7 @@ select[multiple] {
 }
 
 @media (max-width: 768px) {
-    .services-grid {
+    .services-checkbox-grid {
         grid-template-columns: 1fr;
     }
 }
@@ -2680,7 +2680,9 @@ select[multiple] {
     .sip-widget-container {
         flex: 1 !important;
     }
-}@media (max-width: 768px) {
+}
+
+@media (max-width: 768px) {
     .sip-modal-card {
         display: block !important;
         width: 95% !important;
@@ -2694,29 +2696,30 @@ select[multiple] {
         flex-direction: column !important;
     }
 
-    .sip-inputs, .sip-results {
+    .sip-inputs,
+    .sip-results {
         width: 100% !important;
         border-right: none !important;
         border-bottom: 1px solid #f3f4f6 !important;
     }
 
     /* MGSE and other content areas */
-    .sip-widget-container > div {
+    .sip-widget-container>div {
         min-width: unset !important;
         flex: 1 1 100% !important;
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
 }
-    /* Dashboard and Goal Cards nesting fixes */
-    #mgseNormalState > div {
-        flex-direction: column !important;
-        gap: 15px !important;
-    }
-    
-    #mgseNormalState > div > div {
-        width: 100% !important;
-        flex: 1 1 100% !important;
-        min-width: unset !important;
-    }
+
+/* Dashboard and Goal Cards nesting fixes */
+#mgseNormalState>div {
+    flex-direction: column !important;
+    gap: 15px !important;
+}
+
+#mgseNormalState>div>div {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+    min-width: unset !important;
 }

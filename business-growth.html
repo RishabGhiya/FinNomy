@@ -2,174 +2,181 @@
 <html lang="en">
 
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L5E8Q0DRGN"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-L5E8Q0DRGN');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact FinNomy™ | Expert Advice for SIP, Tax & Business Compliance</title>
-    <meta name="description"
-        content="Need professional help with your financial planning? Connect with FinNomy™ experts for personalized advice on calculators, tax compliance, wealth growth, and professional partnerships.">
-    <meta name="keywords"
-        content="contact FinNomy, financial advice, partner with FinNomy, finance experts, tax compliance help, professional finance network">
-    <link rel="canonical" href="https://finnomy.com/connect_us.html">
+    <title>Business & Growth Services | FinNomy™</title>
     <link rel="icon" type="image/png" href="assets/logo-nav.png">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://finnomy.com/connect_us.html">
-    <meta property="og:title" content="Contact FinNomy™ | Expert Advice & Partnerships">
-    <meta property="og:description"
-        content="Bridge the gap to financial clarity. Reach out for professional services or partnership opportunities.">
-    <meta property="og:image" content="https://finnomy.com/assets/logo-nav.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://finnomy.com/connect_us.html">
-    <meta property="twitter:title" content="Contact FinNomy™">
-    <meta property="twitter:description" content="Connect with financial experts and join our professional network.">
-    <meta property="twitter:image" content="https://finnomy.com/assets/logo-nav.png">
-
     <link rel="stylesheet" href="styles/main.css">
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* Page Specific Overrides to ensure it sits perfectly centered like a Hero */
-        .connect-hero-section {
-            min-height: calc(100vh - 90px);
-            /* Full height minus navbar */
-            display: flex;
-            align-items: center;
-            background-color: #ffffff;
-            /* Clean White */
-            padding: 4rem 0;
-            /* Add vertical padding to allow scrolling if tall */
-        }
-
-        .hero-card {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            /* Align top now that images are big */
-            align-items: center;
-            /* Center content in the column */
-            text-align: center;
-            /* Center text */
-            padding: 2rem;
-            transition: transform 0.3s ease;
-            height: 100%;
-            /* Full height match */
-        }
-
-        /* The Grey Line Separator */
-        .hero-card:first-child {
-            border-right: 2px solid #e5e7eb;
-            /* Greyish line */
-        }
-
-        .hero-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .hero-illustration {
-            width: 100%;
-            max-width: 650px;
-            /* MUCH BIGGER (was 400px) */
-            height: auto;
-            margin-bottom: 2.5rem;
-            filter: drop-shadow(0 15px 40px rgba(0, 0, 0, 0.1));
-        }
-
-        /* Typography matches Home Hero */
-        .hero-card h1 {
-            font-size: 2.5rem;
-            /* Hero sizing */
-            color: var(--color-dark-navy);
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .hero-card p {
-            font-size: 1.1rem;
-            color: var(--color-text-muted);
-            margin-bottom: 2rem;
-            max-width: 450px;
-            line-height: 1.6;
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 968px) {
-            .hero-card:first-child {
-                border-right: none;
-                border-bottom: 2px solid #e5e7eb;
-                /* Horizontal line on mobile */
-                padding-bottom: 4rem;
-                margin-bottom: 2rem;
-            }
-
-            .connect-hero-section {
-                height: auto;
-                min-height: auto;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles/services.css">
 </head>
 
 <body>
+    <!-- Pulse Loader -->
+    <div class="finnomy-loader">
+        <img src="assets/logo-nav.png" alt="FinNomy Logo" class="loader-logo">
+    </div>
 
     <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo"><img src="assets/logo-nav.png" alt="FinNomy Logo" class="nav-logo"></a>
+            <a href="index.html" class="logo"><img src="assets/logo-nav.png" alt="FinNomy Symbol" class="nav-logo"></a>
             <div class="hamburger-menu" id="mobile-menu-btn">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
             <ul class="nav-links" id="nav-links">
-                <li><a href="index.html" class="nav-link-home">Home</a></li>
+                <li><a href="index.html#home" class="nav-link-home">Home</a></li>
                 <li><a href="index.html#about" class="nav-link-about">About FinNomy</a></li>
-                <li><a href="services.html" class="nav-link-services">Services</a></li>
+                <li><a href="services.html" class="active nav-link-services">Services</a></li>
                 <li><a href="calculators.html" class="nav-link-calculators">Calculators</a></li>
                 <li><a href="index.html#insights" class="nav-link-insights">Insights</a></li>
-                <li><a href="connect_us.html" class="active nav-link-connect">Connect Us</a></li>
+                <li><a href="connect_us.html" class="nav-link-connect">Connect Us</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Main Section: Hero Style Split */ -->
-    <section class="connect-hero-section">
+    <!-- Hero Section -->
+    <section class="services-hero">
         <div class="container split-layout">
-
-            <!-- Left Side: Connect Us -->
-            <div class="hero-card">
-                <img src="assets/connect_client_bridge.png" alt="Bridge to Clarity" class="hero-illustration">
-
-                <span class="subheading text-fin-blue">For Clients</span>
-                <h1>Start your financial journey with clarity</h1>
-                <p>Tell us your needs, and we’ll bridge you to the right expert.</p>
-
-                <button class="btn btn-fin-blue" onclick="openConnectModal()">Connect Us</button>
+            <div class="text-content">
+                <span class="subheading">Category D</span>
+                <h1>Business & Growth Services</h1>
+                <p>Scale with speed and precision. From startup setup to strategic advisory, we provide the leadership
+                    your business needs to expand.</p>
             </div>
-
-            <!-- Right Side: Become a Partner -->
-            <div class="hero-card">
-                <img src="assets/partner_ecosystem_strict.png" alt="Growing Ecosystem" class="hero-illustration">
-
-                <span class="subheading text-green">For Professionals</span>
-                <h1>Join FinNomy’s Professional Network</h1>
-                <p>Grow with FinNomy. Collaborate, contribute, and become part of our finance ecosystem.</p>
-
-                <button class="btn btn-green" onclick="openPartnerModal()">Become a Partner</button>
+            <div class="visual-content">
+                <img src="assets/business_growth_hero_final.png" alt="Business & Growth Services"
+                    class="illustration-img">
             </div>
+        </div>
+    </section>
 
+    <!-- Sub-Services Grid -->
+    <section class="services-section-wrapper"
+        style="background: var(--color-light-background); border-bottom: 1px solid #eee;">
+        <div class="container">
+            <div class="services-welcome">
+                <h2>Our Specialized Solutions</h2>
+                <p>Strategic leadership and structural stability for your scaling business.</p>
+            </div>
+            <div class="services-grid">
+                <!-- 15. Startup Services -->
+                <div class="service-card">
+                    <div class="service-icon-bubble">🚀</div>
+                    <h3>Startup Services</h3>
+                    <p class="service-tagline">A smooth start for your startup.</p>
+                    <p class="service-overview">We convert your concept into a fully compliant business with clean
+                        processes and the right financial setup.</p>
+                    <a href="javascript:void(0)" onclick="openConnectModal('Startup Services')"
+                        class="learn-more-link">Connect Us &rarr;</a>
+                </div>
+
+                <!-- 16. Business Growth & Strategy -->
+                <div class="service-card">
+                    <div class="service-icon-bubble">📈</div>
+                    <h3>Business Growth & Strategy</h3>
+                    <p class="service-tagline">Plan well. Grow well.</p>
+                    <p class="service-overview">We connect financial data with actionable planning to build strategies
+                        for long-term stability and expansion.</p>
+                    <a href="javascript:void(0)" onclick="openConnectModal('Business Growth & Strategy')"
+                        class="learn-more-link">Connect Us &rarr;</a>
+                </div>
+
+                <!-- 17. Valuation -->
+                <div class="service-card">
+                    <div class="service-icon-bubble">⚖️</div>
+                    <h3>Valuation</h3>
+                    <p class="service-tagline">Know the real value behind your numbers.</p>
+                    <p class="service-overview">Structured, compliant valuations suitable for fundraising, transactions,
+                        restructures, and reporting.</p>
+                    <a href="javascript:void(0)" onclick="openConnectModal('Valuation Services')"
+                        class="learn-more-link">Connect Us &rarr;</a>
+                </div>
+
+                <!-- 18. Subsidy Advisory -->
+                <div class="service-card">
+                    <div class="service-icon-bubble">📜</div>
+                    <h3>Subsidy Advisory</h3>
+                    <p class="service-tagline">Government benefits your business shouldn’t miss.</p>
+                    <p class="service-overview">Identifying subsidy opportunities and providing complete documentation
+                        and filing support.</p>
+                    <a href="javascript:void(0)" onclick="openConnectModal('Subsidy Advisory')"
+                        class="learn-more-link">Connect Us &rarr;</a>
+                </div>
+
+                <!-- 19. Virtual CFO & Strategic Advisory -->
+                <div class="service-card">
+                    <div class="service-icon-bubble">👑</div>
+                    <h3>Virtual CFO & Strategic Advisory</h3>
+                    <p class="service-tagline">Insight. Strategy. Financial leadership.</p>
+                    <p class="service-overview">Overseeing your financial structure and delivering the clarity needed
+                        for stronger decision-making.</p>
+                    <a href="javascript:void(0)" onclick="openConnectModal('Virtual CFO Advisory')"
+                        class="learn-more-link">Connect Us &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Working Process -->
+    <section class="process-section" style="background: white;">
+        <div class="container">
+            <h2 style="text-align: center; font-weight: 800; color: var(--color-dark-navy);">Our Working Process</h2>
+            <p style="text-align: center; color: var(--color-text-muted); margin-bottom: 50px;">A phased approach to
+                business transformation and scaling.</p>
+            <div class="process-grid">
+                <div class="process-step-card">
+                    <div class="step-num-bubble">01</div>
+                    <div class="process-card-content">
+                        <h3>Strategic Assessment</h3>
+                        <p>Identifying growth levers and structural bottlenecks in your current business model.</p>
+                    </div>
+                </div>
+                <div class="process-step-card">
+                    <div class="step-num-bubble">02</div>
+                    <div class="process-card-content">
+                        <h3>Implementation Roadmap</h3>
+                        <p>Executing lean processes and financial controls designed for scaled efficiency.</p>
+                    </div>
+                </div>
+                <div class="process-step-card">
+                    <div class="step-num-bubble">03</div>
+                    <div class="process-card-content">
+                        <h3>Sustained Acceleration</h3>
+                        <p>Continuous performance monitoring and proactive strategic capital advisory for growth.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why FinNomy Section -->
+    <section class="services-section-wrapper" style="background: var(--color-light-background);">
+        <div class="container">
+            <h2 style="text-align: center; font-weight: 800; color: var(--color-dark-navy);">The FinNomy Advantage</h2>
+            <p style="text-align: center; color: var(--color-text-muted); margin-bottom: 40px;">Why industry leaders
+                choose us to lead their financial evolution.</p>
+
+            <div class="why-premium-grid">
+                <div class="why-premium-card">
+                    <div class="why-icon-box">🚀</div>
+                    <h4>Scale-First Mentality</h4>
+                    <p>Our strategies are built for 10x growth, moving beyond simple incremental gains.</p>
+                </div>
+                <div class="why-premium-card">
+                    <div class="why-icon-box">📊</div>
+                    <h4>Data-Driven Clarity</h4>
+                    <p>Replacing gut feelings with precise, actionable financial growth metrics and insights.</p>
+                </div>
+                <div class="why-premium-card">
+                    <div class="why-icon-box">🎯</div>
+                    <h4>Strategic Growth Roadmap</h4>
+                    <p>A data-backed financial plan tailored to your unique business objectives, ensuring every move is
+                        aligned with your long-term scaling goals.</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -184,9 +191,9 @@
                 <div class="footer-links">
                     <h4>Quick Links</h4>
                     <ul>
-                        <li><a href="index.html" class="footer-link-home">Home</a></li>
-                        <li><a href="about.html" class="footer-link-about">About Us</a></li>
-                        <li><a href="services.html" class="footer-link-services">Services</a></li>
+                        <li><a href="index.html#home" class="footer-link-home">Home</a></li>
+                        <li><a href="index.html#about" class="footer-link-about">About Us</a></li>
+                        <li><a href="index.html#services" class="footer-link-services">Services</a></li>
                         <li><a href="calculators.html" class="footer-link-calculators">Calculators</a></li>
                     </ul>
                 </div>
@@ -225,6 +232,7 @@
                                             d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                                     </svg>
                                 </a>
+
                                 <a href="https://x.com/Fin_Nomy" aria-label="X (Twitter)" target="_blank"
                                     rel="noopener noreferrer">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -248,43 +256,34 @@
         </div>
     </footer>
 
-    <!-- Simple Modal Structure */ -->
+    <!-- Connect Modal Overlay (Nomy Connect) -->
     <div id="connectModalOverlay" class="modal-overlay">
         <div class="modal-box">
-            <!-- Left Column: 40% Sidebar (Green) -->
             <div class="modal-left">
                 <h2 class="modal-header-text text-fin">Fin</h2>
             </div>
-
-            <!-- Right Column: 70% Content (White) -->
             <div class="modal-right">
                 <button class="close-modal-btn" onclick="closeConnectModal()">&times;</button>
-
                 <div class="modal-header-wrapper">
                     <h2 class="modal-header-text text-nomy">Nomy Connect</h2>
                     <p class="modal-subline">A bridge between you and financial clarity</p>
                 </div>
-
                 <div class="modal-scroll-content">
-                    <!-- Section A: Personal Details -->
                     <div class="form-grid">
                         <div>
                             <label class="form-label">Full Name*</label>
                             <input type="text" id="inputName" class="form-input" placeholder="Your Name" required>
-                            <span class="error-message">Name is required</span>
                         </div>
                         <div>
                             <label class="form-label">Company</label>
                             <input type="text" id="inputCompany" class="form-input" placeholder="Company Name">
                         </div>
                     </div>
-
                     <div class="form-grid">
                         <div>
                             <label class="form-label">Email*</label>
                             <input type="email" id="inputEmail" class="form-input" placeholder="name@example.com"
                                 required>
-                            <span class="error-message">Enter a valid email</span>
                         </div>
                         <div>
                             <label class="form-label">Mobile Number*</label>
@@ -293,118 +292,66 @@
                                 <input type="tel" id="inputMobile" class="form-input" placeholder="9876543210"
                                     maxlength="10" required>
                             </div>
-                            <span class="error-message" style="margin-top: -1.2rem; margin-bottom: 1.2rem;">Mobile is
-                                required</span>
                         </div>
                     </div>
-
-                    <div class="form-grid">
-                        <div>
-                            <label class="form-label">Social Media Link</label>
-                            <input type="text" class="form-input" placeholder="LinkedIn, Instagram, Twitter, etc.">
-                        </div>
-                        <div>
-                            <label class="form-label">Website URL</label>
-                            <input type="url" class="form-input" placeholder="https://...">
-                        </div>
-                    </div>
-
-                    <!-- Section B: Services Required -->
-                    <label class="form-label" style="margin-top: 1rem;">Service Required*</label>
-                    <div style="margin-bottom: 1.5rem;">
-                        <select id="inputService" class="form-input" style="appearance: auto;" required>
-                            <option value="" disabled selected>Select a Service</option>
-
-                            <optgroup label="Accounting & Financial Management">
-                                <option>Accounting & Bookkeeping</option>
-                                <option>Financial Planning & Analysis (FP&A)</option>
-                                <option>Cost Management</option>
-                                <option>MIS & Reporting</option>
-                                <option>Internal Controls</option>
-                                <option>Business Management Support</option>
-                            </optgroup>
-
-                            <optgroup label="Compliance & Legal">
-                                <option>GST Compliance</option>
-                                <option>Income Tax Compliance</option>
-                                <option>ROC / MCA Filings</option>
-                                <option>Audit & Certifications</option>
-                                <option>Litigation Support</option>
-                            </optgroup>
-
-                            <optgroup label="Tax & Wealth Planning">
-                                <option>Tax Planning</option>
-                                <option>Investment Planning</option>
-                                <option>Retirement Planning</option>
-                            </optgroup>
-
-                            <optgroup label="Business & Growth Services">
-                                <option>Startup Services</option>
-                                <option>Business Growth & Strategy</option>
-                                <option>Valuation</option>
-                                <option>Subsidy Advisory</option>
-                                <option>Virtual CFO & Strategic Advisory</option>
-                            </optgroup>
-                        </select>
-                        <span class="error-message">Please select a service</span>
-                    </div> <!-- Closing form-container -->
-
-                    <!-- Section C: Description & Submit -->
+                    <label class="form-label">Service Required*</label>
+                    <select id="inputService" class="form-input" required>
+                        <option value="" disabled selected>Select a Service</option>
+                        <optgroup label="Accounting & Financial Management">
+                            <option>Accounting & Bookkeeping</option>
+                            <option>Financial Planning & Analysis (FP&A)</option>
+                            <option>Cost Management</option>
+                            <option>MIS & Reporting</option>
+                            <option>Internal Controls</option>
+                            <option>Business Management Support</option>
+                        </optgroup>
+                        <optgroup label="Compliance & Legal">
+                            <option>GST Compliance</option>
+                            <option>Income Tax Compliance</option>
+                            <option>ROC / MCA Filings</option>
+                            <option>Audit & Certifications</option>
+                            <option>Litigation Support</option>
+                        </optgroup>
+                        <optgroup label="Tax & Wealth Planning">
+                            <option>Tax Planning</option>
+                            <option>Investment Planning</option>
+                            <option>Retirement Planning</option>
+                        </optgroup>
+                        <optgroup label="Business & Growth Services">
+                            <option>Startup Services</option>
+                            <option>Business Growth & Strategy</option>
+                            <option>Valuation</option>
+                            <option>Subsidy Advisory</option>
+                            <option>Virtual CFO & Strategic Advisory</option>
+                        </optgroup>
+                    </select>
                     <div style="margin-top: 1.5rem;">
                         <label class="form-label">Brief Description*</label>
                         <textarea id="inputDescription" class="form-textarea"
-                            placeholder="Please describe your requirement in detail. The more clearly you explain, the better we can assist you."
-                            required></textarea>
-                        <span class="error-message">Description is required</span>
+                            placeholder="Please describe your requirement..."></textarea>
                     </div>
-
-                    <!-- Consent Checkbox -->
                     <div class="consent-container">
                         <input type="checkbox" id="inputConsent" class="consent-checkbox" required>
-                        <label for="inputConsent" class="consent-label">I agree to FinNomy’s Privacy Policy and consent
-                            to being contacted.</label>
+                        <label for="inputConsent" class="consent-label">I agree to FinNomy’s Privacy Policy.</label>
                     </div>
-
                     <button id="btnSubmit" class="btn-submit-request" disabled>Submit Request</button>
-                </div> <!-- Closing modal-scroll-content -->
-
-                <!-- Success Screen (Hidden by Default) -->
-                <div id="successScreen" class="success-container" style="display: none;">
-                    <h2 class="success-title">Thank you <span id="user-name-display"></span> for contacting FinNomy.
-                    </h2>
-                    <p class="success-body">Your request has been received successfully, and our team will reach out
-                        within 2-3 hours.</p>
-
-                    <div class="success-cta-row">
-                        <a href="index.html#home" class="btn-success-cta" onclick="closeConnectModal()">Home</a>
-                        <a href="index.html#services" class="btn-success-cta" onclick="closeConnectModal()">Explore our
-                            Services</a>
-                        <a href="index.html#calculators" class="btn-success-cta" onclick="closeConnectModal()">Explore
-                            Calculators</a>
-                    </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- Partner Modal Structure (Mirrors Client Modal) -->
+    <!-- Partner Modal Overlay -->
     <div id="partnerModalOverlay" class="modal-overlay">
         <div class="modal-box">
-            <!-- Left Column -->
             <div class="modal-left">
                 <h2 class="modal-header-text text-fin">Fin</h2>
             </div>
-
-            <!-- Right Column -->
             <div class="modal-right">
-                <!-- Sticky Header -->
                 <div class="modal-header-wrapper">
                     <span class="close-modal-btn" onclick="closePartnerModal()">&times;</span>
                     <h2 class="modal-header-text text-nomy">Nomy Connect</h2>
                     <p class="modal-subline">Aligning your expertise to deliver financial clarity</p>
                 </div>
-
                 <!-- Scrollable Content -->
                 <div class="modal-scroll-content" id="partnerFormContent">
                     <div class="form-container">
@@ -653,20 +600,12 @@
                         in
                         FinNomy.</h2>
                     <p class="success-body">We’ll email the next steps.</p>
-                    <div class="success-cta-row">
-                        <a href="index.html#home" class="btn-success-cta" onclick="closePartnerModal()">Home</a>
-                        <a href="index.html#services" class="btn-success-cta" onclick="closePartnerModal()">Explore our
-                            Services</a>
-                        <a href="index.html#calculators" class="btn-success-cta" onclick="closePartnerModal()">Explore
-                            Calculators</a>
-                    </div>
                 </div>
-            </div> <!-- End modal-right -->
-        </div> <!-- End modal-box -->
-    </div> <!-- End partnerModalOverlay -->
+            </div>
+        </div>
+    </div>
 
-    <!-- Main Logic -->
-    <script src="js/main.js"></script>
+    <!-- Privacy & Terms Modals (Links handled by main.js) -->
     <!-- Privacy Policy Modal -->
     <div id="privacyModal" class="modal-overlay" style="display: none;">
         <div class="privacy-modal-box">
@@ -910,7 +849,7 @@
         </div>
     </div>
 
-    <!-- Terms and Conditions Modal (Twin of Privacy Modal) -->
+    <!-- Terms and Conditions Modal -->
     <div id="termsModal" class="modal-overlay" style="display: none;">
         <div class="terms-modal-box">
             <div class="terms-header">
@@ -1061,7 +1000,7 @@
                     for any financial losses, investment failures, or statutory penalties incurred by the User as a
                     result of relying on these tools.</p>
 
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
 
                 <h3
                     style="background-color: #f9f9f9; padding: 10px; border-left: 4px solid var(--color-primary-green);">
@@ -1137,6 +1076,9 @@
             </div>
         </div>
     </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/services.js"></script>
 </body>
 
 </html>

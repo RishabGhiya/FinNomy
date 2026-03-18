@@ -281,15 +281,19 @@ document.addEventListener('DOMContentLoaded', () => {
             // 1. Scroll-to-section for Home/About/Services/Calc/Insights
             links.home.forEach(l => {
                 l.setAttribute('href', '#home');
+                l.onclick = null;
                 if (!window.location.hash || window.location.hash === '#home') l.classList.add('active');
             });
-            links.about.forEach(l => l.setAttribute('href', '#about'));
-            links.services.forEach(l => l.setAttribute('href', '#services'));
-            links.calculators.forEach(l => l.setAttribute('href', '#calculators'));
-            links.insights.forEach(l => l.setAttribute('href', '#insights'));
+            links.about.forEach(l => { l.setAttribute('href', '#about'); l.onclick = null; });
+            links.services.forEach(l => { l.setAttribute('href', '#services'); l.onclick = null; });
+            links.calculators.forEach(l => { l.setAttribute('href', '#calculators'); l.onclick = null; });
+            links.insights.forEach(l => { l.setAttribute('href', '#insights'); l.onclick = null; });
 
             // Connect Us stays as link to connect_us.html
-            links.connect.forEach(l => l.classList.remove('active'));
+            links.connect.forEach(l => {
+                l.onclick = null;
+                l.classList.remove('active');
+            });
 
         } else {
             // INNER PAGE BEHAVIOR (e.g. About, Connect Us)
@@ -313,11 +317,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 else l.classList.remove('active');
             });
 
-            // 4. Services, Insights -> Trigger Toast with Specific Messages
-            // Calculators -> Link to the live calculators page
-            links.calculators.forEach(l => l.setAttribute('href', 'calculators.html'));
-            attachToast(links.services, "We're carefully shaping our services to bring you financial clarity.");
-            attachToast(links.insights, "Clarity begins with understanding. Insights are on the way.");
+            // 4. Services, Calculators, Insights -> Link to the live pages/sections
+            links.services.forEach(l => { l.setAttribute('href', 'services.html'); l.onclick = null; });
+            links.calculators.forEach(l => { l.setAttribute('href', 'calculators.html'); l.onclick = null; });
+            links.insights.forEach(l => {
+                l.setAttribute('href', pageName === 'index.html' ? '#insights' : 'index.html#insights');
+                l.onclick = null;
+            });
         }
     };
 

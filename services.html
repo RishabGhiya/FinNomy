@@ -8,168 +8,136 @@
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-L5E8Q0DRGN');
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact FinNomy™ | Expert Advice for SIP, Tax & Business Compliance</title>
+    <title>FinNomy™ | Unified Service Ecosystem</title>
     <meta name="description"
-        content="Need professional help with your financial planning? Connect with FinNomy™ experts for personalized advice on calculators, tax compliance, wealth growth, and professional partnerships.">
-    <meta name="keywords"
-        content="contact FinNomy, financial advice, partner with FinNomy, finance experts, tax compliance help, professional finance network">
-    <link rel="canonical" href="https://finnomy.com/connect_us.html">
+        content="Explore the FinNomy™ Service Ecosystem. End-to-end professional finance solutions including accounting, compliance, tax planning, and strategic business growth.">
+
     <link rel="icon" type="image/png" href="assets/logo-nav.png">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://finnomy.com/connect_us.html">
-    <meta property="og:title" content="Contact FinNomy™ | Expert Advice & Partnerships">
-    <meta property="og:description"
-        content="Bridge the gap to financial clarity. Reach out for professional services or partnership opportunities.">
-    <meta property="og:image" content="https://finnomy.com/assets/logo-nav.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://finnomy.com/connect_us.html">
-    <meta property="twitter:title" content="Contact FinNomy™">
-    <meta property="twitter:description" content="Connect with financial experts and join our professional network.">
-    <meta property="twitter:image" content="https://finnomy.com/assets/logo-nav.png">
-
     <link rel="stylesheet" href="styles/main.css">
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* Page Specific Overrides to ensure it sits perfectly centered like a Hero */
-        .connect-hero-section {
-            min-height: calc(100vh - 90px);
-            /* Full height minus navbar */
-            display: flex;
-            align-items: center;
-            background-color: #ffffff;
-            /* Clean White */
-            padding: 4rem 0;
-            /* Add vertical padding to allow scrolling if tall */
-        }
-
-        .hero-card {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            /* Align top now that images are big */
-            align-items: center;
-            /* Center content in the column */
-            text-align: center;
-            /* Center text */
-            padding: 2rem;
-            transition: transform 0.3s ease;
-            height: 100%;
-            /* Full height match */
-        }
-
-        /* The Grey Line Separator */
-        .hero-card:first-child {
-            border-right: 2px solid #e5e7eb;
-            /* Greyish line */
-        }
-
-        .hero-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .hero-illustration {
-            width: 100%;
-            max-width: 650px;
-            /* MUCH BIGGER (was 400px) */
-            height: auto;
-            margin-bottom: 2.5rem;
-            filter: drop-shadow(0 15px 40px rgba(0, 0, 0, 0.1));
-        }
-
-        /* Typography matches Home Hero */
-        .hero-card h1 {
-            font-size: 2.5rem;
-            /* Hero sizing */
-            color: var(--color-dark-navy);
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .hero-card p {
-            font-size: 1.1rem;
-            color: var(--color-text-muted);
-            margin-bottom: 2rem;
-            max-width: 450px;
-            line-height: 1.6;
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 968px) {
-            .hero-card:first-child {
-                border-right: none;
-                border-bottom: 2px solid #e5e7eb;
-                /* Horizontal line on mobile */
-                padding-bottom: 4rem;
-                margin-bottom: 2rem;
-            }
-
-            .connect-hero-section {
-                height: auto;
-                min-height: auto;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles/services.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
-<body>
-
+<body class="bg-white">
     <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo"><img src="assets/logo-nav.png" alt="FinNomy Logo" class="nav-logo"></a>
+            <a href="index.html" class="logo"><img src="assets/logo-nav.png" alt="FinNomy Symbol" class="nav-logo"></a>
             <div class="hamburger-menu" id="mobile-menu-btn">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
             <ul class="nav-links" id="nav-links">
-                <li><a href="index.html" class="nav-link-home">Home</a></li>
+                <li><a href="index.html#home" class="nav-link-home">Home</a></li>
                 <li><a href="index.html#about" class="nav-link-about">About FinNomy</a></li>
-                <li><a href="services.html" class="nav-link-services">Services</a></li>
+                <li><a href="services.html" class="active nav-link-services">Services</a></li>
                 <li><a href="calculators.html" class="nav-link-calculators">Calculators</a></li>
                 <li><a href="index.html#insights" class="nav-link-insights">Insights</a></li>
-                <li><a href="connect_us.html" class="active nav-link-connect">Connect Us</a></li>
+                <li><a href="connect_us.html" class="nav-link-connect">Connect Us</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Main Section: Hero Style Split */ -->
-    <section class="connect-hero-section">
-        <div class="container split-layout">
+    <!-- 1. Hero Section -->
+    <section class="services-hero">
+        <div class="container">
+            <div class="text-content">
+                <span class="subheading text-fin-blue">Our Ecosystem</span>
+                <h1>The FinNomy™ <span style="color: var(--color-primary-green);">Service</span>
+                    <span style="color: var(--color-primary-green);">Ecosystem</span>
+                </h1>
+                <p>End-to-end professional solutions
+                    crafted to simplify your financial journey and build a stronger foundation.</p>
+            </div>
+            <div class="visual-content">
+                <img src="assets/services_hero_final.png" alt="FinNomy Financial Ecosystem Illustration"
+                    class="illustration-img">
+            </div>
+        </div>
+    </section>
 
-            <!-- Left Side: Connect Us -->
-            <div class="hero-card">
-                <img src="assets/connect_client_bridge.png" alt="Bridge to Clarity" class="hero-illustration">
-
-                <span class="subheading text-fin-blue">For Clients</span>
-                <h1>Start your financial journey with clarity</h1>
-                <p>Tell us your needs, and we’ll bridge you to the right expert.</p>
-
-                <button class="btn btn-fin-blue" onclick="openConnectModal()">Connect Us</button>
+    <!-- 2. Services Section -->
+    <section class="services-section-wrapper">
+        <div class="container">
+            <div class="services-welcome">
+                <h2>Welcome to FinNomy’s Unified Ecosystem.</h2>
             </div>
 
-            <!-- Right Side: Become a Partner -->
-            <div class="hero-card">
-                <img src="assets/partner_ecosystem_strict.png" alt="Growing Ecosystem" class="hero-illustration">
+            <div class="services-grid">
+                <!-- Category 1: Accounting -->
+                <a href=" accounting-financial-management.html" class="service-card">
+                    <div>
+                        <div class="service-icon-bubble">📈</div>
+                        <h3>Accounting & Financial Management</h3>
+                        <p class="service-overview">Clean books and real-time clarity for your daily operations and
+                            long-term stability.</p>
+                    </div>
+                    <span class="learn-more-link">Explore Category &rarr;</span>
+                </a>
 
-                <span class="subheading text-green">For Professionals</span>
-                <h1>Join FinNomy’s Professional Network</h1>
-                <p>Grow with FinNomy. Collaborate, contribute, and become part of our finance ecosystem.</p>
+                <!-- Category 2: Compliance -->
+                <a href="compliance-legal.html" class="service-card">
+                    <div>
+                        <div class="service-icon-bubble">⚖️</div>
+                        <h3>Compliance & Legal</h3>
+                        <p class="service-overview">Stay ahead of GST, Income Tax, and ROC filings with structured,
+                            stress-free compliance.</p>
+                    </div>
+                    <span class="learn-more-link">Explore Category &rarr;</span>
+                </a>
 
-                <button class="btn btn-green" onclick="openPartnerModal()">Become a Partner</button>
+                <!-- Category 3: Tax Planning -->
+                <a href="tax-wealth-planning.html" class="service-card">
+                    <div>
+                        <div class="service-icon-bubble">💰</div>
+                        <h3>Tax & Wealth Planning</h3>
+                        <p class="service-overview">Smart strategies to optimize your taxes and build sustainable wealth
+                            for the future.</p>
+                    </div>
+                    <span class="learn-more-link">Explore Category &rarr;</span>
+                </a>
+
+                <!-- Category 4: Business Growth -->
+                <a href="business-growth.html" class="service-card">
+                    <div>
+                        <div class="service-icon-bubble">🚀</div>
+                        <h3>Business & Growth Services</h3>
+                        <p class="service-overview">Scale your business with expert valuation, subsidy advisory, and
+                            strategic CFO support.</p>
+                    </div>
+                    <span class="learn-more-link">Explore Category &rarr;</span>
+                </a>
             </div>
+        </div>
+    </section>
 
+    <!-- 3. Last Section -->
+    <section id="dual-cta">
+        <div class="container">
+            <div class="cta-card">
+                <div class="dual-cta-split">
+                    <div class="cta-left">
+                        <h2><span class="text-fin-blue">Looking for clarity in your financial
+                                journey?</span> Let FinNomy be your trusted finance ecosystem.
+                        </h2>
+                        <a href="javascript:void(0)" class="btn btn-fin-blue" style="margin-top: 1rem;"
+                            onclick="openConnectModal()">Connect Us</a>
+                    </div>
+                    <div class="cta-right">
+                        <h2><span style="color: var(--color-primary-green);">Grow with FinNomy.</span> Collaborate,
+                            contribute, and become part of our finance ecosystem.</h2>
+                        <button class="btn btn-pulse" style="margin-top: 1rem;" onclick="openPartnerModal()">Become
+                            a Partner</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -184,9 +152,9 @@
                 <div class="footer-links">
                     <h4>Quick Links</h4>
                     <ul>
-                        <li><a href="index.html" class="footer-link-home">Home</a></li>
-                        <li><a href="about.html" class="footer-link-about">About Us</a></li>
-                        <li><a href="services.html" class="footer-link-services">Services</a></li>
+                        <li><a href="index.html#home" class="footer-link-home">Home</a></li>
+                        <li><a href="index.html#about" class="footer-link-about">About Us</a></li>
+                        <li><a href="index.html#services" class="footer-link-services">Services</a></li>
                         <li><a href="calculators.html" class="footer-link-calculators">Calculators</a></li>
                     </ul>
                 </div>
@@ -248,7 +216,8 @@
         </div>
     </footer>
 
-    <!-- Simple Modal Structure */ -->
+    <!-- Modals (Standardized from index.html) -->
+    <!-- Connect Modal Overlay -->
     <div id="connectModalOverlay" class="modal-overlay">
         <div class="modal-box">
             <!-- Left Column: 40% Sidebar (Green) -->
@@ -665,8 +634,6 @@
         </div> <!-- End modal-box -->
     </div> <!-- End partnerModalOverlay -->
 
-    <!-- Main Logic -->
-    <script src="js/main.js"></script>
     <!-- Privacy Policy Modal -->
     <div id="privacyModal" class="modal-overlay" style="display: none;">
         <div class="privacy-modal-box">
@@ -1052,7 +1019,9 @@
                 <p>The accuracy of the output depends entirely on the accuracy and completeness of the data provided by
                     the User. FinNomy is not liable for errors resulting from incorrect user inputs.</p>
 
-                <h3 style="margin-top: 20px;">23. MATHEMATICAL & LAW LATENCY DISCLAIMER</h3>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
+
+                <h3>23. MATHEMATICAL & LAW LATENCY DISCLAIMER</h3>
                 <p>While we strive for accuracy, calculations may contain rounding differences or may not reflect the
                     latest minute-by-minute changes in market conditions or statutory tax laws.</p>
 
@@ -1137,6 +1106,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
 </body>
 
 </html>

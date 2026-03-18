@@ -1,0 +1,542 @@
+/* FinNomy Services Styling */
+
+/* Override global main.css constraints for natural scrolling */
+html,
+body {
+    height: auto !important;
+    overflow: visible !important;
+    scroll-snap-type: none !important;
+}
+
+:root {
+    --card-radius: 16px;
+    --card-padding: 30px;
+}
+
+/* Service Hero Section */
+.services-hero {
+    padding-top: 140px;
+    padding-bottom: 80px;
+    background-color: #ffffff;
+    /* User requested white */
+}
+
+.services-hero .container {
+    max-width: 1400px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.services-hero .text-content {
+    flex: 1;
+    text-align: left;
+}
+
+.services-hero .visual-content {
+    flex: 1;
+    text-align: right;
+    margin-top: 0;
+}
+
+.services-hero .illustration-img {
+    max-width: 1100px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    /* mix-blend-mode and filter removed to ensure pure white background transparency */
+    transform: scale(1.45) translateX(60px);
+    transform-origin: right center;
+}
+
+@media (max-width: 1024px) {
+    .services-hero .container {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .services-hero .text-content,
+    .services-hero .visual-content {
+        text-align: center;
+        flex: none;
+        width: 100%;
+    }
+
+    .services-hero .illustration-img {
+        transform: none;
+        margin: 0 auto;
+        max-width: 80%;
+        max-height: 350px;
+    }
+
+    .services-hero {
+        padding-top: 120px;
+        padding-bottom: 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .services-hero h1 {
+        font-size: 2.5rem !important;
+    }
+
+    .services-hero .illustration-img {
+        max-width: 100%;
+    }
+}
+
+
+/* Service Welcome & Grid Section */
+.services-section-wrapper {
+    background-color: var(--color-light-background);
+    padding: 100px 0;
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+}
+
+.services-welcome {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.services-welcome h2 {
+    font-size: 2.2rem;
+    color: var(--color-dark-navy);
+    margin: 0;
+    font-weight: 800;
+}
+
+/* Service Grid */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+@media (max-width: 1024px) {
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .services-section-wrapper {
+        padding: 60px 0;
+    }
+}
+
+/* Service Card (Exact Calculator Style) */
+.service-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease-in-out;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: auto;
+    /* Match calculator card stretch */
+    min-height: 250px;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.service-overview {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin-bottom: 20px;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+    border-color: transparent;
+    background: linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(to right, #00B37E, #0B63D8) border-box;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.service-icon-bubble {
+    font-size: 1.8rem;
+    color: var(--color-primary-green);
+    background-color: #ECFDF5;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.service-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-dark-navy);
+    margin-bottom: 10px;
+}
+
+.service-overview {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.learn-more-link {
+    color: var(--color-secondary-blue);
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover .learn-more-link {
+    gap: 12px;
+    color: var(--color-primary-green);
+}
+
+/* Process Section */
+.process-section {
+    padding: 80px 0;
+    background: #ffffff;
+}
+
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.process-step {
+    text-align: center;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: var(--color-light-background);
+    color: var(--color-secondary-blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 auto 20px;
+    border: 2px solid var(--color-secondary-blue);
+}
+
+/* Why Section */
+.why-section {
+    padding: 80px 0;
+    background: var(--color-light-background);
+}
+
+.why-bullets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.why-item {
+    display: flex;
+    gap: 15px;
+    align-items: start;
+}
+
+.check-icon {
+    color: var(--color-primary-green);
+    font-size: 1.2rem;
+}
+
+/* CTA Section */
+.services-cta {
+    padding: 80px 0;
+    text-align: center;
+    background: white;
+}
+
+.services-cta h2 {
+    margin-bottom: 10px;
+}
+
+.services-cta p {
+    margin-bottom: 30px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--color-dark-navy);
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    padding: 14px 18px;
+    border: 1px solid #e0e5eb;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--color-primary-green);
+    outline: none;
+}
+
+.submit-btn {
+    background: var(--color-primary-green);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #009b6d;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 179, 126, 0.2);
+}
+
+/* Success Message */
+.success-message {
+    text-align: center;
+    display: none;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--color-primary-green);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin: 0 auto 24px;
+}
+
+/* Loader Animation */
+.finnomy-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader-logo {
+    width: 100px;
+    height: 100px;
+    animation: pulseFade 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseFade {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.9);
+        opacity: 0.5;
+    }
+}
+
+#dual-cta {
+    background-color: #ffffff;
+    padding-bottom: 80px;
+}
+
+/* Premium Process Steps */
+.process-step-card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.process-step-card:hover {
+    transform: translateX(10px);
+    border-color: var(--color-secondary-blue);
+    box-shadow: 0 15px 40px rgba(11, 99, 216, 0.1);
+}
+
+.step-num-bubble {
+    width: 60px;
+    height: 60px;
+    background: var(--color-secondary-blue);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.process-card-content h3 {
+    margin-bottom: 10px;
+    color: var(--color-dark-navy);
+}
+
+.process-card-content p {
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+/* Roadmap Background Effect - REMOVED */
+.process-section {
+    position: relative;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.process-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Why Premium Grid */
+.why-premium-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+@media (max-width: 1024px) {
+    .why-premium-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .why-premium-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+.why-premium-card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.why-premium-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.why-icon-box {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.why-premium-card h4 {
+    color: var(--color-dark-navy);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.why-premium-card p {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+    .process-step-card {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .process-step-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+        padding: 30px 20px;
+    }
+
+    .process-card-content h3 {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 968px) {
+    .why-premium-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .process-step-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+}
