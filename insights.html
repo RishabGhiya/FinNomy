@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L5E8Q0DRGN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-L5E8Q0DRGN');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights | FinNomy™ - Financial Clarity & Compliance Hub</title>
+    <link rel="icon" type="image/png" href="assets/logo-nav.png">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/insights.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --gst-bg: #e6fffa;
+            --gst-text: #319795;
+            --it-bg: #ebf8ff;
+            --it-text: #3182ce;
+            --mca-bg: #fffff0;
+            --mca-text: #b7791f;
+        }
+
+        .compliance-pulse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .category-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid #edf2f7;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f7fafc;
+            margin-bottom: 1rem;
+        }
+
+        .category-header h3 {
+            font-size: 1.25rem;
+            color: #2d3748;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .scrollable-feed {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e0 transparent;
+        }
+
+        .scrollable-feed::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scrollable-feed::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 10px;
+        }
+
+        .amendment-snippet {
+            padding: 1.25rem;
+            border-radius: 12px;
+            background: #f8fafc;
+            margin-bottom: 1rem;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .amendment-snippet:hover {
+            border-color: var(--color-primary-green);
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transform: translateX(4px);
+        }
+
+        .snippet-date {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #a0aec0;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .snippet-title {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .read-more-link {
+            font-size: 0.85rem;
+            color: var(--color-primary-green);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Modal Styles */
+        .pulse-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+        }
+
+        .pulse-modal-content {
+            background: #fff;
+            margin: 5% auto;
+            padding: 2.5rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 650px;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .close-pulse-modal {
+            position: absolute;
+            right: 1.5rem;
+            top: 1rem;
+            font-size: 2.5rem;
+            color: #cbd5e0;
+            cursor: pointer;
+        }
+
+        .modal-body-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-tag {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: #1a202c;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .modal-desc {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #4a5568;
+            margin-bottom: 2rem;
+            text-align: justify;
+        }
+
+        .modal-footer-btn {
+            display: block;
+            text-align: center;
+            padding: 1.1rem;
+            background: var(--color-primary-green);
+            color: white;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .btn-it {
+            background: var(--it-bg);
+            color: var(--it-text);
+        }
+
+        .btn-gst {
+            background: var(--gst-bg);
+            color: var(--gst-text);
+        }
+
+        .btn-mca {
+            background: var(--mca-bg);
+            color: var(--mca-text);
+        }
+        .loading-state {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 4rem;
+            color: #cbd5e0;
+        }
+
+        .staleness-banner {
+            text-align: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .staleness-fresh {
+            background: #e6fffa;
+            color: #319795;
+        }
+
+        .staleness-stale {
+            background: #fffff0;
+            color: #b7791f;
+        }
+
+        .staleness-critical {
+            background: #fff5f5;
+            color: #c53030;
+        }
+    </style>
+</head>
+
+<body class="insights-page">
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo"><img src="assets/logo-nav.png" alt="FinNomy Logo" class="nav-logo"></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About FinNomy</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="calculators.html">Calculators</a></li>
+                <li><a href="javascript:void(0)" class="active">Insights</a></li>
+                <li><a href="connect_us.html">Connect Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="insights-hero" style="padding-bottom: 4rem;">
+        <div class="container" style="text-align: center;">
+            <span class="subheading" style="color: var(--color-primary-green);" data-aos="fade-up">Knowledge Hub</span>
+            <h1 style="color: white; margin-bottom: 1rem;" data-aos="fade-up" data-aos-delay="100">Financial Insights
+                Hub</h1>
+            <p style="color: rgba(255,255,255,0.7); max-width: 700px; margin: 0 auto;" data-aos="fade-up"
+                data-aos-delay="200">
+                15+ Live amendments tracked across key regulatory sectors in real-time.
+            </p>
+        </div>
+    </section>
+
+    <section id="compliance-pulse" style="margin-top: -3rem;">
+        <div class="container">
+            <div id="staleness-indicator"></div>
+            <div class="compliance-pulse-grid" id="pulse-grid-container">
+                <div class="loading-state">Initialising live hubs...</div>
+            </div>
+        </div>
+    </section>
+
+    <div id="pulseModal" class="pulse-modal">
+        <div class="pulse-modal-content">
+            <span class="close-pulse-modal" id="closeModalBtn">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        const itLink = "https://www.incometaxindia.gov.in/pages/whats-new.aspx";
+        const gstLink = "https://www.cbic.gov.in/htdocs-cbec/gst/index.html";
+        const mcaLink = "https://www.mca.gov.in/content/mca/global/en/notifications-rules/circulars.html";
+
+        const fallbackData = [
+            { "date": "2026-03-19", "category": "Income Tax", "title": "Notification No. 15/2026: Extension of Deadline for Form 10BD", "summary": "The CBDT has issued Notification No. 15/2026, which provides a significant extension for the filing of Form 10BD for the financial year 2025-26. This form is mandatory for charitable institutions to report donations received and ensures transparency. The revised deadline allows trusts and NGOs much-needed additional time. This move facilitates the timely issuance of donation certificates (Form 10BE) to donors, essential for claiming tax deductions under Section 80G. Tax consultants recommend verifying all donor details like PAN and Aadhaar during this extension. Overall, this is a proactive step by the government to support the non-profit sector's challenges.", "link": itLink, "impact": "High" },
+            { "date": "2026-03-15", "category": "Income Tax", "title": "Circular No. 05/2026: Clarification on TDS for E-commerce Operators", "summary": "The CBDT released Circular No. 05/2026 to clarify TDS issues under Section 194-O, particularly relevant for the ONDC ecosystem. It defines who is responsible for tax deduction when buyers and sellers are on different platforms. It also addresses treatments for discounts and delivery charges. E-commerce platforms must update their payment gateway systems immediately to align with these guidelines. Non-compliance could lead to interest liabilities and notices. Sellers should check how these deductions reflect in their Form 26AS. This circular provides a clear framework for digital commerce in India.", "link": itLink, "impact": "Medium" },
+            { "date": "2026-03-10", "category": "Income Tax", "title": "Budget 2026 Update: New Slab Rates for Individual Taxpayers", "summary": "Income Tax Department has formalized tax slab changes for the New Tax Regency following the 2026 Budget. The extension of the basic exemption limit offers relief to middle-income earners. These changes aim to boost disposable income and drive domestic consumption. Standard deduction has also seen an upward revision. Taxpayers should re-evaluate their portfolios for the new financial year. Employers need to adjust payroll systems by April 2026 for accurate TDS calculation. Individual comparison between New and Old Regency is recommended by financial experts. This is one of the most significant personal tax shifts in years.", "link": itLink, "impact": "High" },
+            { "date": "2026-03-05", "category": "Income Tax", "title": "Advisory: Linking of PAN and Aadhaar for NRI Taxpayers", "summary": "Fresh advisory issued for NRI taxpayers regarding PAN-Aadhaar linking requirement. NRIs without Aadhaar must update their residential status on the portal to keep their PAN operative. An inoperative PAN can trigger higher TDS rates on Indian income. Those staying in India for 182+ days in the previous year are required to apply for Aadhaar. Regular checks of PAN status on the e-filing dashboard are highly recommended. If status shows 'Not Linked' for an NRI, professional assistance should be sought to update records with the jurisdictional officer. This ensures seamless repatriation of funds.", "link": itLink, "impact": "Medium" },
+            { "date": "2026-03-01", "category": "Income Tax", "title": "Instruction No. 02/2026: Guidelines for Faceless Assessment", "summary": "Comprehensive guidelines for Faceless Assessment Scheme focusing on order quality and natural justice principles. Assisting Officers are now mandated to provide video conferencing hearings upon request by the taxpayer. The instruction aims to end arbitrary additions by ensuring all submitted evidence is considered. Senior officials will vet high-value cases for consistency. Taxpayers should provide structured digital responses to all notices. This transparency move reduces appeal necessity and fosters trust. Maintaining digital logs of all portal communications is recommended for future reference.", "link": itLink, "impact": "Low" },
+            { "date": "2026-03-19", "category": "GST", "title": "Central Tax Notification 10/2026: Mandatory E-Invoicing for Small Businesses", "summary": "GST Council lowering e-invoicing threshold for mandatory compliance starting next quarter. This brings more SMEs into real-time reporting via the Invoice Registration Portal. IRNs are required for all B2B transactions to ensure valid credit transfer. Invalid invoices will prevent customers from claiming ITC. SMEs must upgrade accounting software to integrate with the government API. Authorized portals offer free support tools for the transition. Increased integration between e-invoice and e-way bill data is expected. This move marks a major step in digitizing the Indian supply chain.", "link": gstLink, "impact": "High" },
+            { "date": "2026-03-16", "category": "GST", "title": "Advisory: New Validation for GSTR-3B and GSTR-2B Mismatch", "summary": "GSTN introducing new automated validation for credit claimed in GSTR-3B versus availability in GSTR-2B. System blocks filing if mismatches exceed the allowed threshold until explanations are provided. This 'compliance-by-design' approach ensures that only tax-paid invoices are credited. Thorough monthly reconciliation of purchase registers with GSTR-2B is now essential. This prevents fraud and revenue leakage for the government. Businesses may need automated tools to manage high transaction volumes. Responding to DRC-01C notices becomes a routine part of the new filing workflow.", "link": gstLink, "impact": "Medium" },
+            { "date": "2026-03-12", "category": "GST", "title": "Update: GST Rates Revised for Healthcare and Clean Energy", "summary": "Key rate revisions following the 55th GST Council meeting to promote affordable healthcare and green energy. Taxes on life-saving drugs and medical devices have been slashed. Simultaneously, incentives given to manufacturers of solar panels and EV components for net-zero goals. Changes effective from the 1st of the coming month. ERP systems and catalogs must be updated. Hospital room rental taxability above certain limits is now clarified. Hybrid system classification for renewable energy sector provides much-needed investment clarity in India.", "link": gstLink, "impact": "High" },
+            { "date": "2026-03-08", "category": "GST", "title": "Circular No. 202/2026: Clarity on Place of Supply for Services", "summary": "Circular No. 202/2026 clarifying 'Place of Supply' for advertising, data hosting, and intermediary services. For global digital services, location of advertisement display determines POS for targeted campaigns. This significantly impacts IGST versus CGST+SGST determination. Illustrative examples provided for clarity on cross-border transactions. Server location alone is not the sole determinant for data hosting services. Businesses should audit existing billing structures to ensure compliance with these new interpretations. This move aims to reduce litigation in the service sector.", "link": gstLink, "impact": "Low" },
+            { "date": "2026-03-02", "category": "GST", "title": "Advisory: Transition to New GST Return Filing Portal (GST 2.0)", "summary": "Alpha phase of 'GST 2.0' portal announced with improved infrastructure for faster return filing. The new architecture is designed to handle peak traffic without sluggishness. Phased migration starting with large taxpayers. Features include offline drafting tools, integrated ledgers, and intuitive dashboards for notice tracking. Taxpayers should maintain backups during the migration period. GSTN organizing webinars for navigation training. This upgrade addresses long-standing industry feedback on portal performance. Ensure registered contact details are updated to receive migration invites.", "link": gstLink, "impact": "Medium" },
+            { "date": "2026-03-19", "category": "MCA", "title": "General Circular 04/2026: Relaxation in additional fees for LLP Form 8", "summary": "MCA Circular No. 04/2026 providing relief for LLPs struggling with the V3 portal interface during peak season. Additional fees for filing Form 8 (Statement of Accounts) waived for a specified period. This recognizes technical difficulties faced by professionals and reduces compliance costs. Benefit applicable to all LLPs filing within the new grace period. Active status on the portal depends on completing these mandatory filings. Professionals are advised to prioritize these submissions to avoid final-day portal congestion. This decision reinforces MCA's commitment to the 'Ease of Doing Business' initiative.", "link": mcaLink, "impact": "High" },
+            { "date": "2026-03-14", "category": "MCA", "title": "Notification: New Audit Requirements for Small Companies", "summary": "Revised audit requirements introduced for 'Small Companies' to balance corporate governance and compliance weight. Criteria for small company classification updated to bring more firms under lighter regulation. New mandatory disclosures for related party transactions and internal controls added to annual reports. This increases transparency for minority shareholders and lenders. SMEs should consult auditors to align year-end preparations with these Act revisions. Notification also streamlines auditor appointment and resignation protocols to ensure continuous oversight with minimal friction.", "link": mcaLink, "impact": "Medium" },
+            { "date": "2026-03-09", "category": "MCA", "title": "Update: V3 Portal Enhancements for Company Incorporation", "summary": "Completion of V3 portal enhancements for SPICE+ forms for faster company incorporation. Real-time identity verification and direct integration with PAN/TAN/ESIC systems now enabled. Target incorporation timeline reduced to under 24 hours. Automated name-check facility provides instant availability feedback, lowering rejection rates. Entrepreneurs encouraged to use e-KYC based authentication for seamless filing. Video tutorials and FAQs released for new workflow navigation. Recent portal improvements highly praised by the professional consultant community for improving business speed.", "link": mcaLink, "impact": "High" },
+            { "date": "2026-03-04", "category": "MCA", "title": "Advisory: Mandatory KYC for Directors (DIR-3 KYC) for 2026", "summary": "Mandatory annual KYC process for all directors with valid DIN IDs for 2026. Process must be finalized by the deadline to prevent DIN deactivation. Web-based verification allowed if no changes in personal data occurred since last year. Address or contact changes require fresh filing with digital signatures. Failure to comply results in a Rs. 5,000 penalty and system blocks on other corporate filings. KYC is vital for MCA to maintain accurate leadership records and track shell company activities. Directors advised to complete this early to avoid server delays near the deadline.", "link": mcaLink, "impact": "Medium" },
+            { "date": "2026-03-01", "category": "MCA", "title": "Circular No. 02/2026: Clarification on CSR Spending Guidelines", "summary": "Detailed clarification on CSR spending eligibility with focus on environment and carbon credits. Explains CSR fund investment pathways into the national 'Green Credit Program'. Administrative overhead cap remains strictly at 5% of total CSR spend. Timely update for companies aligning with global ESG reporting standards. CSR committees must perform impact assessments for high-value projects. This move enhances CSR quality and ensures meaningful social development. Companies should review internal CSR policies to ensure alignment with these new interpretations and eliminate greenwashing.", "link": mcaLink, "impact": "Low" }
+        ];
+
+        let activeData = [];
+
+        /**
+         * Validates that fetched data is a well-formed array of insight items.
+         * Unlike the old check, this does NOT assume category ordering or link format.
+         */
+        function isValidInsightsData(data) {
+            if (!Array.isArray(data) || data.length === 0) return false;
+            const requiredKeys = ['date', 'category', 'title', 'summary', 'link'];
+            // Check first 3 items (or all if fewer) have required structure
+            const sample = data.slice(0, Math.min(3, data.length));
+            return sample.every(item =>
+                item && typeof item === 'object' &&
+                requiredKeys.every(key => typeof item[key] === 'string' && item[key].trim().length > 0)
+            );
+        }
+
+        /**
+         * Shows a staleness indicator based on how old the data is.
+         */
+        function showStalenessIndicator(data) {
+            const indicator = document.getElementById('staleness-indicator');
+            if (!indicator || !data.length) return;
+
+            // Find the most recent date in the data
+            const dates = data.map(d => new Date(d.date)).filter(d => !isNaN(d));
+            if (!dates.length) return;
+
+            const latestDate = new Date(Math.max(...dates));
+            const now = new Date();
+            const daysDiff = Math.floor((now - latestDate) / (1000 * 60 * 60 * 24));
+
+            let cssClass, icon, message;
+            if (daysDiff <= 7) {
+                cssClass = 'staleness-fresh';
+                icon = '🟢';
+                message = `Updated ${latestDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}`;
+            } else if (daysDiff <= 30) {
+                cssClass = 'staleness-stale';
+                icon = '🟡';
+                message = `Last updated ${daysDiff} days ago — refresh may be pending`;
+            } else {
+                cssClass = 'staleness-critical';
+                icon = '🔴';
+                message = `Data is ${daysDiff} days old — automated updates may have stopped`;
+            }
+
+            indicator.innerHTML = `<div class="staleness-banner ${cssClass}">${icon} ${message}</div>`;
+        }
+
+        async function initPulse() {
+            try {
+                const response = await fetch('insights.json');
+                if (response.ok) {
+                    const parsed = await response.json();
+                    if (isValidInsightsData(parsed)) {
+                        activeData = parsed;
+                    } else {
+                        console.warn('insights.json has invalid structure, using fallback data.');
+                        activeData = fallbackData;
+                    }
+                } else {
+                    activeData = fallbackData;
+                }
+            } catch (err) {
+                console.warn('Using fallback data due to fetch error:', err);
+                activeData = fallbackData;
+            }
+            showStalenessIndicator(activeData);
+            renderPillars(activeData);
+        }
+
+        function renderPillars(data) {
+            const container = document.getElementById('pulse-grid-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const categories = [
+                { name: 'Income Tax', icon: 'fa-file-invoice-dollar', btnClass: 'btn-it' },
+                { name: 'GST', icon: 'fa-receipt', btnClass: 'btn-gst' },
+                { name: 'MCA', icon: 'fa-building', btnClass: 'btn-mca' }
+            ];
+
+            categories.forEach(cat => {
+                const catData = data
+                    .filter(item => item.category === cat.name)
+                    .sort((a, b) => new Date(b.date) - new Date(a.date))
+                    .slice(0, 5);
+
+                const card = document.createElement('div');
+                card.className = 'category-card';
+                card.setAttribute('data-aos', 'fade-up');
+
+                let feedHtml = catData.map(item => `
+                    <div class="amendment-snippet" onclick="showPopup('${item.title.replace(/'/g, "\\'")}')">
+                        <span class="snippet-date">${item.date}</span>
+                        <h4 class="snippet-title">${item.title}</h4>
+                        <span class="read-more-link">Details <i class="fas fa-chevron-right"></i></span>
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <div class="category-header">
+                        <div class="category-icon ${cat.btnClass}"><i class="fas ${cat.icon}"></i></div>
+                        <h3>${cat.name} Pulse</h3>
+                    </div>
+                    <div class="scrollable-feed">
+                        ${feedHtml}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function showPopup(title) {
+            const item = activeData.find(d => d.title === title);
+            if (!item) return;
+
+            const modal = document.getElementById('pulseModal');
+            const content = document.getElementById('modalContent');
+            const catClass = item.category.toLowerCase().replace(' ', '-');
+
+            content.innerHTML = `
+                <div class="modal-body-header">
+                    <span class="modal-tag tag-${catClass}">${item.category}</span>
+                    <span style="font-size: 0.9rem; color: #718096; margin-left: 1rem; font-weight: 500;">${item.date}</span>
+                </div>
+                <h2 class="modal-title">${item.title}</h2>
+                <div class="modal-desc">${item.summary}</div>
+                <a href="${item.link}" target="_blank" class="modal-footer-btn">
+                    View Official Document <i class="fas fa-external-link-alt"></i>
+                </a>
+            `;
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        document.getElementById('closeModalBtn').onclick = () => {
+            document.getElementById('pulseModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+
+        window.onclick = (e) => {
+            if (e.target.classList.contains('pulse-modal')) {
+                document.getElementById('pulseModal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        };
+
+        // Ensure initialization fires regardless of how the page was loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPulse);
+        } else {
+            initPulse();
+        }
+    </script>
+</body>
+
+</html>

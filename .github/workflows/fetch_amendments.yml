@@ -1,0 +1,53 @@
+name: Fetch Compliance Amendments
+
+on:
+  schedule:
+    - cron: '0 9 * * *' # Every day at 9:00 AM UTC
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update-insights:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: pip install google-generativeai
+
+      - name: Verify API Key Exists
+        run: |
+          if [ -z "${{ secrets.GEMINI_API_KEY }}" ]; then
+            echo "::error::GEMINI_API_KEY secret is not set. Add it in Settings > Secrets."
+            exit 1
+          fi
+          echo "✓ GEMINI_API_KEY is configured"
+
+      - name: Generate Compliance Updates
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          echo "=== Starting FinNomy Compliance Updater ==="
+          python fetch_amendments.py 2>&1 | tee updater_output.log
+          echo "=== Updater finished ==="
+
+      - name: Check for warnings
+        if: always()
+        run: |
+          if grep -q "WARNING" updater_output.log 2>/dev/null; then
+            echo "::warning::Check updater output for potential issues."
+          fi
+
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update compliance insights [skip ci]"
+          file_pattern: 'insights.json'
+
