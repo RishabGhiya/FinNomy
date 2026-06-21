@@ -1,0 +1,376 @@
+/* 
+   FinNomy Insights Page Styles
+   Focus: Premium Content Hub, Compliance Pulse, and Grid Layout
+*/
+
+/* 1. Page Background & Base */
+.insights-page {
+    background-color: var(--color-light-background);
+}
+
+.insights-page section {
+    padding: 6rem 0;
+}
+
+/* 2. Insights Hero */
+.insights-hero {
+    background: linear-gradient(135deg, rgba(10, 31, 61, 0.95) 0%, rgba(10, 31, 61, 0.8) 100%),
+        url('../assets/insights_hero.png');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 8rem 0 6rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 3. Compliance Pulse (The "Automated" Feed) */
+.compliance-pulse-container {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+    margin-top: -5rem;
+    /* Overlap with hero */
+    position: relative;
+    z-index: 10;
+}
+
+.pulse-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #f0f3f7;
+    padding-bottom: 1rem;
+}
+
+.pulse-header h2 {
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.pulse-dot {
+    width: 12px;
+    height: 12px;
+    background-color: #ff4d4d;
+    border-radius: 50%;
+    animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: scale(0.8);
+        box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7);
+    }
+
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 10px rgba(255, 77, 77, 0);
+    }
+
+    100% {
+        transform: scale(0.8);
+        box-shadow: 0 0 0 0 rgba(255, 77, 77, 0);
+    }
+}
+
+.pulse-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.pulse-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid #f1f5f9;
+    transition: all 0.3s ease;
+}
+
+.pulse-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    border-color: #e2e8f0;
+}
+
+.pulse-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+    flex-grow: 1;
+}
+
+.pulse-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid #f1f5f9;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.pulse-item:last-child {
+    border-bottom: none;
+}
+
+.pulse-item:hover {
+    color: var(--color-primary-blue);
+    padding-left: 0.5rem;
+}
+
+.pulse-item h4 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.pulse-item .item-arrow {
+    opacity: 0.3;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    color: var(--color-primary-green);
+    font-size: 1.2rem;
+}
+
+.pulse-item:hover .item-arrow {
+    opacity: 1;
+    transform: translateX(5px);
+}
+
+/* Modal Styles */
+.pulse-modal {
+    display: none;
+    position: fixed;
+    z-index: 10001;
+    /* Above navbar */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 31, 61, 0.85);
+    backdrop-filter: blur(8px);
+    overflow-y: auto;
+    padding: 2rem 0;
+}
+
+.pulse-modal-content {
+    background: white;
+    margin: 2rem auto;
+    padding: 3rem;
+    border-radius: 24px;
+    max-width: 700px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: modal-slide-up 0.4s ease-out;
+}
+
+@keyframes modal-slide-up {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close-pulse-modal {
+    position: absolute;
+    right: 2rem;
+    top: 1.5rem;
+    font-size: 2.5rem;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    line-height: 1;
+}
+
+.close-pulse-modal:hover {
+    color: var(--color-dark-navy);
+}
+
+.modal-tag {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.modal-title {
+    font-size: 2rem;
+    color: var(--color-dark-navy);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.modal-body {
+    color: #475569;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+}
+
+.modal-footer {
+    border-top: 1px solid #f1f5f9;
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+.modal-ref {
+    font-weight: 600;
+    color: var(--color-primary-blue);
+}
+
+.pulse-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.tag-gst {
+    background: #e6f7f2;
+    color: #00b37e;
+}
+
+.tag-tax {
+    background: #eef4ff;
+    color: #0b63d8;
+}
+
+.tag-roc {
+    background: #fff1e6;
+    color: #ff8c33;
+}
+
+.pulse-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-dark-navy);
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+
+.pulse-time {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* 4. Insights Grid */
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2.5rem;
+}
+
+.insight-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.insight-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+}
+
+.insight-thumb {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+.insight-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.insight-card:hover .insight-thumb img {
+    transform: scale(1.05);
+}
+
+.insight-body {
+    padding: 2rem;
+    flex-grow: 1;
+}
+
+.insight-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+}
+
+.insight-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-dark-navy);
+}
+
+.insight-excerpt {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+}
+
+/* 5. Insight-Specific CTAs */
+.read-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-primary-green);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.read-more-btn:hover {
+    gap: 0.75rem;
+}
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+    .compliance-pulse-container {
+        margin-top: -2rem;
+        padding: 1.5rem;
+    }
+
+    .insights-grid {
+        grid-template-columns: 1fr;
+    }
+}

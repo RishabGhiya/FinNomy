@@ -1,122 +1,122 @@
 [
   {
-    "date": "2026-05-22",
+    "date": "24 May 2026",
+    "category": "GST",
+    "title": "SC Relegates GST Assessee to Appeal Remedy as Final Assessment Orders Were Already Passed",
+    "summary": "The Supreme Court ruled that once final GST assessment orders are issued, taxpayers must use the statutory appellate remedy under Section 107 of the GST Act. Taxpayers cannot bypass this process and must raise any issues, including missing seized files, before the appellate authority.",
+    "link": "https://taxguru.in/goods-and-service-tax/sc-relegates-gst-assessee-appeal-remedy-final-assessment-orders-passed.html",
+    "impact": "High"
+  },
+  {
+    "date": "24 May 2026",
+    "category": "GST",
+    "title": "Regulatory & Adjudicatory Functions Cannot Be Artificially Segregated for GST Levy: Gauhati HC",
+    "summary": "The Gauhati High Court has determined that electricity regulatory functions and adjudicatory powers are integral parts of a single statutory framework. Therefore, they cannot be artificially split or classified as support services for the purpose of levying GST.",
+    "link": "https://taxguru.in/goods-and-service-tax/regulatory-adjudicatory-functions-artificially-segregated-gst-levy-gauhati-hc.html",
+    "impact": "Medium"
+  },
+  {
+    "date": "24 May 2026",
+    "category": "GST",
+    "title": "Karnataka HC Grants Protection From Coercive Action as Assessee Intended to File GST Appeal",
+    "summary": "The Karnataka High Court provided relief to a taxpayer by restraining the tax department from taking any coercive recovery steps. This protection is granted on the condition that the petitioner files the statutory appeal against the GST adjudication order.",
+    "link": "https://taxguru.in/goods-and-service-tax/karnataka-hc-grants-protection-coercive-action-assessee-intended-file-gst-appeal.html",
+    "impact": "High"
+  },
+  {
+    "date": "24 May 2026",
+    "category": "Income Tax",
+    "title": "ITAT Deletes Addition Because Gratuity Payments Exceeded Interest Income",
+    "summary": "The Kolkata ITAT has removed a tax addition against an employees' gratuity fund. The Tribunal noted that because the gratuity payouts were greater than the interest earned during the year, there was no net income to be taxed.",
+    "link": "https://taxguru.in/income-tax/itat-deletes-addition-gratuity-payments-exceeded-interest-income.html",
+    "impact": "Medium"
+  },
+  {
+    "date": "24 May 2026",
+    "category": "MCA",
+    "title": "EPFO Claims Rejected in CIRP Due to Lack of Sections 7A, 7Q & 14B Adjudication",
+    "summary": "The NCLT Mumbai approved a resolution plan, rejecting EPFO claims that were based only on provisional calculations without formal adjudication. The ruling asserts that only crystallized statutory liabilities determined through proper legal channels can be admitted during the Corporate Insolvency Resolution Process (CIRP).",
+    "link": "https://taxguru.in/corporate-law/epfo-claims-rejected-cirp-due-lack-sections-7a-7q-14b-adjudication.html",
+    "impact": "High"
+  },
+  {
+    "date": "22 May 2026",
     "category": "Income Tax",
     "title": "Notification No. 38/2026: Revised ITR Forms for AY 2026-27 Now Available",
-    "summary": "The CBDT has released updated ITR forms for Assessment Year 2026-27, incorporating the new tax slab rates from Budget 2026 and expanded reporting requirements. Key changes include a dedicated schedule for virtual digital assets, revised capital gains computation for new holding period rules, and updated Section 80C sub-limits. The new ITR-2 and ITR-3 forms now feature auto-populated fields from AIS/TIS data, reducing manual entry errors. Tax professionals should note the mandatory disclosure of foreign assets has been expanded to include crypto holdings on international exchanges. The deadline for filing has been confirmed as 31st July 2026 for non-audit cases. Employers and payroll systems must ensure TDS certificates (Form 16) align with the revised schedules. Early filing is strongly recommended to avoid last-minute portal congestion.",
-    "link": "https://www.incometaxindia.gov.in/pages/whats-new.aspx",
+    "summary": "The CBDT has released updated ITR forms for Assessment Year 2026-27, incorporating the new tax slab rates from Budget 2026 and expanded reporting requirements. Key changes include a dedicated schedule for virtual digital assets, revised capital gains computation for new holding period rules, and updated Section 80C sub-limits.",
+    "link": "https://incometaxindia.gov.in/Pages/communications/notifications.aspx",
     "impact": "High"
   },
   {
-    "date": "2026-05-18",
+    "date": "18 May 2026",
     "category": "Income Tax",
     "title": "Circular No. 09/2026: Clarification on Section 194T — TDS on Partnership Firm Payments",
-    "summary": "The CBDT has issued Circular No. 09/2026, providing detailed clarifications on the newly introduced Section 194T regarding TDS on payments made by partnership firms to their partners. Effective from April 2026, firms must deduct TDS at 10% on salary, remuneration, commission, bonus, and interest payments exceeding Rs. 20,000 annually to each partner. The circular addresses ambiguities around threshold calculation — confirming it is computed partner-wise per financial year. It clarifies that the provision applies to both traditional partnerships and LLPs. Partners should ensure their PAN is updated and linked with the firm's records. CA firms managing multiple partnerships must update their compliance checklists immediately. The government has also released an updated utility for Form 26Q to accommodate these new deductions. This is a significant shift in how partnership income is taxed at source.",
-    "link": "https://www.incometaxindia.gov.in/pages/whats-new.aspx",
+    "summary": "The CBDT has issued Circular No. 09/2026, providing detailed clarifications on the newly introduced Section 194T regarding TDS on payments made by partnership firms to their partners. Effective from April 2026, firms must deduct TDS at 10% on salary, remuneration, commission, bonus, and interest payments exceeding Rs. 20,000 annually to each partner.",
+    "link": "https://incometaxindia.gov.in/Pages/communications/notifications.aspx",
     "impact": "High"
   },
   {
-    "date": "2026-05-12",
+    "date": "12 May 2026",
     "category": "Income Tax",
     "title": "Advisory: New Annual Information Statement (AIS) 2.0 Portal Goes Live",
-    "summary": "The Income Tax Department has launched AIS 2.0, a revamped portal providing taxpayers with a comprehensive 360-degree view of their financial transactions. The upgraded system now integrates data from mutual fund houses, stock brokers, banks, property registrars, and cryptocurrency exchanges in near real-time. Taxpayers can now view pending high-value transaction alerts and submit online feedback for discrepancies directly through the portal. The new interface includes a graphical summary dashboard and downloadable Excel reports. Tax professionals can access client AIS data through the authorized representative module. This system is expected to significantly reduce assessment notices by enabling proactive correction of mismatches. The CBDT urges all taxpayers to review their AIS before filing returns for AY 2026-27. Integration with Form 26AS data has been streamlined for a unified experience.",
-    "link": "https://www.incometaxindia.gov.in/pages/whats-new.aspx",
+    "summary": "The Income Tax Department has launched AIS 2.0, a revamped portal providing taxpayers with a comprehensive 360-degree view of their financial transactions. The upgraded system now integrates data from mutual fund houses, stock brokers, banks, property registrars, and cryptocurrency exchanges in near real-time.",
+    "link": "https://incometaxindia.gov.in/Pages/communications/notifications.aspx",
     "impact": "Medium"
   },
   {
-    "date": "2026-05-06",
+    "date": "06 May 2026",
     "category": "Income Tax",
     "title": "Instruction No. 05/2026: Revised Monetary Limits for Filing Appeals",
-    "summary": "The CBDT has issued Instruction No. 05/2026, revising the monetary limits for filing departmental appeals before ITAT, High Courts, and the Supreme Court. The new thresholds have been increased to Rs. 60 lakh for ITAT, Rs. 2 crore for High Courts, and Rs. 5 crore for the Supreme Court. Cases involving transfer pricing, international taxation, and Constitutional questions remain exempt from these limits. This instruction is expected to reduce pending litigation significantly and free up judicial resources. Existing appeals below the revised thresholds will be reviewed for potential withdrawal. Taxpayers with pending cases below the new limits should consult their advocates about the possibility of early resolution. This is part of the government's broader initiative to reduce tax litigation by 50% before 2028.",
-    "link": "https://www.incometaxindia.gov.in/pages/whats-new.aspx",
+    "summary": "The CBDT has issued Instruction No. 05/2026, revising the monetary limits for filing departmental appeals before ITAT, High Courts, and the Supreme Court. The new thresholds have been increased to Rs. 60 lakh for ITAT, Rs. 2 crore for High Courts, and Rs. 5 crore for the Supreme Court.",
+    "link": "https://incometaxindia.gov.in/Pages/communications/notifications.aspx",
     "impact": "Medium"
   },
   {
-    "date": "2026-05-01",
-    "category": "Income Tax",
-    "title": "Notification No. 35/2026: TCS Exemption for Overseas Education Loans via RBI-Approved Banks",
-    "summary": "The CBDT has notified an exemption from Tax Collected at Source (TCS) under Section 206C(1G) for overseas education remittances funded through education loans disbursed by RBI-approved scheduled banks. This relief applies to loans sanctioned on or after 1st April 2026. Students and parents remitting funds for foreign university tuition fees through approved loan channels will no longer face the 5% TCS on amounts up to Rs. 7 lakh, or 20% above that threshold. The exemption requires the student to furnish a valid I-20/CAS letter and the loan sanction letter at the time of remittance. Banks must maintain compliance records for verification. This notification provides significant financial relief to families funding overseas education and removes a major cash-flow burden during the admission season.",
-    "link": "https://www.incometaxindia.gov.in/pages/whats-new.aspx",
-    "impact": "High"
-  },
-  {
-    "date": "2026-05-23",
+    "date": "23 May 2026",
     "category": "GST",
     "title": "Central Tax Notification 18/2026: Mandatory IMS Reconciliation Before GSTR-3B Filing",
-    "summary": "The GSTN has made it mandatory for all registered taxpayers to reconcile their Input Tax Credit (ITC) through the Invoice Management System (IMS) before filing GSTR-3B, effective from June 2026 returns. The IMS dashboard now requires explicit acceptance or rejection of each inward supply invoice. Auto-populated ITC in GSTR-3B will only include invoices marked as 'accepted' in IMS. Invoices left in 'pending' status beyond the filing deadline will be automatically deferred to the next period. This change aims to eliminate the persistent GSTR-2B vs GSTR-3B mismatches that triggered mass DRC-01C notices. Businesses with high invoice volumes must invest in automated reconciliation tools. The GSTN has released API documentation for ERP integration. Tax professionals should immediately train their teams on the new IMS workflow to avoid ITC loss.",
-    "link": "https://www.cbic.gov.in/htdocs-cbec/gst/index.html",
+    "summary": "The GSTN has made it mandatory for all registered taxpayers to reconcile their Input Tax Credit (ITC) through the Invoice Management System (IMS) before filing GSTR-3B, effective from June 2026 returns. The IMS dashboard now requires explicit acceptance or rejection of each inward supply invoice.",
+    "link": "https://www.cbic-gst.gov.in/central-tax-notifications.html",
     "impact": "High"
   },
   {
-    "date": "2026-05-17",
+    "date": "17 May 2026",
     "category": "GST",
     "title": "Circular No. 210/2026: Clarification on GST Applicability for EV Charging Stations",
-    "summary": "The CBIC has issued Circular No. 210/2026, providing crucial clarifications on the GST treatment of electric vehicle (EV) charging services. The circular confirms that supply of electricity through charging stations is classified as a 'service' and not a 'sale of goods', attracting 18% GST under SAC 9987. Residential housing societies providing EV charging as an amenity are covered under the composite supply provisions. Commercial charging station operators can claim ITC on infrastructure investment including chargers, electrical equipment, and civil construction. Battery swapping services are classified separately and attract 5% GST without ITC benefit. This clarity is expected to boost investments in the EV charging infrastructure sector. State-level authorities have been directed to issue trade facilitation circulars within 30 days.",
-    "link": "https://www.cbic.gov.in/htdocs-cbec/gst/index.html",
+    "summary": "The CBIC has issued Circular No. 210/2026, providing crucial clarifications on the GST treatment of electric vehicle (EV) charging services. The circular confirms that supply of electricity through charging stations is classified as a 'service' and not a 'sale of goods', attracting 18% GST under SAC 9987.",
+    "link": "https://www.cbic-gst.gov.in/central-tax-notifications.html",
     "impact": "Medium"
   },
   {
-    "date": "2026-05-10",
-    "category": "GST",
-    "title": "Advisory: GSTN Launches AI-Powered Return Filing Assistant (Beta)",
-    "summary": "GSTN has launched a beta version of its AI-powered return filing assistant integrated into the GST portal. The assistant uses machine learning to detect potential errors in GSTR-1 and GSTR-3B before submission, flagging mismatches in HSN codes, incorrect tax rate applications, and mathematical discrepancies. It also suggests optimal ITC utilization strategies based on the taxpayer's electronic credit ledger balances. Initial feedback from the pilot program involving large taxpayers has been positive, with error rates dropping by 40%. The tool currently supports English and Hindi, with more languages planned. Taxpayers can opt-in through the portal settings. GSTN emphasizes that all suggestions are advisory and the final filing decision rests with the taxpayer. This initiative is part of the broader GST 2.0 modernization roadmap.",
-    "link": "https://www.cbic.gov.in/htdocs-cbec/gst/index.html",
-    "impact": "Medium"
-  },
-  {
-    "date": "2026-05-05",
-    "category": "GST",
-    "title": "Rate Notification 16/2026: GST Reduced to 5% on Health and Life Insurance Premiums",
-    "summary": "Following extensive deliberation at the 56th GST Council meeting, the rate on health insurance and term life insurance premiums has been reduced from 18% to 5% without ITC. This landmark decision applies to individual policies with annual premiums up to Rs. 30,000, covering a vast majority of retail policyholders. Group health insurance policies provided by employers remain at 18% with full ITC. The effective date for the rate change is 1st June 2026. Insurance companies must issue revised premium schedules and update their billing systems. Policyholders on annual premium cycles may see prorated benefits. The move is expected to increase insurance penetration significantly. GST registration for insurance agents and their commission structures remain unchanged.",
-    "link": "https://www.cbic.gov.in/htdocs-cbec/gst/index.html",
-    "impact": "High"
-  },
-  {
-    "date": "2026-05-01",
-    "category": "GST",
-    "title": "Advisory: Mandatory Multi-Factor Authentication for GST Portal Login",
-    "summary": "GSTN has mandated multi-factor authentication (MFA) for all GST portal logins starting 15th May 2026. In addition to the existing OTP on registered mobile, users must now set up an authenticator app (Google Authenticator or Microsoft Authenticator) as a second factor. This measure addresses the rising incidents of unauthorized access and fraudulent return filings using compromised credentials. Authorized signatories and tax professionals using the DSC-based login pathway are exempted from the app-based MFA requirement. Users who fail to set up MFA will be locked out of their accounts after the grace period. GSTN has published a step-by-step setup guide on the portal help center. All API-based integrations using EVC authentication must also comply with the new security protocol.",
-    "link": "https://www.cbic.gov.in/htdocs-cbec/gst/index.html",
-    "impact": "Medium"
-  },
-  {
-    "date": "2026-05-21",
+    "date": "21 May 2026",
     "category": "MCA",
     "title": "General Circular 08/2026: Extended Timeline for Filing MSME Form I (Half-Yearly Return)",
-    "summary": "The MCA has extended the deadline for filing MSME Form I (Half-Yearly Return on outstanding payments to MSMEs) for the period October 2025 to March 2026. The new deadline provides a 30-day extension from the original due date. This relief addresses challenges faced by companies in reconciling vendor payment data across multiple ERP systems. All companies with outstanding payments to MSME-registered vendors exceeding 45 days must file this form. Non-filing results in the company being flagged for compliance review and potential penalty proceedings. Companies should cross-reference their vendor master data with the MSME Udyam registration portal. The circular also clarifies that the form must be filed even if the company has zero outstanding payments, as a nil return. Finance teams should prioritize vendor payment audits immediately.",
-    "link": "https://www.mca.gov.in/content/mca/global/en/notifications-rules/circulars.html",
+    "summary": "The MCA has extended the deadline for filing MSME Form I (Half-Yearly Return on outstanding payments to MSMEs) for the period October 2025 to March 2026. The new deadline provides a 30-day extension from the original due date.",
+    "link": "https://www.mca.gov.in/content/mca/global/en/notifications-rules/mca-circulars.html",
     "impact": "High"
   },
   {
-    "date": "2026-05-15",
+    "date": "15 May 2026",
     "category": "MCA",
     "title": "Notification: Companies (Accounts) Amendment Rules, 2026 — Sustainability Reporting",
-    "summary": "The MCA has notified the Companies (Accounts) Amendment Rules, 2026, introducing mandatory sustainability and ESG reporting for companies with a net worth exceeding Rs. 500 crore. The Business Responsibility and Sustainability Report (BRSR) framework has been updated to include Scope 3 emission disclosures, water stewardship metrics, and supply chain due diligence assessments. Companies falling under the new threshold must comply from FY 2026-27 onwards. Independent assurance of sustainability data by a qualified third party is now mandatory for the top 150 companies by market capitalization. The revised framework aligns with the International Sustainability Standards Board (ISSB) guidelines. Companies should begin training their sustainability teams and engaging assurance providers early. Board-level sustainability committees are now required to review quarterly progress.",
-    "link": "https://www.mca.gov.in/content/mca/global/en/notifications-rules/circulars.html",
+    "summary": "The MCA has notified the Companies (Accounts) Amendment Rules, 2026, introducing mandatory sustainability and ESG reporting for companies with a net worth exceeding Rs. 500 crore. The Business Responsibility and Sustainability Report (BRSR) framework has been updated to include Scope 3 emission disclosures.",
+    "link": "https://www.mca.gov.in/content/mca/global/en/notifications-rules/mca-circulars.html",
     "impact": "High"
   },
   {
-    "date": "2026-05-09",
+    "date": "09 May 2026",
     "category": "MCA",
     "title": "Update: V3 Portal — Digital Verification Module for Director DIN-KYC Now Live",
-    "summary": "The MCA V3 portal has launched a streamlined digital verification module for the annual Director DIN-KYC process. Directors can now complete their KYC entirely through Aadhaar-based e-KYC with facial recognition, eliminating the need for DSC-based filing in cases with no data changes. The system cross-references director information with the PAN database, voter ID records, and bank KYC repositories in real-time. Processing time has been reduced from 3-5 days to near-instant verification. Directors who completed KYC in the previous year with no changes can use the one-click 'Confirm No Changes' web-verification. The Rs. 5,000 penalty for non-compliance remains unchanged. Directors serving on boards of multiple companies should prioritize early completion. The deadline for DIN-KYC for FY 2025-26 is 30th September 2026.",
-    "link": "https://www.mca.gov.in/content/mca/global/en/notifications-rules/circulars.html",
+    "summary": "The MCA V3 portal has launched a streamlined digital verification module for the annual Director DIN-KYC process. Directors can now complete their KYC entirely through Aadhaar-based e-KYC with facial recognition, eliminating the need for DSC-based filing in cases with no data changes.",
+    "link": "https://www.mca.gov.in/content/mca/global/en/notifications-rules/mca-circulars.html",
     "impact": "Medium"
   },
   {
-    "date": "2026-05-04",
+    "date": "04 May 2026",
     "category": "MCA",
     "title": "Circular No. 06/2026: Revised Norms for Related Party Transactions Under Section 188",
-    "summary": "MCA Circular No. 06/2026 introduces revised materiality thresholds and approval mechanisms for Related Party Transactions (RPTs) under Section 188 of the Companies Act. The new norms lower the threshold for mandatory audit committee review to Rs. 1 crore (from Rs. 5 crore), ensuring greater scrutiny of inter-company dealings. Listed companies must now obtain prior approval of shareholders for RPTs exceeding the revised material threshold through a special resolution. The circular mandates detailed arm's length pricing documentation, aligning corporate governance standards with transfer pricing principles. Independent directors are required to provide a reasoned justification in their report for approving significant RPTs. Non-compliance attracts enhanced penalties including officer-in-default provisions. Companies should immediately review their RPT policies and update board agendas for upcoming meetings.",
-    "link": "https://www.mca.gov.in/content/mca/global/en/notifications-rules/circulars.html",
+    "summary": "MCA Circular No. 06/2026 introduces revised materiality thresholds and approval mechanisms for Related Party Transactions (RPTs) under Section 188 of the Companies Act. The new norms lower the threshold for mandatory audit committee review to Rs. 1 crore.",
+    "link": "https://www.mca.gov.in/content/mca/global/en/notifications-rules/mca-circulars.html",
     "impact": "High"
-  },
-  {
-    "date": "2026-05-01",
-    "category": "MCA",
-    "title": "Advisory: Mandatory XBRL Filing for Financial Statements — Expanded Taxonomy",
-    "summary": "The MCA has expanded the mandatory XBRL filing taxonomy for annual financial statements, effective for filings related to FY 2025-26 onwards. The updated taxonomy includes new tags for lease accounting under Ind AS 116, expected credit loss disclosures under Ind AS 109, and segment reporting enhancements. Companies with a paid-up capital exceeding Rs. 5 crore or turnover exceeding Rs. 150 crore must file using the new schema. The XBRL validation tool on the V3 portal has been updated to check for the expanded tags. Non-compliant filings will be automatically rejected at the portal level. Chartered Accountants and Company Secretaries must update their XBRL preparation software. MCA has released a comprehensive mapping guide between the old and new taxonomy elements. Early adoption is encouraged to allow time for resolving validation errors.",
-    "link": "https://www.mca.gov.in/content/mca/global/en/notifications-rules/circulars.html",
-    "impact": "Medium"
   }
 ]

@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
             about: document.querySelectorAll('.nav-link-about, .footer-link-about'),
             services: document.querySelectorAll('.nav-link-services, .footer-link-services'),
             calculators: document.querySelectorAll('.nav-link-calculators, .footer-link-calculators'),
-            insights: document.querySelectorAll('.nav-link-insights, .footer-link-insights'),
+            // insights: document.querySelectorAll('.nav-link-insights, .footer-link-insights'),
             connect: document.querySelectorAll('.nav-link-connect')
         };
 
@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isHomePage) {
             // HOME PAGE BEHAVIOR
-            // 1. Scroll-to-section for Home/About/Services/Calc/Insights
+            // 1. Scroll-to-section for Home/About/Services/Calc
             links.home.forEach(l => {
                 l.setAttribute('href', '#home');
                 l.onclick = null;
@@ -287,7 +287,12 @@ document.addEventListener('DOMContentLoaded', () => {
             links.about.forEach(l => { l.setAttribute('href', '#about'); l.onclick = null; });
             links.services.forEach(l => { l.setAttribute('href', '#services'); l.onclick = null; });
             links.calculators.forEach(l => { l.setAttribute('href', '#calculators'); l.onclick = null; });
-            links.insights.forEach(l => { l.setAttribute('href', '#insights'); l.onclick = null; });
+
+            // 2. Insights -> Link to section on Home Page
+            // links.insights.forEach(l => {
+            //     l.setAttribute('href', '#insights');
+            //     l.onclick = null;
+            // });
 
             // Connect Us stays as link to connect_us.html
             links.connect.forEach(l => {
@@ -317,13 +322,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 else l.classList.remove('active');
             });
 
-            // 4. Services, Calculators, Insights -> Link to the live pages/sections
+            // 4. Services, Calculators -> Link to the live pages
             links.services.forEach(l => { l.setAttribute('href', 'services.html'); l.onclick = null; });
             links.calculators.forEach(l => { l.setAttribute('href', 'calculators.html'); l.onclick = null; });
-            links.insights.forEach(l => {
-                l.setAttribute('href', pageName === 'index.html' ? '#insights' : 'index.html#insights');
-                l.onclick = null;
-            });
+
+            // 5. Insights -> Show "Coming Soon" Toast on all other pages
+            // attachToast(links.insights, "Clarity begins with understanding. Insights are on the way.");
         }
     };
 
