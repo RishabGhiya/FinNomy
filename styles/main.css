@@ -483,20 +483,18 @@ footer {
     grid-template-columns: 2fr 1fr 1fr 1fr;
     /* Give more space to brand column */
     gap: var(--spacing-lg);
+    align-items: start;
     margin-bottom: var(--spacing-sm);
     /* Reduced from lg to sm */
 }
 
 /* ... existing footer code ... */
 
-
-
 .footer-brand {
     display: flex;
     flex-direction: column;
     width: 100%;
-    align-items: center;
-    /* Changed to center alignment */
+    align-items: flex-start;
 }
 
 .footer-brand .logo {
@@ -521,11 +519,17 @@ footer {
     /* Tightly grouped */
 }
 
+.footer-links {
+    display: flex;
+    flex-direction: column;
+}
+
 .footer-links h4 {
     color: white;
     font-size: 18px;
     margin-bottom: var(--spacing-md);
     position: relative;
+    font-weight: 700;
 }
 
 .footer-links h4::after {
@@ -538,16 +542,32 @@ footer {
     background-color: var(--color-primary-green);
 }
 
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
 .footer-links ul li {
     margin-bottom: 12px;
+    line-height: 1.4;
+    list-style: none;
 }
 
-.footer-links a {
+.footer-links a,
+.footer-dropdown-trigger {
     color: rgba(255, 255, 255, 0.7);
     font-size: 14px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: inline-block;
+    cursor: pointer;
+    line-height: 1.4;
 }
 
-.footer-links a:hover {
+.footer-links a:hover,
+.footer-dropdown-trigger:hover,
+.footer-dropdown:hover .footer-dropdown-trigger {
     color: var(--color-primary-green);
 }
 

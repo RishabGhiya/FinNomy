@@ -1,0 +1,13 @@
+# Temporary Python and test scripts
+*.py
+*.pyc
+__pycache__/
+test_*.html
+test_*.py
+test-*.html
+test-*.txt
+*.tmp
+
+# VS Code Chrome debug data
+.vscode/chrome/
+.vscode/launch.json

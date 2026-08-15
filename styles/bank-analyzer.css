@@ -8,7 +8,13 @@
     margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     background:var(--bg); color:var(--text); line-height:1.5;
   }
-  .wrap{max-width:100%; margin:0; padding:0 2% 0; box-sizing:border-box; width:100%;}
+  .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 120px 16px 60px;
+    box-sizing: border-box;
+    width: 100%;
+  }
 
   /* Letterhead */
   .letterhead{
@@ -46,8 +52,8 @@
 
   /* Cards */
   .card{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; margin:18px 0;}
-  h1.page-title{font-size:22px; margin:24px 0 4px;}
-  .subtitle{color:var(--grey); font-size:14px; margin-bottom:0;}
+  .page-title, h1.page-title{font-size:26px; font-weight:800; color:var(--navy); margin:0 0 6px; letter-spacing:-0.5px;}
+  .subtitle{color:var(--grey); font-size:14.5px; margin:0 0 20px; line-height:1.5;}
 
   .upload-zone{
     border:2px dashed #C7D2E0; border-radius:12px; padding:36px 20px; text-align:center;
@@ -113,6 +119,3 @@
   @keyframes spin{to{transform:rotate(360deg);}}
   .col-2{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
   @media(max-width:600px){.col-2{grid-template-columns:1fr;}}
-    .wrap {
-        padding-top: 110px;
-    }
