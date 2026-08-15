@@ -87,6 +87,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Mobile Dropdown Toggle ---
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+        const toggleLink = dropdown.querySelector('.nav-link-tools');
+        if (toggleLink) {
+            toggleLink.addEventListener('click', (e) => {
+                // Only act as a toggle on mobile screens
+                if (window.innerWidth <= 768) {
+                    e.preventDefault(); 
+                    dropdown.classList.toggle('active');
+                }
+            });
+        }
+    });
+
     // 1. Intersection Observer for Scroll Animations
     const observerOptions = {
         root: null, // viewport

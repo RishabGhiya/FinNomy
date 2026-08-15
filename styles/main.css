@@ -2723,3 +2723,80 @@ select[multiple] {
     flex: 1 1 100% !important;
     min-width: unset !important;
 }
+
+/* --- Tools Dropdown Styles --- */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--color-dark-navy);
+    min-width: 260px;
+    box-shadow: var(--shadow-hover);
+    z-index: 1000;
+    border-radius: 8px;
+    padding: 10px 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-menu li {
+    display: block;
+    width: 100%;
+}
+
+.dropdown-menu li a {
+    color: rgba(255, 255, 255, 0.8) !important;
+    padding: 12px 24px !important;
+    text-decoration: none !important;
+    display: block;
+    font-size: 15px !important;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+.dropdown-menu li a:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+}
+
+/* Removes the underline animation for dropdown links */
+.dropdown-menu li a::after {
+    display: none !important; 
+}
+
+/* Desktop: Open on hover */
+@media (min-width: 769px) {
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+}
+
+/* Mobile: Default hidden, display block when 'active' */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        position: static;
+        background-color: transparent;
+        box-shadow: none;
+        padding-left: 15px;
+        border: none;
+    }
+    
+    .dropdown.active .dropdown-menu {
+        display: block;
+    }
+}
+
+/* Footer Dropdown Hover */
+@media (min-width: 769px) {
+    .footer-dropdown:hover .footer-dropdown-menu {
+        display: block !important;
+    }
+}
+.footer-dropdown-menu li a:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+}
