@@ -4646,3 +4646,28 @@ function handleDeepLink() {
         }
     }, 500);
 }
+
+// Footer Dropdown Mobile Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const footerDropdowns = document.querySelectorAll('.footer-dropdown');
+    footerDropdowns.forEach(dropdown => {
+        const toggleSpan = dropdown.querySelector('span');
+        if (toggleSpan) {
+            toggleSpan.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                }
+            });
+        }
+    });
+
+    // Close footer dropdowns when clicking outside
+    document.addEventListener('click', (event) => {
+        footerDropdowns.forEach(dropdown => {
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+    });
+});

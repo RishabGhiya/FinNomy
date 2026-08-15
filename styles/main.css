@@ -2800,3 +2800,9 @@ select[multiple] {
     background-color: rgba(255, 255, 255, 0.1) !important;
     color: white !important;
 }
+/* Mobile active state for footer dropdown */
+@media (max-width: 768px) {
+    .footer-dropdown.active .footer-dropdown-menu {
+        display: block !important;
+    }
+}
