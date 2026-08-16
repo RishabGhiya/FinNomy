@@ -1371,25 +1371,32 @@ canvas {
    ========================================================================= */
 @media (max-width: 900px) {
   .hero-section {
-    padding: 80px 0 28px 0;
+    padding: 72px 0 24px 0;
   }
   .hero-container {
     grid-template-columns: 1fr;
     text-align: center;
-    gap: 28px;
+    gap: 24px;
+    padding: 0 20px;
   }
-  .hero-title { font-size: 2.35rem; }
-  .hero-subtitle { margin: 0 auto 20px auto; }
+  .hero-title {
+    font-size: clamp(1.9rem, 5vw, 2.5rem);
+  }
+  .hero-subtitle {
+    font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+    margin: 0 auto 20px auto;
+  }
   .hero-btn-group, .hero-trust-badges {
     justify-content: center;
     flex-wrap: wrap;
   }
   .hero-visual-wrap img {
-    max-width: 380px;
+    max-width: 360px;
+    margin: 0 auto;
   }
   .zigzag-step, .zigzag-step.flip {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 18px;
     padding: 16px 0;
   }
   .zigzag-step.flip .zigzag-text {
@@ -1411,31 +1418,71 @@ canvas {
 
 @media (max-width: 768px) {
   .landing-section-full {
-    padding: 32px 0;
+    padding: 28px 0;
+  }
+  .section-container {
+    padding: 0 16px;
+  }
+  .section-header {
+    margin-bottom: 24px;
+  }
+  .section-header .section-main-title {
+    font-size: clamp(1.5rem, 4.5vw, 2rem);
+  }
+  .section-header .section-main-subtitle {
+    font-size: 13.5px;
   }
   .hero-section {
-    padding-top: 75px;
-    padding-bottom: 24px;
+    padding-top: 68px;
+    padding-bottom: 20px;
+  }
+  .hero-container {
+    padding: 0 16px;
   }
   .card, #upload-card {
-    padding: 20px 16px;
+    padding: 18px 14px;
+    border-radius: 12px;
+  }
+  #dropzone {
+    padding: 24px 14px;
+  }
+  .upload-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
   }
   .reveal-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
   .advantages-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .step-heading {
+    font-size: clamp(1.25rem, 3.8vw, 1.5rem);
   }
   .zigzag-step, .zigzag-step.flip {
     grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 22px 18px;
+    gap: 16px;
+    padding: 18px 14px;
+  }
+  .zigzag-step.step-highlight {
+    padding: 18px 14px;
   }
   .mockup-body {
     padding: 16px 12px;
   }
+  .mockup-dna-score {
+    font-size: 36px;
+  }
+  .mockup-table-card {
+    padding: 14px 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
   .mockup-overview-table {
-    font-size: 12px;
+    font-size: 11.5px;
+    min-width: 280px;
   }
   .mockup-overview-table th, .mockup-overview-table td {
     padding: 6px 8px;
@@ -1446,8 +1493,46 @@ canvas {
   .actions {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
   }
   .actions .btn {
     width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+  .password-input-row {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+  .password-input-row input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .password-input-row button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-btn-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+  .hero-btn-group .btn-hero-primary,
+  .hero-btn-group .btn-hero-secondary {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 12px 18px;
+  }
+  .hero-trust-badges {
+    font-size: 11px;
+    gap: 4px;
+  }
+  .hero-visual-wrap img {
+    max-width: 280px;
   }
 }
