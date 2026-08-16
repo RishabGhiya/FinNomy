@@ -567,19 +567,23 @@ body {
 }
 
 /* =========================================================================
-   5. REVEAL FEATURE GRID (6 CARDS)
+   5. REVEAL FEATURE GRID (5 BENEFIT CARDS)
    ========================================================================= */
-.reveal-grid {
+.reveal-grid-5 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+}
+
+.reveal-grid-5 .reveal-card:nth-child(4) {
+  grid-column: span 1;
 }
 
 .reveal-card {
   background: #FFFFFF;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 22px 20px;
+  padding: 24px 22px;
   box-shadow: var(--shadow-sm);
   transition: all 0.25s ease;
 }
@@ -591,8 +595,8 @@ body {
 }
 
 .reveal-icon-wrap {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: 12px;
   background: var(--blue-light);
   color: var(--blue);
@@ -600,7 +604,7 @@ body {
   align-items: center;
   justify-content: center;
   margin-bottom: 14px;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .reveal-card-title {
