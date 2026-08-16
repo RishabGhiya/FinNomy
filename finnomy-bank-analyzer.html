@@ -3,9 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bank Statement Analyzer | FinNomy</title>
+<title>Bank Statement Analyzer | FinNomy™</title>
+<meta name="description" content="Turn your bank statement PDF, Excel, or CSV into plain-language financial clarity. Analyze income, expenses, cash flow, spending categories, and Money DNA — 100% free and in-browser.">
+<meta name="keywords" content="bank statement analyzer, financial health analysis, bank statement parser, expense categorization, cash flow analyzer, Money DNA, private bank statement analyzer">
+<link rel="canonical" href="https://finnomy.com/finnomy-bank-analyzer.html">
+<link rel="icon" type="image/png" href="assets/logo-nav.png">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
-<!-- These CDN libraries are standard page assets -->
+<!-- Open Graph Meta Tags -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://finnomy.com/finnomy-bank-analyzer.html">
+<meta property="og:title" content="Bank Statement Analyzer | FinNomy™">
+<meta property="og:description" content="Know exactly where your money goes. In-browser bank statement intelligence with zero server uploads.">
+<meta property="og:image" content="https://finnomy.com/assets/logo-nav.png">
+
+<!-- CDN Assets (Standard page dependencies for offline client-side parsing & export) -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.js"></script>
@@ -23,13 +35,13 @@
   window.dispatchEvent(new Event("pdfjslib-ready"));
 </script>
 
-<link rel="stylesheet" href="styles/bank-analyzer.css">
 <link rel="stylesheet" href="styles/main.css">
+<link rel="stylesheet" href="styles/bank-analyzer.css">
 <script src="js/main.js" defer></script>
 </head>
 <body>
 
-    <!-- Navbar -->
+    <!-- 1. Navbar -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo"><img src="assets/logo-nav.png" alt="FinNomy Logo" class="nav-logo"></a>
@@ -58,65 +70,418 @@
 
 <div class="wrap">
 
-  <h1 class="page-title">Know exactly where your money goes</h1>
-  <p class="subtitle">Upload your bank statement and get an instant, plain-language financial health report — free.</p>
-
-  <div class="privacy-banner">
-    <div class="icon">🔒</div>
-    <div>
-      <b>Your bank statement never leaves your browser.</b> No transaction is uploaded to any server, no account
-      details are stored anywhere, and closing or refreshing this page permanently removes everything from memory.
-      No AI/LLM reads your transactions either — analysis runs entirely on fixed rules, on your device.
-      See full details at the bottom of this page.
+  <!-- 2. Hero Section -->
+  <section class="hero-section">
+    <div class="hero-badge">
+      <span class="badge-icon">⚡</span> In-Browser Financial Clarity
     </div>
-  </div>
+    <h1 class="hero-title">Know exactly where your money goes.</h1>
+    <p class="hero-subtitle">Turn your bank statement into a clear picture of your income, expenses, spending patterns and cash flow — in seconds.</p>
 
-  <div id="inAppBrowserBanner" style="display:none;" class="privacy-banner">
-    <div class="icon">📱</div>
-    <div>You're viewing this inside another app's built-in browser. If the file picker or upload doesn't
-      open properly, tap the <b>•••</b> menu and choose <b>"Open in Browser"</b> for the smoothest experience.</div>
-  </div>
+    <!-- In-App Browser Advisory Notice -->
+    <div id="inAppBrowserBanner" style="display:none;" class="privacy-banner">
+      <div class="icon">📱</div>
+      <div>You're viewing this inside another app's built-in browser. If the file picker or upload doesn't open properly, tap the <b>•••</b> menu and choose <b>"Open in Browser"</b> for the smoothest experience.</div>
+    </div>
 
-  <div class="card" id="upload-card">
-    <div style="margin-bottom:16px;">
-      <div class="muted" style="margin-bottom:6px;">What kind of account is this?</div>
-      <div id="accountModeToggle" style="display:inline-flex; border:1.5px solid var(--border); border-radius:8px; overflow:hidden;">
-        <button type="button" class="mode-btn mode-btn-active" data-mode="personal">Personal Account</button>
-        <button type="button" class="mode-btn" data-mode="business">Business / Freelancer Account</button>
+    <!-- Functional Component: Centerpiece Upload Card -->
+    <div class="card" id="upload-card">
+      <div class="account-mode-wrapper">
+        <label class="account-mode-label">Select Account Type</label>
+        <div id="accountModeToggle">
+          <button type="button" class="mode-btn mode-btn-active" data-mode="personal">Personal Account</button>
+          <button type="button" class="mode-btn" data-mode="business">Business / Freelancer Account</button>
+        </div>
+      </div>
+
+      <div class="upload-zone" id="dropzone" role="button" tabindex="0">
+        <svg class="upload-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+        <div class="upload-primary-text">Drop your bank statement here, or click to browse</div>
+        <div class="upload-sub-text">Accepts PDF, Excel (.xlsx / .xls), or CSV &nbsp;•&nbsp; Nothing is uploaded to any server</div>
+        <div id="pdfEngineStatus">PDF engine: ready</div>
+        <input type="file" id="fileInput" accept=".csv,.xlsx,.xls,.pdf">
+      </div>
+
+      <div id="fileChipHolder"></div>
+
+      <div id="pdfPasswordHolder" style="display:none;">
+        <label for="pdfPasswordInput">
+          PDF Password (only if your statement is locked — usually DOB as DDMMYYYY, PAN, or Customer ID):
+        </label>
+        <input type="password" id="pdfPasswordInput" placeholder="Leave blank if not password-protected">
+      </div>
+
+      <div id="errorHolder"></div>
+
+      <div class="actions">
+        <button class="btn btn-primary-hero" id="analyzeBtn" disabled>Analyse My Statement</button>
+        <button class="btn ghost" id="sampleFormatBtn" type="button">What format do I need?</button>
+      </div>
+
+      <div class="hero-trust-bar">
+        <span>🔒 Free • No registration required • Your statement stays on your device</span>
       </div>
     </div>
-    <div class="upload-zone" id="dropzone">
-      <div class="upload-icon">📄</div>
-      <div style="font-weight:600; margin-bottom:4px;">Drop your statement here, or click to browse</div>
-      <div class="muted">Accepts .csv, .xlsx/.xls, or .pdf statements &nbsp;•&nbsp; Nothing is uploaded anywhere</div>
-      <div class="muted" id="pdfEngineStatus" style="margin-top:4px;">PDF engine: checking…</div>
-      <input type="file" id="fileInput" accept=".csv,.xlsx,.xls,.pdf">
-    </div>
-    <div id="fileChipHolder"></div>
-    <div id="pdfPasswordHolder" style="display:none; margin-top:10px;">
-      <label class="muted" for="pdfPasswordInput" style="display:block; margin-bottom:4px;">
-        PDF password (only if your bank's statement is locked — usually your DOB as DDMMYYYY, PAN, or a customer ID):
-      </label>
-      <input type="password" id="pdfPasswordInput" placeholder="Leave blank if not password-protected"
-        style="width:100%; max-width:320px; padding:8px 10px; border:1px solid var(--border); border-radius:6px; font-size:13.5px;">
-    </div>
-    <div id="errorHolder"></div>
-    <div class="actions">
-      <button class="btn" id="analyzeBtn" disabled>Analyze My Statement</button>
-      <button class="btn ghost" id="sampleFormatBtn" type="button">What format do I need?</button>
-    </div>
-  </div>
 
-  <div class="loading" id="loadingBox">
-    <div class="spinner"></div>
-    Analysing your statement on your device — this never leaves your browser…
-  </div>
+    <!-- Loading Animation Box -->
+    <div class="loading" id="loadingBox">
+      <div class="spinner"></div>
+      <div class="loading-text">Analysing your statement securely on your device…</div>
+      <div class="loading-subtext">Extracting income, categorizing transactions, calculating cash flow and Money DNA…</div>
+    </div>
 
-  <div id="report"></div>
+    <!-- Dynamic Report / Preview Target Container -->
+    <div id="report"></div>
+
+  </section>
+
+  <!-- 3. Section: "What your bank statement can reveal" -->
+  <section class="landing-section">
+    <div class="section-header">
+      <span class="section-tag">Financial Intelligence</span>
+      <h2 class="section-main-title">What your bank statement can reveal</h2>
+      <p class="section-main-subtitle">Your bank statement contains more financial information than you may realize. FinNomy turns those raw transactions into simple, meaningful insights.</p>
+    </div>
+
+    <div class="reveal-grid">
+      <!-- Card 1 -->
+      <div class="reveal-card">
+        <div class="reveal-icon-wrap" style="background:#E6F8F2; color:#00B37E;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3 class="reveal-card-title">Income Analysis</h3>
+        <p class="reveal-card-desc">Understand total income and identify major inflow sources, frequency, and stability across accounts.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="reveal-card">
+        <div class="reveal-icon-wrap" style="background:#FEF2F2; color:#DC2626;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <h3 class="reveal-card-title">Expense Analysis</h3>
+        <p class="reveal-card-desc">See how much you spend and where it actually goes, distinguishing essential costs from discretionary spending.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="reveal-card">
+        <div class="reveal-icon-wrap" style="background:#EEF4FE; color:#0B63D8;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        </div>
+        <h3 class="reveal-card-title">Spending Categories</h3>
+        <p class="reveal-card-desc">Auto-group transactions into food, shopping, travel, utilities, rent, investments, and more.</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="reveal-card">
+        <div class="reveal-icon-wrap" style="background:#FEF3C7; color:#D97706;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <h3 class="reveal-card-title">Cash Flow &amp; Net Balance</h3>
+        <p class="reveal-card-desc">Clear balance between money in vs. money out, tracking your monthly savings rate and financial buffer.</p>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="reveal-card">
+        <div class="reveal-icon-wrap" style="background:#F3E8FF; color:#9333EA;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h3 class="reveal-card-title">Monthly Trends</h3>
+        <p class="reveal-card-desc">Track how financial habits, seasonal spikes in spending, and monthly burn change over time.</p>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="reveal-card">
+        <div class="reveal-icon-wrap" style="background:#F1F5F9; color:#0F2A4A;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h3 class="reveal-card-title">Transaction Analysis</h3>
+        <p class="reveal-card-desc">Structured, searchable view instead of reading hundreds of confusing raw PDF statement lines.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Section: "How FinNomy Bank Analyzer works" -->
+  <section class="landing-section">
+    <div class="section-header">
+      <span class="section-tag">Step-by-Step Clarity</span>
+      <h2 class="section-main-title">How FinNomy Bank Analyzer works</h2>
+      <p class="section-main-subtitle">From raw transaction records to complete financial clarity in 5 straightforward steps.</p>
+    </div>
+
+    <div class="workflow-steps-container">
+      <!-- Step 1 -->
+      <div class="step-card">
+        <div class="step-number">01</div>
+        <div class="step-content">
+          <h3 class="step-title">Upload</h3>
+          <p class="step-desc">Upload your bank statement PDF, Excel (.xlsx/.xls), or CSV downloaded from your net-banking portal.</p>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step-card">
+        <div class="step-number">02</div>
+        <div class="step-content">
+          <h3 class="step-title">Analyse</h3>
+          <p class="step-desc">FinNomy automatically reads and extracts transaction data in memory using deterministic rule engines.</p>
+        </div>
+      </div>
+
+      <!-- Step 3 (Accented & Highlighted) -->
+      <div class="step-card step-card-highlight">
+        <div class="step-number">03</div>
+        <div class="step-content">
+          <span class="step-badge-accent">You Stay In Control</span>
+          <h3 class="step-title">Review &amp; Regroup</h3>
+          <p class="step-desc">Review categorized entries and easily regroup or reassign anything with a single click.</p>
+          <div class="step-quote">
+            <span>✨</span> <em>“Automation does the initial work. You stay in control.”</em>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step-card">
+        <div class="step-number">04</div>
+        <div class="step-content">
+          <h3 class="step-title">Understand</h3>
+          <p class="step-desc">View your Money DNA score, income vs expense breakdowns, category summaries, and monthly trends.</p>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="step-card">
+        <div class="step-number">05</div>
+        <div class="step-content">
+          <h3 class="step-title">Take Action</h3>
+          <p class="step-desc">Use clear insights to optimize recurring bills, control lifestyle inflation, and make confident financial decisions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Section: "See your money differently." -->
+  <section class="landing-section">
+    <div class="section-header">
+      <span class="section-tag">Visual Intelligence</span>
+      <h2 class="section-main-title">See your money differently.</h2>
+      <p class="section-main-subtitle">Hundreds of transactions become a simple, actionable financial picture.</p>
+    </div>
+
+    <!-- Interactive HTML/CSS Dashboard Visual Mockup -->
+    <div class="mockup-outer-frame">
+      <div class="mockup-window-header">
+        <div class="mockup-dots">
+          <div class="mockup-dot dot-red"></div>
+          <div class="mockup-dot dot-yellow"></div>
+          <div class="mockup-dot dot-green"></div>
+        </div>
+        <div class="mockup-window-title">FinNomy Financial Health Report — Overview</div>
+      </div>
+
+      <div class="mockup-body">
+        <!-- Top Metrics Bar -->
+        <div class="mockup-metric-grid">
+          <div class="mockup-metric-card">
+            <div class="mockup-metric-label">Total Inflow</div>
+            <div class="mockup-metric-value" style="color:var(--green);">₹1,84,500</div>
+            <div class="mockup-metric-sub sub-green">↑ Salary &amp; Inflows</div>
+          </div>
+          <div class="mockup-metric-card">
+            <div class="mockup-metric-label">Total Outflow</div>
+            <div class="mockup-metric-value" style="color:var(--blue);">₹1,12,300</div>
+            <div class="mockup-metric-sub sub-blue">Essentials &amp; Lifestyle</div>
+          </div>
+          <div class="mockup-metric-card">
+            <div class="mockup-metric-label">Net Savings</div>
+            <div class="mockup-metric-value">₹72,200</div>
+            <div class="mockup-metric-sub sub-green">+39.1% Savings Rate</div>
+          </div>
+          <div class="mockup-metric-card">
+            <div class="mockup-metric-label">Money DNA</div>
+            <div class="mockup-metric-value" style="color:#065F46;">84 / 100</div>
+            <div class="mockup-metric-sub sub-green">✓ Healthy Balance</div>
+          </div>
+        </div>
+
+        <!-- Split Chart & Category Breakdown Row -->
+        <div class="mockup-split-row">
+          <!-- Monthly Comparison Chart Mockup -->
+          <div class="mockup-panel">
+            <div class="mockup-panel-title">
+              <span>Monthly Inflow vs Outflow</span>
+              <span style="font-size:12px; color:var(--grey); font-weight:500;">Last 3 Months</span>
+            </div>
+            <div class="css-bar-chart">
+              <div class="css-bar-group">
+                <div class="css-bar bar-inflow" style="height:85%;"></div>
+                <div class="css-bar bar-outflow" style="height:60%;"></div>
+              </div>
+              <div class="css-bar-group">
+                <div class="css-bar bar-inflow" style="height:90%;"></div>
+                <div class="css-bar bar-outflow" style="height:55%;"></div>
+              </div>
+              <div class="css-bar-group">
+                <div class="css-bar bar-inflow" style="height:95%;"></div>
+                <div class="css-bar bar-outflow" style="height:62%;"></div>
+              </div>
+            </div>
+            <div class="chart-labels">
+              <span>Month 1</span>
+              <span>Month 2</span>
+              <span>Month 3</span>
+            </div>
+            <div class="chart-legend">
+              <div class="legend-item"><div class="legend-color" style="background:var(--green);"></div> Inflow</div>
+              <div class="legend-item"><div class="legend-color" style="background:var(--blue);"></div> Outflow</div>
+            </div>
+          </div>
+
+          <!-- Category Spending Breakdown Mockup -->
+          <div class="mockup-panel">
+            <div class="mockup-panel-title">
+              <span>Top Spending Categories</span>
+              <span style="font-size:12px; color:var(--blue); font-weight:600;">% of Total</span>
+            </div>
+            <div class="cat-progress-list">
+              <div class="cat-progress-item">
+                <div class="cat-progress-header">
+                  <span>Groceries &amp; Daily Needs</span>
+                  <span>28% (₹31,440)</span>
+                </div>
+                <div class="cat-progress-track">
+                  <div class="cat-progress-fill" style="width:28%; background:#0B63D8;"></div>
+                </div>
+              </div>
+
+              <div class="cat-progress-item">
+                <div class="cat-progress-header">
+                  <span>Investments &amp; Wealth</span>
+                  <span>24% (₹26,950)</span>
+                </div>
+                <div class="cat-progress-track">
+                  <div class="cat-progress-fill" style="width:24%; background:#00B37E;"></div>
+                </div>
+              </div>
+
+              <div class="cat-progress-item">
+                <div class="cat-progress-header">
+                  <span>Utilities &amp; Bills</span>
+                  <span>18% (₹20,210)</span>
+                </div>
+                <div class="cat-progress-track">
+                  <div class="cat-progress-fill" style="width:18%; background:#F59E0B;"></div>
+                </div>
+              </div>
+
+              <div class="cat-progress-item">
+                <div class="cat-progress-header">
+                  <span>Food Delivery &amp; Dining</span>
+                  <span>14% (₹15,720)</span>
+                </div>
+                <div class="cat-progress-track">
+                  <div class="cat-progress-fill" style="width:14%; background:#EF4444;"></div>
+                </div>
+              </div>
+
+              <div class="cat-progress-item">
+                <div class="cat-progress-header">
+                  <span>Shopping &amp; Leisure</span>
+                  <span>16% (₹17,980)</span>
+                </div>
+                <div class="cat-progress-track">
+                  <div class="cat-progress-fill" style="width:16%; background:#8B5CF6;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Regrouping Demonstration Card -->
+        <div class="mockup-regroup-demo">
+          <div class="demo-tx-info">
+            <span style="font-weight:600; color:var(--navy);">Swiggy Instamart #8821</span>
+            <span style="color:var(--grey);">• ₹1,420 •</span>
+            <span class="demo-pill-interactive">Groceries ✏️</span>
+          </div>
+          <div style="font-size:12.5px; color:var(--grey); font-weight:500;">
+            ✓ Click any category tag to instantly regroup transactions
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Section: "Why choose FinNomy?" -->
+  <section class="landing-section">
+    <div class="section-header">
+      <span class="section-tag">Uncompromising Principles</span>
+      <h2 class="section-main-title">Why choose FinNomy?</h2>
+      <p class="section-main-subtitle">Built from the ground up for privacy, speed, and genuine financial understanding.</p>
+    </div>
+
+    <div class="advantages-grid">
+      <!-- Advantage 1 -->
+      <div class="advantage-card">
+        <div class="advantage-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><line x1="12" y1="6" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="18"/></svg>
+        </div>
+        <div>
+          <h3 class="advantage-title">Free of Cost</h3>
+          <p class="advantage-desc">No hidden fees, paywalls, or premium tiers. Full financial analysis is free for personal and business use.</p>
+        </div>
+      </div>
+
+      <!-- Advantage 2 -->
+      <div class="advantage-card">
+        <div class="advantage-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <h3 class="advantage-title">No Registration Required</h3>
+          <p class="advantage-desc">Start immediately without sign-up, email, or phone numbers. Zero friction to analyze your statement.</p>
+        </div>
+      </div>
+
+      <!-- Advantage 3 -->
+      <div class="advantage-card">
+        <div class="advantage-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div>
+          <h3 class="advantage-title">Your Data Stays on Your Device</h3>
+          <p class="advantage-desc">Processed entirely in the browser using client-side JavaScript; files are never uploaded to remote servers or AI models.</p>
+        </div>
+      </div>
+
+      <!-- Advantage 4 -->
+      <div class="advantage-card">
+        <div class="advantage-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div>
+          <h3 class="advantage-title">You Stay in Control</h3>
+          <p class="advantage-desc">Easily correct and regroup transaction tags with one click, then immediately regenerate updated charts and reports.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Final Call-to-Action (CTA) -->
+  <div class="final-cta-section">
+    <h2 class="final-cta-title">Ready to understand where your money goes?</h2>
+    <p class="final-cta-desc">Upload your bank statement and turn your transactions into complete financial clarity in seconds.</p>
+    <button type="button" class="btn btn-cta-scroll" onclick="scrollToUpload()">Analyse My Statement</button>
+    <div class="final-cta-subtext">Free • No registration required • Private analysis</div>
+  </div>
 
 </div>
 
-<!-- Footer -->
+<!-- 8. Footer -->
 <footer id="footer">
     <div class="container">
         <div class="footer-grid">
@@ -205,6 +570,20 @@
         </div>
     </div>
 </footer>
+
+<script>
+  function scrollToUpload() {
+    const card = document.getElementById('upload-card');
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const dropzone = document.getElementById('dropzone');
+      if (dropzone) {
+        dropzone.classList.add('dragover');
+        setTimeout(() => dropzone.classList.remove('dragover'), 1200);
+      }
+    }
+  }
+</script>
 
 <script src="js/bank-analyzer.js" defer></script>
 </body>
