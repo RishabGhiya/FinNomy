@@ -567,16 +567,18 @@ body {
 }
 
 /* =========================================================================
-   5. REVEAL FEATURE GRID (5 BENEFIT CARDS)
+   5. REVEAL FEATURE GRID (4 BENEFIT CARDS)
    ========================================================================= */
+.reveal-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
 .reveal-grid-5 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-}
-
-.reveal-grid-5 .reveal-card:nth-child(4) {
-  grid-column: span 1;
 }
 
 .reveal-card {
@@ -1502,7 +1504,7 @@ input[type="file"] {
   .zigzag-step.flip .zigzag-visual {
     order: 2;
   }
-  .reveal-grid {
+  .reveal-grid, .reveal-grid-4, .reveal-grid-5 {
     grid-template-columns: repeat(2, 1fr);
   }
   .tax-metric-preview-grid {
@@ -1521,7 +1523,7 @@ input[type="file"] {
   .card, #upload-card {
     padding: 20px 16px;
   }
-  .reveal-grid {
+  .reveal-grid, .reveal-grid-4, .reveal-grid-5 {
     grid-template-columns: 1fr;
   }
   .tax-metric-preview-grid {
