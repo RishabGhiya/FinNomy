@@ -1092,6 +1092,306 @@ const ItrParser = {
 };
 
 /* =========================================================================
+   2B. MULTI-FORM ITR JSON EXTRACTION & PARSER (ITR-1, ITR-2, ITR-3, ITR-4)
+   ========================================================================= */
+const ItrJsonParser = {
+  num(v) {
+    if (v === null || v === undefined || v === "") return 0;
+    const n = Number(v);
+    return isNaN(n) ? 0 : n;
+  },
+
+  str(v) {
+    if (v === null || v === undefined) return "";
+    return String(v).trim();
+  },
+
+  extract(jsonObj) {
+    if (!jsonObj || typeof jsonObj !== "object") {
+      throw new Error("Invalid ITR JSON structure. Could not parse JSON object.");
+    }
+
+    // 1. Detect root node & Form Type
+    let root = jsonObj;
+    let formType = "ITR";
+
+    if (jsonObj.ITR) {
+      const itr = jsonObj.ITR;
+      if (itr.ITR1 || itr.ITR_1) { root = itr.ITR1 || itr.ITR_1; formType = "ITR-1"; }
+      else if (itr.ITR2 || itr.ITR_2) { root = itr.ITR2 || itr.ITR_2; formType = "ITR-2"; }
+      else if (itr.ITR3 || itr.ITR_3) { root = itr.ITR3 || itr.ITR_3; formType = "ITR-3"; }
+      else if (itr.ITR4 || itr.ITR_4) { root = itr.ITR4 || itr.ITR_4; formType = "ITR-4"; }
+      else { root = itr; }
+    } else if (jsonObj.ITR1 || jsonObj.ITR_1) {
+      root = jsonObj.ITR1 || jsonObj.ITR_1;
+      formType = "ITR-1";
+    } else if (jsonObj.ITR2 || jsonObj.ITR_2) {
+      root = jsonObj.ITR2 || jsonObj.ITR_2;
+      formType = "ITR-2";
+    } else if (jsonObj.ITR3 || jsonObj.ITR_3) {
+      root = jsonObj.ITR3 || jsonObj.ITR_3;
+      formType = "ITR-3";
+    } else if (jsonObj.ITR4 || jsonObj.ITR_4) {
+      root = jsonObj.ITR4 || jsonObj.ITR_4;
+      formType = "ITR-4";
+    }
+
+    if (formType === "ITR" && root.FormName) {
+      formType = String(root.FormName).toUpperCase();
+    } else if (formType === "ITR" && root.Form_ITR1) {
+      formType = "ITR-1";
+    } else if (formType === "ITR" && root.Form_ITR4) {
+      formType = "ITR-4";
+    }
+
+    const pers = root.PersonalInfo || root.PartA_GEN1?.PersonalInfo || {};
+    const filing = root.FilingStatus || root.PartA_GEN1?.FilingStatus || {};
+    const creation = root.CreationInfo || {};
+    const ver = root.Verification?.Declaration || root.Verification || {};
+
+    // 2. Personal Information & Header
+    let assesseeName = "";
+    if (pers.AssesseeName) {
+      const fn = this.str(pers.AssesseeName.FirstName);
+      const mn = this.str(pers.AssesseeName.MiddleName);
+      const sn = this.str(pers.AssesseeName.SurNameOrOrgName || pers.AssesseeName.SurName || pers.AssesseeName.LastName);
+      assesseeName = [fn, mn, sn].filter(Boolean).join(" ");
+    }
+    if (!assesseeName) assesseeName = this.str(pers.Name || ver.AssesseeVerName || creation.SWCreatedBy || "");
+
+    const fatherName = this.str(ver.FatherName || pers.FatherName || "");
+    const pan = this.str(pers.PAN || ver.AssesseePAN || root.PAN || "");
+    
+    let rawAy = this.str(creation.AssessmentYear || root.AssessmentYear || root.Form_ITR1?.AssessmentYear || root.AY || "");
+    if (!rawAy.includes("-") && rawAy.length === 4) {
+      const yr = parseInt(rawAy, 10);
+      rawAy = `${yr}-${String(yr + 1).slice(-2)}`;
+    }
+    const assessmentYear = rawAy || "2024-25";
+
+    const ackNumber = this.str(root.AckNum || filing.AckNum || ver.AckNum || root.AckNo || "");
+    const filingDate = this.str(filing.FilingDate || ver.Date || creation.Date || "");
+    
+    // Filing Section
+    let filingSection = "139(1)";
+    const secCode = String(filing.ReturnFileSec || filing.ReturnSection || "");
+    if (secCode === "11" || secCode === "139(1)") filingSection = "139(1) - On or before due date";
+    else if (secCode === "12" || secCode === "139(4)") filingSection = "139(4) - Belated return";
+    else if (secCode === "17" || secCode === "139(5)") filingSection = "139(5) - Revised return";
+    else if (secCode) filingSection = `u/s ${secCode}`;
+
+    // Address
+    let address = "";
+    const addrObj = pers.Address || {};
+    if (addrObj) {
+      const parts = [
+        addrObj.ResidenceNo || addrObj.FlatDoorBlockNo,
+        addrObj.ResidenceName || addrObj.NameOfPremises,
+        addrObj.RoadStreet,
+        addrObj.LocalityOrArea,
+        addrObj.CityOrTownOrDistrict,
+        addrObj.StateCode,
+        addrObj.PinCode
+      ].filter(Boolean).map(this.str);
+      address = parts.join(", ");
+    }
+
+    // Tax Regime Detection
+    let detectedRegime = "new";
+    const optOut = String(filing.OptOutNewRegime || filing.OptOutNewTaxRegime || root.PartA_GEN1?.OptOutNewTaxRegime || "").toUpperCase();
+    const optNew = String(filing.NewTaxRegime || filing.OptNewTaxRegime || root.PartA_GEN1?.NewTaxRegime || "").toUpperCase();
+    if (optOut === "Y" || optOut === "YES" || optNew === "N" || optNew === "NO") {
+      detectedRegime = "old";
+    }
+
+    // 3. Sub-schedules & Income
+    const incDed = root.ITR1_IncomeDeductions || root.ITR4_IncomeDeductions || root.IncomeDeductions || {};
+    const schedS = root.ScheduleS || {};
+    const schedHP = root.ScheduleHP || {};
+    const schedBP = root.ScheduleBP || {};
+    const schedCG = root.ScheduleCG || {};
+    const schedOS = root.ScheduleOS || {};
+    const partB_TI = root.PartB_TI || {};
+    const partB_TTI = root.PartB_TTI || root.ITR1_TaxComputation || {};
+    const schedVIA = incDed.DeductUndChapVIA || root.ScheduleVIA || {};
+    const taxPaid = root.TaxPaid?.TaxesPaid || root.TaxesPaid || partB_TTI.TaxesPaid || {};
+
+    // A. Salary
+    let grossSal = this.num(incDed.GrossSalary || schedS.Salaries?.GrossSalary || schedS.GrossSalary || 0);
+    let salAllowancesExempt = this.num(incDed.AllwncExemptUs10?.TotalAllwncExemptUs10 || incDed.AllwncExemptUs10 || schedS.AllwncExemptUs10 || 0);
+    let salStdDed = this.num(incDed.DeductionUs16ia || schedS.DeductionUs16ia || 0);
+    let salProfTax = this.num(incDed.EntertainmentAlw16ii || incDed.ProfessionalTaxUs16iii || schedS.ProfessionalTax || 0);
+    let salNet = this.num(incDed.IncomeFromSal || schedS.TotalIncomeFromSal || partB_TI.Salaries || 0);
+    if (salNet === 0 && grossSal > 0) {
+      salNet = Math.max(0, grossSal - salAllowancesExempt - salStdDed - salProfTax);
+    }
+
+    // B. House Property
+    let hpNet = this.num(incDed.TotalIncomeOfHP || schedHP.TotalIncomeHP || partB_TI.TotalIncomeHP || 0);
+    let hpInterest = this.num(incDed.TypeOfHP?.InterestPayable || schedHP.AnnualValue?.InterestPayable || 0);
+
+    // C. Business / Profession
+    let busPresumptive = this.num(incDed.IncomeFromBusinessProf || schedBP.PresumptiveInc?.Total || (this.num(schedBP.PersumptiveInc44AD?.Total) + this.num(schedBP.PersumptiveInc44ADA?.Total)) || 0);
+    let busTurnover = this.num(incDed.GrossTurnover || schedBP.Turnover44AD || schedBP.GrossReceipts44AD || 0);
+    let busPresumptive44ADA = this.num(schedBP.PersumptiveInc44ADA?.Total || 0);
+    let busNonSpec = this.num(schedBP.NonSpeculativeBusiness?.NetProfit || 0);
+    let busSpeculative = this.num(schedBP.SpeculativeBusiness?.NetProfit || 0);
+    let busNet = this.num(partB_TI.ProfBusProf || schedBP.TotalProfBusProf || busPresumptive || (busNonSpec + busSpeculative) || 0);
+
+    // D. Capital Gains
+    let stcg111A = this.num(schedCG.ShortTermCapGain?.STCG111A || partB_TI.ShortTermCapGain111A || 0);
+    let stcgNormal = this.num(schedCG.ShortTermCapGain?.STCGNormal || partB_TI.ShortTermCapGainNormal || 0);
+    let ltcg112A = this.num(schedCG.LongTermCapGain?.LTCG112A || partB_TI.LongTermCapGain112A || 0);
+    let ltcg112 = this.num(schedCG.LongTermCapGain?.LTCG112 || partB_TI.LongTermCapGain112 || 0);
+    let cgTotal = this.num(schedCG.TotalCapGains || partB_TI.TotalCapGains || (stcg111A + stcgNormal + ltcg112A + ltcg112) || 0);
+
+    // E. Other Sources
+    let osSavings = 0;
+    let osDeposits = 0;
+    let osRefund = 0;
+    let osDividend = 0;
+    let osFamilyPension = 0;
+    let osSec57 = this.num(schedOS.DeductionUs57 || incDed.OthersInc?.DeductionUs57 || 0);
+    let osOther = 0;
+
+    if (Array.isArray(incDed.OthersInc?.OthersIncDtls)) {
+      for (const item of incDed.OthersInc.OthersIncDtls) {
+        const code = String(item.OthersIncCode || "").toUpperCase();
+        const amt = this.num(item.OthersIncAmt);
+        if (code === "SAV") osSavings += amt;
+        else if (code === "IFD") osDeposits += amt;
+        else if (code === "TAX") osRefund += amt;
+        else if (code === "DIV") osDividend += amt;
+        else if (code === "FAP") osFamilyPension += amt;
+        else osOther += amt;
+      }
+    } else {
+      osSavings = this.num(schedOS.InterestFromSavings || 0);
+      osDeposits = this.num(schedOS.InterestFromDeposit || 0);
+      osRefund = this.num(schedOS.InterestOnRefund || 0);
+      osDividend = this.num(schedOS.DividendIncome || 0);
+      osFamilyPension = this.num(schedOS.FamilyPension || 0);
+    }
+
+    let osTotalFinal = this.num(incDed.TotalOthersInc || schedOS.TotalOtherSources || partB_TI.TotalOtherSources || (osSavings + osDeposits + osRefund + osDividend + osFamilyPension + osOther - osSec57) || 0);
+
+    // Deductions Chapter VI-A
+    let sec80C = this.num(schedVIA.Section80C || schedVIA.Us80C || 0);
+    let sec80CCD1B = this.num(schedVIA.Section80CCD1B || schedVIA.Us80CCD1B || 0);
+    let sec80CCD2 = this.num(schedVIA.Section80CCD2 || schedVIA.Us80CCD2 || 0);
+    let sec80D = this.num(schedVIA.Section80D || schedVIA.Us80D || 0);
+    let sec80TTA = this.num(schedVIA.Section80TTA || schedVIA.Us80TTA || 0);
+    let sec80TTB = this.num(schedVIA.Section80TTB || schedVIA.Us80TTB || 0);
+    let deductionVIA = this.num(schedVIA.TotalChapVIADeductions || partB_TI.TotalChapVIA || 0);
+
+    // Totals
+    let grossTotalIncome = this.num(incDed.GrossTotIncome || partB_TI.GrossTotalIncome || (salNet + (hpNet > 0 ? hpNet : 0) + busNet + cgTotal + osTotalFinal) || 0);
+    let totalIncome = this.num(incDed.TotalIncome || partB_TI.TotalIncome || partB_TTI.TotalIncome || Math.max(0, grossTotalIncome - deductionVIA) || 0);
+
+    // Taxes
+    const tax = {
+      taxAtNormalRates: this.num(partB_TTI.TaxPayableOnTI || partB_TTI.TaxPayableOnTotalIncome || 0),
+      taxAtSpecialRates: this.num(partB_TTI.TaxOnSpecialRates || 0),
+      rebate87A: this.num(partB_TTI.Rebate87A || 0),
+      taxAfterRebate: this.num(partB_TTI.TaxPayableAfterRebate || partB_TTI.TaxAfterRebate || 0),
+      surcharge: this.num(partB_TTI.Surcharge || 0),
+      cess: this.num(partB_TTI.EducationCess || partB_TTI.HealthEducationCess || 0),
+      grossTaxLiability: this.num(partB_TTI.GrossTaxLiability || 0),
+      relief89: this.num(partB_TTI.Section89 || 0),
+      interest234A: this.num(partB_TTI.IntrstPay?.IntrstCap234A || partB_TTI.Interest234A || 0),
+      interest234B: this.num(partB_TTI.IntrstPay?.IntrstCap234B || partB_TTI.Interest234B || 0),
+      interest234C: this.num(partB_TTI.IntrstPay?.IntrstCap234C || partB_TTI.Interest234C || 0),
+      fee234F: this.num(partB_TTI.IntrstPay?.LateFilingFee234F || partB_TTI.Fee234F || 0),
+      advanceTax: this.num(taxPaid.AdvanceTax || 0),
+      selfAssessmentTax: this.num(taxPaid.SelfAssessmentTax || 0),
+      tds: this.num(taxPaid.TDS || 0),
+      tcs: this.num(taxPaid.TCS || 0),
+      totalTaxesPaid: this.num(taxPaid.TotalTaxesPaid || 0),
+      amountPayable: this.num(partB_TTI.BalTaxPayable || 0),
+      refund: this.num(partB_TTI.Refund?.RefundDue || partB_TTI.RefundDue || 0)
+    };
+
+    // Bank Accounts
+    const bankAccounts = [];
+    const bankArr = root.TaxPaid?.BankDetails?.AddtnlBankDetails || root.BankAccounts?.BankAccount || partB_TTI.BankDetails || [];
+    if (Array.isArray(bankArr)) {
+      for (const b of bankArr) {
+        bankAccounts.push({
+          ifsc: this.str(b.IFSCCode || b.ifsc),
+          bank: this.str(b.BankName || b.bank || "Bank"),
+          account: this.str(b.BankAccountNo || b.account),
+          type: this.str(b.AccountType || b.type || "Savings")
+        });
+      }
+    }
+
+    return {
+      formType,
+      detectedRegime,
+      header: {
+        name: assesseeName || "Assessee",
+        fatherName,
+        pan,
+        assessmentYear,
+        ackNumber,
+        filingDate,
+        filingSection,
+        status: this.str(pers.Status || "Individual - Resident"),
+        employerName: null,
+        employerTAN: null,
+        email: this.str(pers.Address?.EmailAddress || ""),
+        dob: this.str(pers.DOB || ""),
+        aadhaar: this.str(pers.AadhaarCardNo || pers.AadhaarEnrolmentId || ""),
+        address
+      },
+      income: {
+        salaryGross: grossSal,
+        salaryAllowancesExempt: salAllowancesExempt,
+        salaryStdDeduction: salStdDed,
+        salaryProfessionalTax: salProfTax,
+        salaryNet: salNet,
+        hpNet,
+        hpInterestLoan24b: hpInterest || (hpNet < 0 ? Math.abs(hpNet) : 0),
+        businessTurnover: busTurnover,
+        businessPresumptive: busPresumptive,
+        businessPresumptive44ADA: busPresumptive44ADA,
+        businessNonSpeculative: busNonSpec,
+        businessSpeculative: busSpeculative,
+        businessNet: busNet,
+        capitalGainsSTCG111A: stcg111A,
+        capitalGainsSTCGNormal: stcgNormal,
+        capitalGainsLTCG112A: ltcg112A,
+        capitalGainsLTCG112: ltcg112,
+        capitalGainsTotal: cgTotal,
+        otherSourcesSavings: osSavings,
+        otherSourcesDeposits: osDeposits,
+        otherSourcesRefund: osRefund,
+        otherSourcesDividend: osDividend,
+        otherSourcesFamilyPension: osFamilyPension,
+        otherSourcesSec57: osSec57,
+        otherSourcesOther: osOther,
+        otherSourcesTotal: osTotalFinal,
+        sec80C: sec80C || (deductionVIA > 0 && !sec80CCD1B && !sec80D && !sec80TTA && !sec80TTB ? Math.min(150000, deductionVIA) : 0),
+        sec80CCD1B,
+        sec80CCD2,
+        sec80D,
+        sec80TTA,
+        sec80TTB,
+        grossTotalIncome,
+        deductionVIA,
+        totalIncome,
+        lossCarriedForward: busSpeculative < 0 ? Math.abs(busSpeculative) : 0
+      },
+      tax,
+      bankAccounts,
+      otherSourcesBreakdown: [],
+      tdsDetails: [],
+      warnings: []
+    };
+  }
+};
+
+/* =========================================================================
    3. PDF TEXT EXTRACTION WITH PASSWORD SUPPORT (pdf.js v4)
    ========================================================================= */
 function waitForPdfjs(timeoutMs = 8000) {
@@ -1108,105 +1408,143 @@ function waitForPdfjs(timeoutMs = 8000) {
 
 async function extractPdfTextLines(file, password) {
   const ready = await waitForPdfjs();
-  if (!ready) throw new Error("The PDF engine didn't finish loading — please check your connection and refresh.");
-  const diag = { pages: 0, rawItemsPerPage: [], isEncrypted: false, passwordWasWrong: false };
-  const buf = await file.arrayBuffer();
-  let pdf;
-  try {
-    const params = { data: buf };
-    if (password) params.password = password;
-    pdf = await window.pdfjsLib.getDocument(params).promise;
-  } catch (err) {
-    if (err && err.name === "PasswordException") {
-      diag.isEncrypted = true;
-      diag.passwordWasWrong = !!password;
-      return { lines: [], diag };
-    }
-    diag.loadError = `${err && err.name ? err.name + ": " : ""}${err && err.message ? err.message : String(err)}`;
-    return { lines: [], diag };
+  if (!ready || !window.pdfjsLib) {
+    throw new Error("PDF processing engine is still initializing. Please wait a moment and try again.");
   }
 
-  diag.pages = pdf.numPages;
-  const allLines = [];
-  for (let p = 1; p <= pdf.numPages; p++) {
-    const page = await pdf.getPage(p);
-    const content = await page.getTextContent();
-    diag.rawItemsPerPage.push(content.items.length);
-    const items = content.items.map(it => ({ text: it.str, x: it.transform[4], y: it.transform[5] })).filter(it => it.text && it.text.trim());
-    items.sort((a, b) => b.y - a.y);
-    const clusters = [];
-    let current = [], refY = null;
-    for (const it of items) {
-      if (refY === null || Math.abs(it.y - refY) < 3.2) {
-        current.push(it);
-        refY = current.reduce((s, x) => s + x.y, 0) / current.length;
-      } else {
-        clusters.push(current);
-        current = [it];
-        refY = it.y;
-      }
+  const pdfjsLib = window.pdfjsLib;
+  const arrayBuffer = await file.arrayBuffer();
+
+  const diag = { isEncrypted: false, passwordWasWrong: false };
+
+  let pdfDoc = null;
+  try {
+    const loadingTask = pdfjsLib.getDocument({
+      data: arrayBuffer,
+      password: password || undefined
+    });
+    pdfDoc = await loadingTask.promise;
+  } catch (err) {
+    if (err.name === "PasswordException") {
+      diag.isEncrypted = true;
+      if (err.code === 2 || password) diag.passwordWasWrong = true;
+      return { lines: [], diag };
     }
-    if (current.length) clusters.push(current);
-    for (const cluster of clusters) {
-      const lineText = cluster.sort((a, b) => a.x - b.x).map(it => it.text).join(" ").replace(/\s+/g, " ").trim();
-      if (lineText) allLines.push(lineText);
+    throw err;
+  }
+
+  const lines = [];
+  for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+    const page = await pdfDoc.getPage(pageNum);
+    const textContent = await page.getTextContent();
+    const items = textContent.items || [];
+    
+    // Group text items by line Y-coordinate
+    const lineMap = new Map();
+    for (const it of items) {
+      if (!it.str || !it.str.trim()) continue;
+      const y = Math.round(it.transform[5]);
+      if (!lineMap.has(y)) lineMap.set(y, []);
+      lineMap.get(y).push({ x: it.transform[4], text: it.str });
+    }
+
+    // Sort top-to-bottom
+    const sortedY = Array.from(lineMap.keys()).sort((a, b) => b - a);
+    for (const y of sortedY) {
+      const row = lineMap.get(y).sort((a, b) => a.x - b.x);
+      const rowText = row.map(r => r.text).join(" ").trim();
+      if (rowText) lines.push(rowText);
     }
   }
-  return { lines: allLines, diag };
+
+  return { lines, diag };
 }
 
 /* =========================================================================
-   4. FINNOMY ITR APP CONTROLLER & INTERACTIVE WORKFLOW
+   4. UI CONTROLLER & EVENT WIRING (FinnomyItrApp)
    ========================================================================= */
 const FinnomyItrApp = {
   selectedFile: null,
   enteredPassword: null,
   rawParsedData: null,
   currentRegime: "new",
-  currentComputedState: null,
+  currentAgeGroup: "individual",
 
   init() {
-    this.bindGlobalEvents();
+    this.bindDropzone();
+    this.bindButtons();
   },
 
-  bindGlobalEvents() {
+  bindDropzone() {
     const dropzone = document.getElementById("dropzone");
     const fileInput = document.getElementById("fileInput");
-    const submitPwdBtn = document.getElementById("submitPdfPasswordBtn") || document.getElementById("passwordSubmitBtn");
-    const pwdInput = document.getElementById("pdfPasswordInput");
-    const extractBtn = document.getElementById("extractBtn") || document.getElementById("analyzeBtn");
-    const howToBtn = document.getElementById("howToDownloadBtn") || document.getElementById("sampleFormatBtn");
-
-    if (howToBtn) {
-      howToBtn.addEventListener("click", () => this.showHowToModal());
-    }
 
     if (dropzone && fileInput) {
       dropzone.addEventListener("click", () => fileInput.click());
-      fileInput.addEventListener("change", (e) => this.handleFileSelected(e.target.files[0]));
-
-      dropzone.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        dropzone.classList.add("dragover");
+      
+      dropzone.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          fileInput.click();
+        }
       });
-      dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
+
+      fileInput.addEventListener("change", (e) => {
+        if (e.target.files && e.target.files[0]) {
+          this.handleFileSelected(e.target.files[0]);
+        }
+      });
+
+      ["dragenter", "dragover"].forEach(evtName => {
+        dropzone.addEventListener(evtName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.classList.add("dragover");
+        });
+      });
+
+      ["dragleave", "drop"].forEach(evtName => {
+        dropzone.addEventListener(evtName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.classList.remove("dragover");
+        });
+      });
+
       dropzone.addEventListener("drop", (e) => {
-        e.preventDefault();
-        dropzone.classList.remove("dragover");
-        if (e.dataTransfer.files && e.dataTransfer.files.length) {
-          this.handleFileSelected(e.dataTransfer.files[0]);
+        const dt = e.dataTransfer;
+        if (dt && dt.files && dt.files[0]) {
+          this.handleFileSelected(dt.files[0]);
         }
       });
     }
+  },
 
+  bindButtons() {
+    const extractBtn = document.getElementById("extractBtn") || document.getElementById("analyzeBtn");
+    if (extractBtn) {
+      extractBtn.addEventListener("click", () => this.processFile());
+    }
+
+    const howToBtn = document.getElementById("howToDownloadBtn");
+    if (howToBtn) {
+      howToBtn.addEventListener("click", () => {
+        alert("How to download your ITR Return:\n\n1. Login to https://eportal.incometax.gov.in\n2. Go to 'e-File' > 'Income Tax Returns' > 'View Filed Returns'\n3. Click 'Download Form' (PDF) or 'Download JSON' for your desired Assessment Year.\n4. Upload the downloaded file directly here.");
+      });
+    }
+
+    const submitPwdBtn = document.getElementById("submitPdfPasswordBtn");
+    const pwdInput = document.getElementById("pdfPasswordInput");
     if (submitPwdBtn && pwdInput) {
       submitPwdBtn.addEventListener("click", () => {
         const pwd = pwdInput.value.trim();
-        if (!pwd) return alert("Please enter the password.");
+        if (!pwd) {
+          alert("Please enter the PDF password.");
+          return;
+        }
         this.enteredPassword = pwd;
         this.processFile(pwd);
       });
-
       pwdInput.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
           e.preventDefault();
@@ -1214,18 +1552,13 @@ const FinnomyItrApp = {
         }
       });
     }
-
-    if (extractBtn) {
-      extractBtn.addEventListener("click", () => {
-        this.processFile();
-      });
-    }
   },
 
   handleFileSelected(file) {
     if (!file) return;
-    if (!file.name.toLowerCase().endsWith(".pdf")) {
-      alert("Please upload an official Income Tax Return (ITR) PDF file.");
+    const name = file.name.toLowerCase();
+    if (!name.endsWith(".pdf") && !name.endsWith(".json")) {
+      alert("Please upload an official Income Tax Return (ITR) PDF or JSON file.");
       return;
     }
 
@@ -1235,9 +1568,10 @@ const FinnomyItrApp = {
     const chipHolder = document.getElementById("fileChipHolder");
     if (chipHolder) {
       const sizeKB = (file.size / 1024).toFixed(1);
+      const icon = name.endsWith(".json") ? "📋" : "📄";
       chipHolder.innerHTML = `
         <div class="file-chip">
-          <span>📄 <b>${this.esc(file.name)}</b> (${sizeKB} KB)</span>
+          <span>${icon} <b>${this.esc(file.name)}</b> (${sizeKB} KB)</span>
           <button id="removeFileBtn" type="button" style="background:none; border:none; color:var(--red); font-size:16px; cursor:pointer; margin-left:8px;" title="Remove file">✕</button>
         </div>
       `;
@@ -1250,12 +1584,6 @@ const FinnomyItrApp = {
 
     const extractBtn = document.getElementById("extractBtn") || document.getElementById("analyzeBtn");
     if (extractBtn) extractBtn.disabled = false;
-
-    const errorHolder = document.getElementById("errorHolder");
-    if (errorHolder) errorHolder.innerHTML = "";
-
-    const pwdHolder = document.getElementById("pdfPasswordHolder");
-    if (pwdHolder) pwdHolder.style.display = "none";
   },
 
   resetUpload() {
@@ -1274,9 +1602,6 @@ const FinnomyItrApp = {
 
     const pwdHolder = document.getElementById("pdfPasswordHolder");
     if (pwdHolder) pwdHolder.style.display = "none";
-
-    const errorHolder = document.getElementById("errorHolder");
-    if (errorHolder) errorHolder.innerHTML = "";
   },
 
   async processFile(password = "") {
@@ -1291,6 +1616,22 @@ const FinnomyItrApp = {
     if (loadingBox) loadingBox.style.display = "block";
 
     try {
+      const fileName = this.selectedFile.name.toLowerCase();
+
+      // 1. Handle JSON File Upload
+      if (fileName.endsWith(".json")) {
+        const text = await this.selectedFile.text();
+        const jsonObj = JSON.parse(text);
+        const parsed = ItrJsonParser.extract(jsonObj);
+        this.rawParsedData = parsed;
+        this.currentRegime = parsed.detectedRegime || "new";
+
+        if (loadingBox) loadingBox.style.display = "none";
+        this.renderReviewScreen();
+        return;
+      }
+
+      // 2. Handle PDF File Upload
       const { lines, diag } = await extractPdfTextLines(this.selectedFile, password || this.enteredPassword || "");
 
       if (diag.isEncrypted) {
@@ -1317,7 +1658,7 @@ const FinnomyItrApp = {
     }
   },
 
-  getFinancialYear(ay) {
+  getFinancialYear(ay) {FinancialYear(ay) {
     if (!ay) return "2024-25";
     const m = String(ay).match(/^(\d{4})-(\d{2,4})$/);
     if (m) {

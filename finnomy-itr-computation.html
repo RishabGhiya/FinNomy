@@ -475,7 +475,7 @@
             <div class="section-header">
                 <span class="section-tag">In-Browser Generator</span>
                 <h2 class="section-main-title">Generate Your Tax Computation</h2>
-                <p class="section-main-subtitle">Drop your filed ITR PDF below for instant, secure computation.</p>
+                <p class="section-main-subtitle">Drop your filed ITR PDF or JSON below for instant, secure computation.</p>
             </div>
 
             <div style="max-width: 960px; margin: 0 auto;">
@@ -490,10 +490,10 @@
                 <div class="card" id="upload-card">
                     <div class="upload-zone" id="dropzone" role="button" tabindex="0">
                         <div class="upload-icon">📄</div>
-                        <div style="font-weight:700; font-size:16px; margin-bottom:4px; color:var(--navy);">Drop your ITR Return PDF here, or click to browse</div>
-                        <div class="muted" style="color:var(--grey); font-size:13px;">Supports ITR-1 (Sahaj), ITR-2, ITR-3, and ITR-4 (Sugam) forms for AY 2024-25, 2025-26 &amp; 2026-27</div>
+                        <div style="font-weight:700; font-size:16px; margin-bottom:4px; color:var(--navy);">Drop your ITR Return PDF or JSON here, or click to browse</div>
+                        <div class="muted" style="color:var(--grey); font-size:13px;">Supports ITR-1 (Sahaj), ITR-2, ITR-3, and ITR-4 (Sugam) forms in PDF or JSON format for AY 2024-25, 2025-26 &amp; 2026-27</div>
                     </div>
-                    <input type="file" id="fileInput" accept=".pdf" style="display:none;">
+                    <input type="file" id="fileInput" accept=".pdf,.json,application/pdf,application/json" style="display:none;">
 
                     <div id="fileChipHolder"></div>
 
