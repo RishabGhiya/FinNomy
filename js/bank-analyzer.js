@@ -11,17 +11,25 @@ const CATEGORY_RULES = {
   // "how many income sources / how regular is your income" read of the main Income Analysis.
   // Interest specifically is also handled direction-aware in prepTransactions (a debit "interest
   // till..." narration is interest CHARGED, not earned — text alone can't tell direction).
-  "Passive Income": [/int\.?\s*paid/, /interest credit/i, /interest till/i, /\bint\.?\s*(cr|credited)\b/i,
-    /ach-?div/, /dividend/, /\bcashback\b/, /\brewards?\b/, /\bbonus\b/i, /rent received/i],
-  "Refund": [/\brefund(ed)?\b/i, /\breversal\b/i, /transaction reversed/i],
-  "Income": [/\bsalary\b/, /neft.*salary/, /\bstipend\b/, /\bfreelance\b/, /consulting fee/],
-  "Rent": [/\brent\b/, /\blandlord\b/],
+  "Passive Income": [/int\.?\s*paid/i, /interest\s*credit/i, /interest\s*till/i, /\bint\.?\s*(cr|credited)\b/i,
+    /ach-?div/i, /dividend/i, /\bcashback\b/i, /\brewards?\b/i, /\bbonus\b/i, /rent\s*received/i,
+    /\bannuity\b/i, /\broyalty\b/i],
+  "Refund": [/\brefund(ed)?\b/i, /\breversal\b/i, /transaction\s*reversed/i, /\bcashback\s*rev/i],
+  "Income": [
+    /\bsalary\b/i, /\bpayroll\b/i, /\bstipend\b/i, /\bfreelance\b/i, /\bconsulting\s*(fee|charge)?\b/i,
+    /\bremuneration\b/i, /\bwages?\b/i, /\bdirect\s*dep(osit)?\b/i, /\bcms\s*(cr|salary|payout)\b/i,
+    /\bpayout\b/i, /\bincentive\b/i, /\bfees?\s*rec(eived)?\b/i, /\binvoice\s*paid\b/i,
+    /\bclient\s*pay(ment)?\b/i, /\bneft.*salary\b/i, /\bach.*salary\b/i, /\bupi.*salary\b/i,
+    /\bsal\s*(for|credit|cr|payout|\b[a-z]{3}\b)\b/i, /\bprofessional\s*fees?\s*rec/i,
+    /\bcredits?\s*salary\b/i, /\bmonthly\s*payout\b/i, /\bearnings?\b/i
+  ],
+  "Rent": [/\brent\b/i, /\blandlord\b/i],
   // Credit card bill payments (CRED, Paytm CC, bank autopay) are debt *settlement* for
   // purchases already made — checked before EMI/Loan since both can say "autopay"/"payment",
   // and mixing revolving card debt into fixed-tenure loan figures would blur two different
   // kinds of obligation together.
-  "Credit Card / Debt Payment": [/\bcred\b/, /paytm cc/, /\bcc payment\b/, /card bill/, /card autopay/,
-    /(hdfc|icici|sbi|axis|kotak|idfc)\s*(cc|credit card)/, /\bautopay\b.*card/],
+  "Credit Card / Debt Payment": [/\bcred\b/i, /paytm\s*cc/i, /\bcc\s*payment\b/i, /card\s*bill/i, /card\s*autopay/i,
+    /(hdfc|icici|sbi|axis|kotak|idfc)\s*(cc|credit card)/i, /\bautopay\b.*card/i],
   "EMI / Loan": [/\bemi\b/, /\bnach\b.*fin/, /\bloan\b/, /bajaj finserv/],
   "Investments – Tax Saving": [/\bppf\b/, /\belss\b/, /\bnps\b/, /sukanya samriddhi/, /\bssy\b/, /tax saver/],
   "Investments – Wealth Building": [/\bsip\b/, /mutual fund/, /\bmf\b/, /\bstocks?\b/, /zerodha/, /groww/, /\bupstox\b/, /\bkite\b/],
@@ -270,26 +278,62 @@ function prepTransactions(raw, opts) {
     const catResult = categorizeWithConfidence(r.description);
     let category = catResult.category;
     let categoryConfidence = catResult.confidence;
-    // categorize() matches on text alone, so a debit narration containing "salary" (e.g. a
-    // business paying an employee, or a personal account paying domestic help) would otherwise
-    // land in "Income" — which is a real mis-categorization regardless of account type, since
-    // Income should only ever describe money coming in.
-    if (debit > 0 && category === "Income") { category = "Payroll / Salary Paid Out"; categoryConfidence = 90; }
-    // A "peer payment" narration that actually names the account holder themselves (e.g. "NEFT
-    // DR-...-RISHAB JAIN-NETBANK...", when the statement belongs to Rishab Jain) is a
-    // self-transfer, not a real payment to someone else — reclassify as the contra category.
-    if ((category === "Bank Transfer / Peer Payment" || category === "Transfers") && isSelfTransferDescription(r.description, selfName)) {
-      category = "Bank Transfers"; categoryConfidence = 90;
+    const descLower = (r.description || "").toLowerCase();
+
+    // Direction-aware adjustments:
+    if (debit > 0 && category === "Income") {
+      category = "Payroll / Salary Paid Out";
+      categoryConfidence = 90;
     }
+
+    // Credits (Inflows): Identify real income / revenue vs self transfers
+    if (credit > 0) {
+      const isIncomeKeyword = /\b(salary|payroll|stipend|freelance|consulting|remuneration|wages?|direct\s*dep(osit)?|cms\s*(cr|salary|payout)|payout|incentive|fees?\s*rec(eived)?|invoice\s*paid|client\s*pay(ment)?|sal\s*(for|credit|cr|payout|\b[a-z]{3}\b)|professional\s*fees?\s*rec|credits?\s*salary|monthly\s*payout|earnings?)\b/i.test(descLower);
+      const isPassiveKeyword = /\b(interest|dividend|cashback|rewards?|rent\s*rec(eived)?|annuity|royalty)\b/i.test(descLower);
+      const isRefundKeyword = /\b(refund(ed)?|reversal|transaction\s*reversed|cashback\s*rev)\b/i.test(descLower);
+
+      if (isIncomeKeyword) {
+        category = "Income";
+        categoryConfidence = 95;
+      } else if (isPassiveKeyword) {
+        category = "Passive Income";
+        categoryConfidence = 95;
+      } else if (isRefundKeyword) {
+        category = "Refund";
+        categoryConfidence = 95;
+      } else if (isSelfTransferDescription(r.description, selfName)) {
+        // True self-transfer between the same user's accounts
+        category = "Bank Transfers";
+        categoryConfidence = 90;
+      } else if (category === "Bank Transfers" || category === "Transfers") {
+        // External transfer received (NEFT / RTGS / UPI / IMPS from an employer or third party)
+        // Must NOT be swallowed into contra bank transfers; classify as external inflow/peer payment with confidence 70
+        category = "Bank Transfer / Peer Payment";
+        categoryConfidence = 70;
+      }
+    } else if (debit > 0) {
+      if ((category === "Bank Transfer / Peer Payment" || category === "Transfers") && isSelfTransferDescription(r.description, selfName)) {
+        category = "Bank Transfers";
+        categoryConfidence = 90;
+      }
+    }
+
     return {
-      date: r.date, description: String(r.description || "").trim(), debit, credit,
+      date: r.date,
+      description: String(r.description || "").trim(),
+      debit,
+      credit,
       balance: (r.balance !== undefined && r.balance !== null && r.balance !== "") ? Number(r.balance) : null,
-      category, categoryConfidence, merchant: normalizeMerchant(r.description), month: toMonthKey(r.date),
+      category,
+      categoryConfidence,
+      merchant: normalizeMerchant(r.description),
+      month: toMonthKey(r.date),
     };
   }).sort((a, b) => a.date - b.date);
-  // Stable id assigned after sorting, once — re-aggregating later (e.g. after a manual category
-  // override) reuses this same array in place rather than re-sorting, so ids stay valid.
+
+  // Stable id assigned after sorting
   tx.forEach((t, i) => { t._id = i; });
+  window.masterTransactionList = tx;
   return tx;
 }
 function overview(tx) {
@@ -1535,22 +1579,77 @@ function renderReport(r, meta) {
     </div>
   </div>`;
 
-  // Unknown-merchant review banner — nudges toward the click-to-fix category editing feature
-  // rather than leaving uncategorized transactions to sit quietly at the bottom of the report.
-  if (cov.uncategorizedCount > 5) {
-    const reviewSample = r.topMerchants.filter(m => m.avgConfidence < 70).slice(0, 5);
-    html += `<div class="card" style="background:#FFF8E6; border-color:#F0DDA0;">
-      <div style="display:flex; align-items:center; gap:12px; margin-bottom:${reviewSample.length ? "10px" : "0"};">
-        <div style="font-size:20px;">🔍</div>
-        <div class="body-text" style="margin:0;"><b>${cov.uncategorizedCount} merchant${cov.uncategorizedCount === 1 ? "" : "s"} need${cov.uncategorizedCount === 1 ? "s" : ""} review</b>
-          (worth ${fmtMoney(cov.uncategorizedAmount)}). Fixing them improves your Money DNA score and classification coverage.</div>
+  // Action Required: Dedicated Review for Uncategorized & Low-Confidence Transactions
+  const needsReview = (r.transactions || []).filter(t => 
+    t.category === "Uncategorized" || 
+    t.categoryConfidence < 75 || 
+    (t.credit > 0 && t.category !== "Income" && t.category !== "Passive Income" && t.category !== "Refund")
+  );
+
+  if (needsReview.length > 0) {
+    const totalNeedsReviewAmt = sum(needsReview, t => (t.debit > 0 ? t.debit : t.credit));
+    const uncatCredits = needsReview.filter(t => t.credit > 0);
+    const uncatDebits = needsReview.filter(t => t.debit > 0);
+
+    html += `
+    <div class="card action-card-alert" id="action-required-review-card">
+      <div class="action-card-header">
+        <div>
+          <div class="action-card-title">
+            <span>⚠️</span> Action Required: Review Uncategorized Transactions (${needsReview.length} items)
+          </div>
+          <div class="action-card-subtitle">
+            Found <b>${needsReview.length}</b> transaction(s) worth <b>${fmtMoney(totalNeedsReviewAmt)}</b> (${uncatCredits.length} Inflows, ${uncatDebits.length} Outflows) needing review.
+            Assigning them sharpens your Money DNA score, Income Analysis, and Savings Rate instantly.
+          </div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="btn" id="toggleReviewTableBtn" style="background:#D97706; padding:8px 16px; font-size:13px; box-shadow:none;">
+            Toggle Review List (${needsReview.length})
+          </button>
+        </div>
       </div>
-      ${reviewSample.length ? `<div style="display:flex; flex-direction:column; gap:6px; padding-left:32px;">
-        ${reviewSample.map(m => `<div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:6px; padding:6px 12px;">
-          <span style="font-size:13px;">${esc(titleCase(m.merchant))} <span class="muted">(${fmtMoney(m.totalSpend)})</span></span>
-          ${categoryEditCell(m.category, "merchant", m.merchant, "Assign category →")}
-        </div>`).join("")}
-      </div>` : ""}
+
+      <div id="reviewTableCollapse" class="review-table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description / Merchant</th>
+              <th class="num">Type &amp; Amount</th>
+              <th>Current Category</th>
+              <th>Reassign Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${needsReview.map(t => `
+              <tr id="review-row-${t._id}">
+                <td style="white-space:nowrap;">${fmtDate(t.date)}</td>
+                <td>
+                  <div style="font-weight:600; color:var(--navy);">${esc(titleCase(t.merchant))}</div>
+                  <div class="muted" style="font-size:11.5px;">${esc(t.description)}</div>
+                </td>
+                <td class="num" style="white-space:nowrap;">
+                  ${t.credit > 0 
+                    ? `<span style="color:var(--green); font-weight:700;">+${fmtMoney(t.credit)}</span> <span class="pill healthy" style="font-size:10.5px; padding:2px 6px;">INFLOW</span>`
+                    : `<span style="color:var(--warn); font-weight:700;">-${fmtMoney(t.debit)}</span> <span class="pill deficit" style="font-size:10.5px; padding:2px 6px;">OUTFLOW</span>`
+                  }
+                </td>
+                <td>
+                  <span class="pill ${t.category === 'Uncategorized' ? 'deficit' : 'moderate'}" style="font-size:11.5px;">
+                    ${esc(catLabel(t.category))} (${t.categoryConfidence}%)
+                  </span>
+                </td>
+                <td>
+                  <select class="cat-edit-select inline-review-select" data-txid="${t._id}">
+                    ${CATEGORY_LIST.map(cat => `<option value="${esc(cat)}" ${cat === t.category ? 'selected' : ''}>${esc(cat)}</option>`).join('')}
+                  </select>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
     </div>`;
   }
 
@@ -2494,22 +2593,49 @@ function restoreLabel(select, kind, key, category) {
   select.replaceWith(span);
 }
 function queueCategoryChange(select, kind, key, newCategory) {
-  if (!lastResults) return;
-  const tx = lastResults.transactions;
+  if (!lastResults && !window.masterTransactionList) return;
+  const tx = window.masterTransactionList || (lastResults && lastResults.transactions);
+  if (!tx) return;
   let updatedNow = 0;
-  // A manual correction is by definition certain — mark it as user-confirmed (100%) rather than
-  // leaving the old rule-derived confidence value sitting there stale.
+
+  // A manual correction is by definition certain — mark it as user-confirmed (100%)
   if (kind === "merchant") {
-    tx.forEach(t => { if (t.merchant === key) { t.category = newCategory; t.categoryConfidence = 100; updatedNow++; } });
+    tx.forEach(t => {
+      if (t.merchant === key) {
+        t.category = newCategory;
+        t.categoryConfidence = 100;
+        t.isUserOverridden = true;
+        updatedNow++;
+      }
+    });
   } else if (kind === "tx") {
     const id = Number(key);
     const match = tx.find(t => t._id === id);
-    if (match) { match.category = newCategory; match.categoryConfidence = 100; updatedNow = 1; }
+    if (match) {
+      match.category = newCategory;
+      match.categoryConfidence = 100;
+      match.isUserOverridden = true;
+      updatedNow = 1;
+    }
   }
+
+  // Synchronize master transaction list
+  window.masterTransactionList = tx;
+  if (lastResults) lastResults.transactions = tx;
   pendingUpdatedCount += updatedNow;
-  restoreLabel(select, kind, key, newCategory);
+
+  if (select && select.classList.contains("inline-review-select")) {
+    const row = select.closest("tr");
+    if (row) {
+      row.classList.add("cat-changed");
+      setTimeout(() => row.classList.remove("cat-changed"), 1400);
+    }
+  } else if (select) {
+    restoreLabel(select, kind, key, newCategory);
+  }
   showRegenerateBar();
 }
+
 function showRegenerateBar() {
   let bar = document.getElementById("regenerateBar");
   const isNew = !bar;
@@ -2517,38 +2643,61 @@ function showRegenerateBar() {
     bar = document.createElement("div");
     bar.id = "regenerateBar";
     bar.className = "no-pdf-capture";
-    // Fixed to the viewport (not sticky within the report's document flow) — guarantees it's
-    // visible immediately no matter where in a long, scrolled report the edit happened, rather
-    // than relying on scroll position to bring a sticky element into view.
-    bar.style.cssText = "position:fixed; top:0; left:0; right:0; z-index:500; background:#0F2A4A; color:#fff; padding:14px 20px; display:flex; align-items:center; justify-content:center; gap:16px; box-shadow:0 2px 16px rgba(0,0,0,0.35); font-size:14px; font-weight:600;";
+    bar.style.cssText = "position:fixed; top:0; left:0; right:0; z-index:9999; background:#0F2A4A; color:#fff; padding:14px 20px; display:flex; align-items:center; justify-content:center; gap:16px; box-shadow:0 4px 20px rgba(0,0,0,0.4); font-size:14.5px; font-weight:600;";
     document.body.appendChild(bar);
   }
-  bar.innerHTML = `<span>✏️ ${pendingUpdatedCount} transaction${pendingUpdatedCount === 1 ? "" : "s"} updated</span>
-    <button id="regenerateReportBtn" class="btn" style="background:#00B37E; padding:9px 20px; border:none; font-size:14px;">🔄 Regenerate Report</button>`;
+  bar.innerHTML = `<span>✏️ <b>${pendingUpdatedCount}</b> category edit${pendingUpdatedCount === 1 ? "" : "s"} staged</span>
+    <button id="regenerateReportBtn" class="btn" style="background:#00B37E; padding:9px 22px; border:none; font-size:14px; box-shadow:none; cursor:pointer;">🔄 Regenerate Report</button>`;
   if (isNew) {
-    // Brief entrance animation — a bar that just silently appears at the very top of a long
-    // page is easy to miss; a short slide/flash draws the eye to it the moment it shows up.
     bar.style.transform = "translateY(-100%)";
     bar.style.transition = "transform 0.35s ease-out";
     requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.transform = "translateY(0)"; }));
   }
 }
-function regenerateReport() {
-  if (!lastResults) return;
-  const prevScore = lastResults.moneyDNA ? lastResults.moneyDNA.overall : null;
-  const prevCoverage = lastResults.classificationCoverage ? lastResults.classificationCoverage.coverageByAmountPct : null;
+
+function recalculateFinancialReport(transactions) {
+  const txList = transactions || window.masterTransactionList || (lastResults && lastResults.transactions);
+  if (!txList || !txList.length) return;
+  window.masterTransactionList = txList;
+  const prevScore = lastResults && lastResults.moneyDNA ? lastResults.moneyDNA.overall : null;
+  const prevCoverage = lastResults && lastResults.classificationCoverage ? lastResults.classificationCoverage.coverageByAmountPct : null;
   const updatedCount = pendingUpdatedCount;
-  lastResults = aggregateAll(lastResults.transactions);
+
+  lastResults = aggregateAll(window.masterTransactionList);
   pendingUpdatedCount = 0;
-  document.getElementById("regenerateBar")?.remove(); // now fixed to <body>, not inside #report, so renderReport()'s innerHTML swap won't clear it on its own
+  document.getElementById("regenerateBar")?.remove();
   renderReport(lastResults, { businessMode });
+
   const newScore = lastResults.moneyDNA ? lastResults.moneyDNA.overall : null;
   const newCoverage = lastResults.classificationCoverage ? lastResults.classificationCoverage.coverageByAmountPct : null;
-  const parts = [`${updatedCount} transaction${updatedCount === 1 ? "" : "s"} updated`];
-  if (prevCoverage !== null && newCoverage !== null && Math.round(prevCoverage) !== Math.round(newCoverage)) parts.push(`Classification ${Math.round(prevCoverage)}% → ${Math.round(newCoverage)}%`);
+  const parts = [`${updatedCount > 0 ? updatedCount : 'All'} transactions updated`];
+  if (prevCoverage !== null && newCoverage !== null && Math.round(prevCoverage) !== Math.round(newCoverage)) parts.push(`Coverage ${Math.round(prevCoverage)}% → ${Math.round(newCoverage)}%`);
   if (prevScore !== null && newScore !== null && prevScore !== newScore) parts.push(`Money DNA ${prevScore} → ${newScore}`);
   showToast(parts.join(" · "));
 }
+window.recalculateFinancialReport = recalculateFinancialReport;
+
+function regenerateReport() {
+  recalculateFinancialReport(window.masterTransactionList);
+}
+
+document.addEventListener("change", (e) => {
+  if (e.target && e.target.classList.contains("inline-review-select")) {
+    const select = e.target;
+    const txId = Number(select.dataset.txid);
+    const newCategory = select.value;
+    queueCategoryChange(select, "tx", txId, newCategory);
+  }
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target && (e.target.id === "toggleReviewTableBtn" || e.target.closest("#toggleReviewTableBtn"))) {
+    const tableDiv = document.getElementById("reviewTableCollapse");
+    if (tableDiv) {
+      tableDiv.style.display = (tableDiv.style.display === "none") ? "block" : "none";
+    }
+  }
+});
 
 function clearAllData() {
   selectedFile = null;
