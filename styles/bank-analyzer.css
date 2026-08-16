@@ -54,13 +54,15 @@ html, body {
   color: var(--text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  scroll-snap-type: none !important;
+  height: auto !important;
 }
 
 /* Full-Width Section Containers */
 .landing-section-full {
   width: 100%;
   margin: 0;
-  padding: 72px 0;
+  padding: 40px 0;
 }
 
 .section-white {
@@ -76,7 +78,7 @@ html, body {
 .section-tool {
   background: #F1F5F9;
   border-top: 1px solid var(--border);
-  padding: 80px 0 60px;
+  padding: 44px 0 40px;
 }
 
 .section-container {
@@ -87,134 +89,143 @@ html, body {
 }
 
 /* =========================================================================
-   1. HERO SECTION (Split Layout with FinNomy Visual Media)
+   1. HERO SECTION (MATCHING HOMEPAGE)
    ========================================================================= */
-.hero-full {
-  background: #FFFFFF;
-  padding-top: 120px;
-  padding-bottom: 60px;
+.hero-section {
+  background-color: #FFFFFF;
+  padding: 92px 0 32px 0;
   width: 100%;
 }
 
-.hero-split-grid {
+.hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 1.15fr 1fr;
   align-items: center;
-  gap: 40px;
+  gap: 48px;
 }
 
-.hero-text-col {
-  text-align: left;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--blue-light);
-  border: 1px solid var(--blue-border);
-  color: var(--blue);
-  padding: 6px 16px;
-  border-radius: 9999px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.2px;
-  margin-bottom: 18px;
-}
-
-.hero-badge .badge-icon {
-  font-size: 14px;
+/* Left Column Content */
+.hero-eyebrow {
+  font-family: var(--font-display, 'Poppins', 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #00B37E; /* Brand Green */
+  margin-bottom: 12px;
 }
 
 .hero-title {
-  font-size: clamp(34px, 4.2vw, 50px);
+  font-family: var(--font-display, 'Poppins', 'Plus Jakarta Sans', sans-serif);
+  font-size: clamp(2.35rem, 3.6vw, 3.25rem);
   font-weight: 800;
-  color: var(--navy);
-  margin: 0 0 16px;
-  letter-spacing: -0.8px;
-  line-height: 1.18;
+  line-height: 1.15;
+  color: #0F172A;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
 }
 
 .hero-subtitle {
-  color: var(--grey);
-  font-size: clamp(16px, 1.8vw, 18px);
-  margin: 0 0 28px;
+  font-size: 1.1rem;
+  color: #475569;
   line-height: 1.6;
+  margin-bottom: 28px;
+  max-width: 540px;
 }
 
-.hero-cta-row {
+.hero-btn-group {
   display: flex;
-  gap: 14px;
   align-items: center;
-  flex-wrap: wrap;
+  gap: 16px;
   margin-bottom: 24px;
+  flex-wrap: wrap;
 }
 
 .btn-hero-primary {
-  background: var(--blue);
+  background: #0B63D8;
   color: #FFFFFF;
-  padding: 15px 34px;
-  font-size: 16px;
+  font-family: var(--font-display, 'Poppins', 'Plus Jakarta Sans', sans-serif);
+  font-size: 1rem;
   font-weight: 700;
-  border-radius: 12px;
+  padding: 14px 28px;
+  border-radius: 10px;
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  box-shadow: 0 6px 20px rgba(11, 99, 216, 0.3);
-  text-decoration: none;
-  transition: all 0.2s ease;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(11, 99, 216, 0.25);
+  transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
 }
 
 .btn-hero-primary:hover {
-  background: var(--blue-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(11, 99, 216, 0.4);
+  background: #094eb0;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(11, 99, 216, 0.35);
 }
 
 .btn-hero-secondary {
   background: #FFFFFF;
-  color: var(--navy);
-  border: 1.5px solid var(--border);
+  color: #0F172A;
+  font-family: var(--font-display, 'Poppins', 'Plus Jakarta Sans', sans-serif);
+  font-size: 1rem;
+  font-weight: 700;
   padding: 14px 26px;
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: 12px;
+  border-radius: 10px;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid #CBD5E1;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
   transition: all 0.2s ease;
 }
 
 .btn-hero-secondary:hover {
-  background: var(--bg-subtle);
-  border-color: #CBD5E1;
+  background: #F8FAFC;
+  border-color: #94A3B8;
+  color: #0B63D8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
 }
 
-.hero-trust-list {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  font-size: 13px;
-  color: var(--grey);
-  font-weight: 500;
-}
-
-.hero-trust-item {
+.hero-trust-badges {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #64748B;
+  flex-wrap: wrap;
 }
 
-.hero-visual-col {
-  text-align: center;
-  position: relative;
+/* Right Column Visual (No Box, No Card Shadow) */
+.hero-visual-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent !important; /* No white rectangle background */
+  box-shadow: none !important;        /* No card drop shadow */
+  border: none !important;
+  padding: 0 !important;
 }
 
-.hero-mascot-img {
-  max-width: 100%;
+.hero-visual-wrap img,
+.hero-visual-wrap svg {
+  width: 100%;
+  max-width: 600px;
   height: auto;
-  max-height: 420px;
+  max-height: 580px;
+  display: block;
   object-fit: contain;
-  border-radius: var(--radius-xl);
-  filter: drop-shadow(0 16px 30px rgba(15, 42, 74, 0.12));
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 /* =========================================================================
@@ -223,33 +234,33 @@ html, body {
 .section-header {
   text-align: center;
   max-width: 760px;
-  margin: 0 auto 44px;
+  margin: 0 auto 24px;
 }
 
 .section-tag {
   display: inline-block;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.2px;
   color: var(--blue);
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 .section-main-title {
-  font-size: clamp(28px, 3.2vw, 38px);
+  font-size: clamp(26px, 3vw, 34px);
   font-weight: 800;
   color: var(--navy);
-  margin: 0 0 12px;
+  margin: 0 0 8px;
   letter-spacing: -0.5px;
   line-height: 1.25;
 }
 
 .section-main-subtitle {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--grey);
   margin: 0;
-  line-height: 1.6;
+  line-height: 1.55;
 }
 
 /* =========================================================================
@@ -258,148 +269,177 @@ html, body {
 .reveal-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 20px;
 }
 
 .reveal-card {
   background: #FFFFFF;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 30px 26px;
+  padding: 22px 20px;
+  box-shadow: var(--shadow-sm);
   transition: all 0.25s ease;
-  display: flex;
-  flex-direction: column;
 }
 
 .reveal-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
   border-color: #CBD5E1;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .reveal-icon-wrap {
-  width: 50px;
-  height: 50px;
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
   background: var(--blue-light);
   color: var(--blue);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
-  font-size: 22px;
+  margin-bottom: 14px;
+  font-size: 20px;
 }
 
 .reveal-card-title {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--navy);
-  margin: 0 0 10px;
+  margin: 0 0 6px;
 }
 
 .reveal-card-desc {
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--grey);
-  line-height: 1.6;
+  line-height: 1.5;
   margin: 0;
 }
 
 /* =========================================================================
-   3. WORKFLOW STEPS (5 STEPS)
+   3. WORKFLOW STEPS (SEAMLESS ZIG-ZAG 5-STEP LAYOUT)
    ========================================================================= */
-.workflow-steps-container {
+.zigzag-container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  max-width: 900px;
+  gap: 28px;
+  max-width: 1060px;
   margin: 0 auto;
 }
 
-.step-card {
-  background: #FFFFFF;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 24px 30px;
-  display: flex;
+.zigzag-step {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 44px;
   align-items: center;
-  gap: 24px;
-  transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 4px 0;
+  box-shadow: none;
+  transition: none;
 }
 
-.step-card:hover {
-  border-color: #CBD5E1;
-  box-shadow: var(--shadow-sm);
+.zigzag-step:hover {
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
 }
 
-.step-number {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--blue);
-  background: var(--blue-light);
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+.zigzag-step.flip {
+  grid-template-columns: 0.95fr 1.05fr;
 }
 
-.step-content {
-  flex: 1;
+.zigzag-step.flip .zigzag-text {
+  order: 2;
 }
 
-.step-title {
-  font-size: 17.5px;
-  font-weight: 700;
-  color: var(--navy);
-  margin: 0 0 4px;
+.zigzag-step.flip .zigzag-visual {
+  order: 1;
 }
 
-.step-desc {
-  font-size: 14px;
-  color: var(--grey);
-  margin: 0;
-  line-height: 1.55;
-}
-
-.step-card-highlight {
-  background: linear-gradient(135deg, #F8FAFF 0%, #F0FDF8 100%);
+/* Step 03: Review & Regroup - Keep prominent highlighted accent card styling */
+.zigzag-step.step-highlight {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F0FDF8 100%);
   border: 2px solid var(--green);
-  box-shadow: 0 8px 24px rgba(0, 179, 126, 0.12);
+  border-radius: var(--radius-xl);
+  padding: 32px 36px;
+  box-shadow: 0 10px 30px rgba(0, 179, 126, 0.12);
+  transition: all 0.25s ease;
 }
 
-.step-card-highlight .step-number {
-  background: var(--green);
-  color: #FFFFFF;
+.zigzag-step.step-highlight:hover {
+  box-shadow: 0 14px 36px rgba(0, 179, 126, 0.18);
+  transform: translateY(-2px);
 }
 
-.step-badge-accent {
-  display: inline-block;
-  background: var(--green-light);
-  border: 1px solid var(--green-border);
-  color: #047857;
-  font-size: 11.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 3px 10px;
-  border-radius: 9999px;
-  margin-bottom: 6px;
-}
-
-.step-quote {
-  margin-top: 8px;
-  font-size: 13.5px;
-  font-weight: 600;
-  color: #065F46;
-  display: flex;
+.step-tag-pill {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: var(--blue-light);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  margin-bottom: 12px;
+}
+
+.step-tag-pill.pill-green {
+  color: #065F46;
+  background: var(--green-light);
+  border: 1px solid var(--green-border);
+}
+
+.step-heading, .zigzag-title {
+  font-family: var(--font-display, 'Poppins', 'Plus Jakarta Sans', sans-serif);
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.step-heading .step-num, .zigzag-title .step-num {
+  color: #0B63D8;
+  margin-right: 8px;
+}
+
+.zigzag-desc {
+  font-size: 15px;
+  color: var(--grey);
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+
+.zigzag-bullet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13.8px;
+  color: var(--slate);
+  font-weight: 500;
+}
+
+.zigzag-bullet-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.zigzag-visual-card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  width: 100%;
+  box-shadow: 0 4px 16px rgba(15, 42, 74, 0.04);
 }
 
 /* =========================================================================
-   4. DASHBOARD VISUAL MOCKUP
+   4. DASHBOARD VISUAL MOCKUP (EXACT MATCH WITH FINNOMY REPORT DRAFT OUTPUT)
    ========================================================================= */
 .mockup-outer-frame {
   background: #FFFFFF;
@@ -441,68 +481,150 @@ html, body {
 }
 
 .mockup-body {
-  padding: 32px;
+  padding: 28px;
   background: #F8FAFC;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.mockup-metric-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.mockup-metric-card {
+/* Money DNA Score Centerpiece */
+.mockup-dna-box {
   background: #FFFFFF;
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 18px;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
 }
 
-.mockup-metric-label {
-  font-size: 12px;
-  font-weight: 600;
+.mockup-dna-tag {
+  font-size: 11px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   color: var(--grey);
   margin-bottom: 4px;
 }
 
-.mockup-metric-value {
-  font-size: 22px;
+.mockup-dna-score {
+  font-size: 48px;
   font-weight: 800;
   color: var(--navy);
-  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  margin: 4px 0;
 }
 
-.mockup-metric-sub {
-  font-size: 12px;
+.mockup-dna-score span {
+  font-size: 20px;
+  color: var(--grey);
   font-weight: 600;
-  margin-top: 4px;
 }
 
-.sub-green { color: var(--green); }
-.sub-blue { color: var(--blue); }
+.mockup-dna-badge {
+  display: inline-block;
+  background: #FFF3CD;
+  color: #8A5423;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
 
+.mockup-callout-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  text-align: left;
+  margin-top: 14px;
+}
+
+.mockup-callout-item {
+  background: #F8FAFC;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+}
+
+.mockup-callout-label {
+  font-size: 11.5px;
+  color: var(--grey);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.mockup-callout-val {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.mockup-callout-sub {
+  font-size: 11.5px;
+  color: var(--grey);
+}
+
+/* Overview Summary Table */
+.mockup-table-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+}
+
+.mockup-card-head {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mockup-overview-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.mockup-overview-table th {
+  background: #0F2A4A;
+  color: #FFFFFF;
+  padding: 8px 12px;
+  font-size: 12px;
+  text-align: left;
+}
+
+.mockup-overview-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--slate);
+}
+
+.mockup-overview-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Split Row: Charts & Progress */
 .mockup-split-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
-  margin-bottom: 20px;
 }
 
 .mockup-panel {
   background: #FFFFFF;
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 22px;
+  border-radius: var(--radius-lg);
+  padding: 20px;
 }
 
 .mockup-panel-title {
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 700;
   color: var(--navy);
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -512,8 +634,8 @@ html, body {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  height: 140px;
-  padding-top: 20px;
+  height: 130px;
+  padding-top: 16px;
   border-bottom: 1.5px solid var(--border);
   gap: 12px;
 }
@@ -528,7 +650,7 @@ html, body {
 }
 
 .css-bar {
-  width: 22px;
+  width: 20px;
   border-radius: 4px 4px 0 0;
 }
 
@@ -547,7 +669,7 @@ html, body {
 .chart-legend {
   display: flex;
   gap: 16px;
-  margin-top: 14px;
+  margin-top: 12px;
   font-size: 12px;
   color: var(--grey);
 }
@@ -567,7 +689,7 @@ html, body {
 .cat-progress-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .cat-progress-item {
@@ -579,13 +701,13 @@ html, body {
 .cat-progress-header {
   display: flex;
   justify-content: space-between;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 600;
   color: var(--slate);
 }
 
 .cat-progress-track {
-  height: 8px;
+  height: 7px;
   background: var(--bg-subtle);
   border-radius: 9999px;
   overflow: hidden;
@@ -600,19 +722,19 @@ html, body {
   background: #FFFFFF;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  padding: 16px 20px;
+  padding: 14px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 
 .demo-tx-info {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 13.5px;
+  gap: 10px;
+  font-size: 13px;
 }
 
 .demo-pill-interactive {
@@ -622,9 +744,9 @@ html, body {
   background: var(--blue-light);
   color: var(--blue);
   border: 1px dashed var(--blue);
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: 6px;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -634,7 +756,7 @@ html, body {
 .advantages-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 22px;
+  gap: 20px;
   max-width: 960px;
   margin: 0 auto;
 }
@@ -643,9 +765,9 @@ html, body {
   background: #FFFFFF;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 28px;
+  padding: 26px;
   display: flex;
-  gap: 18px;
+  gap: 16px;
   transition: all 0.2s ease;
 }
 
@@ -656,8 +778,8 @@ html, body {
 }
 
 .advantage-icon {
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
   background: var(--green-light);
   color: var(--green);
@@ -669,7 +791,7 @@ html, body {
 }
 
 .advantage-title {
-  font-size: 17px;
+  font-size: 16.5px;
   font-weight: 700;
   color: var(--navy);
   margin: 0 0 6px;
@@ -685,6 +807,7 @@ html, body {
 /* =========================================================================
    6. UPLOAD & ANALYZE TOOL SECTION (RELOCATED TO DEDICATED CONTAINER)
    ========================================================================= */
+#analyzer-tool-section,
 #analyzer-section {
   scroll-margin-top: 80px;
 }
@@ -1246,22 +1369,40 @@ canvas {
 /* =========================================================================
    RESPONSIVE MEDIA QUERIES
    ========================================================================= */
-@media (max-width: 960px) {
-  .hero-split-grid {
+@media (max-width: 900px) {
+  .hero-section {
+    padding: 80px 0 28px 0;
+  }
+  .hero-container {
     grid-template-columns: 1fr;
     text-align: center;
+    gap: 28px;
   }
-  .hero-text-col {
-    text-align: center;
-  }
-  .hero-cta-row, .hero-trust-list {
+  .hero-title { font-size: 2.35rem; }
+  .hero-subtitle { margin: 0 auto 20px auto; }
+  .hero-btn-group, .hero-trust-badges {
     justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hero-visual-wrap img {
+    max-width: 380px;
+  }
+  .zigzag-step, .zigzag-step.flip {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 16px 0;
+  }
+  .zigzag-step.flip .zigzag-text {
+    order: 1;
+  }
+  .zigzag-step.flip .zigzag-visual {
+    order: 2;
   }
   .reveal-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .mockup-metric-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .mockup-callout-grid {
+    grid-template-columns: 1fr;
   }
   .mockup-split-row {
     grid-template-columns: 1fr;
@@ -1270,14 +1411,14 @@ canvas {
 
 @media (max-width: 768px) {
   .landing-section-full {
-    padding: 56px 0;
+    padding: 32px 0;
   }
-  .hero-full {
-    padding-top: 100px;
-    padding-bottom: 40px;
+  .hero-section {
+    padding-top: 75px;
+    padding-bottom: 24px;
   }
   .card, #upload-card {
-    padding: 22px 18px;
+    padding: 20px 16px;
   }
   .reveal-grid {
     grid-template-columns: 1fr;
@@ -1285,15 +1426,19 @@ canvas {
   .advantages-grid {
     grid-template-columns: 1fr;
   }
-  .step-card {
-    padding: 18px 20px;
-    gap: 16px;
+  .zigzag-step, .zigzag-step.flip {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 22px 18px;
   }
   .mockup-body {
-    padding: 20px 16px;
+    padding: 16px 12px;
   }
-  .mockup-metric-grid {
-    grid-template-columns: 1fr;
+  .mockup-overview-table {
+    font-size: 12px;
+  }
+  .mockup-overview-table th, .mockup-overview-table td {
+    padding: 6px 8px;
   }
   .col-2 {
     grid-template-columns: 1fr;

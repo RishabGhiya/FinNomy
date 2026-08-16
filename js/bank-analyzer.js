@@ -103,7 +103,8 @@ const DISCRETIONARY = new Set(["Food Delivery", "Restaurants & Cafes", "Shopping
 // Full list of assignable categories, for the manual override dropdown — kept as a plain array
 // (not derived from CATEGORY_RULES keys at render time) so its order is deliberate rather than
 // whatever object-key order happens to be.
-const CATEGORY_LIST = ["Income", "Passive Income", "Refund", "Payroll / Salary Paid Out", "Rent",
+const CATEGORY_LIST = [
+  "Salary / Primary Income", "Secondary Inflow", "Income", "Passive Income", "Refund", "Payroll / Salary Paid Out", "Rent",
   "Credit Card / Debt Payment", "EMI / Loan", "Investments – Tax Saving", "Investments – Wealth Building",
   "Gold / Digital Gold", "Income Tax", "Tax Payments (GST/TDS)", "Insurance", "Electricity", "Mobile / Internet",
   "Gas & Water", "Bill Payment", "Subscriptions", "Groceries", "Food Delivery", "Restaurants & Cafes", "Gaming",
@@ -111,7 +112,8 @@ const CATEGORY_LIST = ["Income", "Passive Income", "Refund", "Payroll / Salary P
   "Shopping", "Pharmacy", "Hospital / Doctor", "Diagnostics", "Education", "Cash Withdrawal",
   "Professional Fees", "Advertising & Marketing", "Software & Hosting", "Payment Gateway / POS Settlement",
   "Housing Society / Maintenance", "Courier & Logistics", "Donations & Charity", "Bank Charges",
-  "Bank Transfer / Peer Payment", "Bank Transfers", "Transfers", "Uncategorized"];
+  "Bank Transfer / Peer Payment", "Bank Transfers", "Transfers", "Uncategorized"
+];
 // Quick-commerce / food-delivery / cab micro-rollups — small named views over already-
 // categorized transactions (matched independently against the raw description), not a
 // replacement for the main category rules above.
@@ -136,10 +138,19 @@ const LOW_CONFIDENCE_CATEGORIES = new Set(["Bank Transfers", "Transfers", "Bank 
 // This never touches the Overview section, which stays a literal, bank-reconciled ledger.
 const CONTRA_CATEGORIES = new Set(["Bank Transfers"]);
 function isAnalyticalSpend(t) {
-  return t.debit > 0 && t.category !== "Income" && t.category !== "Passive Income" && !CONTRA_CATEGORIES.has(t.category);
+  return t.debit > 0 && 
+    t.category !== "Income" && 
+    t.category !== "Salary / Primary Income" && 
+    t.category !== "Passive Income" && 
+    t.category !== "Secondary Inflow" && 
+    !CONTRA_CATEGORIES.has(t.category);
 }
 function isAnalyticalIncome(t) {
-  return (t.category === "Income" || t.category === "Passive Income") && !CONTRA_CATEGORIES.has(t.category);
+  return (t.category === "Income" || 
+          t.category === "Salary / Primary Income" || 
+          t.category === "Passive Income" || 
+          t.category === "Secondary Inflow") && 
+         !CONTRA_CATEGORIES.has(t.category);
 }
 function categorizeWithConfidence(description) {
   const desc = (description || "").toLowerCase();
@@ -281,7 +292,7 @@ function prepTransactions(raw, opts) {
     const descLower = (r.description || "").toLowerCase();
 
     // Direction-aware adjustments:
-    if (debit > 0 && category === "Income") {
+    if (debit > 0 && (category === "Income" || category === "Salary / Primary Income")) {
       category = "Payroll / Salary Paid Out";
       categoryConfidence = 90;
     }
@@ -293,10 +304,10 @@ function prepTransactions(raw, opts) {
       const isRefundKeyword = /\b(refund(ed)?|reversal|transaction\s*reversed|cashback\s*rev)\b/i.test(descLower);
 
       if (isIncomeKeyword) {
-        category = "Income";
+        category = "Salary / Primary Income";
         categoryConfidence = 95;
       } else if (isPassiveKeyword) {
-        category = "Passive Income";
+        category = "Secondary Inflow";
         categoryConfidence = 95;
       } else if (isRefundKeyword) {
         category = "Refund";
@@ -328,6 +339,7 @@ function prepTransactions(raw, opts) {
       categoryConfidence,
       merchant: normalizeMerchant(r.description),
       month: toMonthKey(r.date),
+      isUserOverridden: false,
     };
   }).sort((a, b) => a.date - b.date);
 
@@ -391,7 +403,7 @@ function monthlySummary(tx) {
   for (const t of tx) {
     if (CONTRA_CATEGORIES.has(t.category)) continue;
     const e = map.get(t.month) || { month: t.month, income: 0, otherCredit: 0, expense: 0 };
-    if (t.category === "Income" || t.category === "Passive Income") e.income += t.credit;
+    if (isAnalyticalIncome(t)) e.income += t.credit;
     else e.otherCredit += t.credit;
     e.expense += t.debit;
     map.set(t.month, e);
@@ -426,23 +438,24 @@ function topMerchants(tx, n = 10) {
   })).sort((a, b) => b.totalSpend - a.totalSpend).slice(0, n);
 }
 function incomeAnalysis(tx) {
-  const inc = tx.filter(t => t.category === "Income");
-  const passive = tx.filter(t => t.category === "Passive Income");
+  const inc = tx.filter(t => t.category === "Income" || t.category === "Salary / Primary Income");
+  const passive = tx.filter(t => t.category === "Passive Income" || t.category === "Secondary Inflow");
   const passiveSummary = { total: sum(passive, t => t.credit), count: passive.length };
-  if (!inc.length) return { numSources: 0, totalIncome: 0, avgMonthlyIncome: 0, regularity: "No income detected", bySource: [], passive: passiveSummary };
+  const allInc = [...inc, ...passive];
+  if (!allInc.length) return { numSources: 0, totalIncome: 0, avgMonthlyIncome: 0, regularity: "No income detected", bySource: [], passive: passiveSummary };
   const bySrc = new Map();
-  for (const t of inc) {
+  for (const t of allInc) {
     const e = bySrc.get(t.merchant) || { merchant: t.merchant, total: 0, count: 0 };
     e.total += t.credit; e.count += 1; bySrc.set(t.merchant, e);
   }
   const monthMap = new Map();
-  for (const t of inc) monthMap.set(t.month, (monthMap.get(t.month) || 0) + t.credit);
+  for (const t of allInc) monthMap.set(t.month, (monthMap.get(t.month) || 0) + t.credit);
   const vals = [...monthMap.values()];
-  const mean = vals.reduce((a, b) => a + b, 0) / vals.length;
-  const variance = vals.reduce((a, b) => a + (b - mean) ** 2, 0) / vals.length;
+  const mean = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+  const variance = vals.length ? vals.reduce((a, b) => a + (b - mean) ** 2, 0) / vals.length : 0;
   const cv = mean ? Math.sqrt(variance) / mean : NaN;
   const regularity = cv < 0.1 ? "Stable / regular" : cv < 0.3 ? "Somewhat variable" : "Irregular";
-  return { numSources: bySrc.size, totalIncome: sum(inc, t => t.credit), avgMonthlyIncome: mean, regularity,
+  return { numSources: bySrc.size, totalIncome: sum(allInc, t => t.credit), avgMonthlyIncome: mean, regularity,
     bySource: [...bySrc.values()].sort((a, b) => b.total - a.total), passive: passiveSummary };
 }
 function recurringTransactions(tx, minOcc = 3) {
@@ -519,7 +532,7 @@ function financialHealth(tx, monthly) {
   // Savings = whatever's left of total income — the standard framework's own definition of
   // "savings" (residual, not just what got invested), so this stays correct even for a period
   // with irregular or no investment activity.
-  const totalIncomeAll = sum(tx.filter(t => t.category === "Income" || t.category === "Passive Income"), t => t.credit);
+  const totalIncomeAll = sum(tx.filter(t => isAnalyticalIncome(t)), t => t.credit);
   const needsAmt = essential + debtPaymentTotal;
   const wantsAmt = discretionary;
   const savingsAmt = totalIncomeAll - needsAmt - wantsAmt;
@@ -812,7 +825,7 @@ function computeSalaryExhaustionDays(tx) {
   for (const t of tx) { if (!monthGroups.has(t.month)) monthGroups.set(t.month, []); monthGroups.get(t.month).push(t); }
   const results = [];
   for (const list of monthGroups.values()) {
-    const income = sum(list.filter(t => t.category === "Income"), t => t.credit);
+    const income = sum(list.filter(t => isAnalyticalIncome(t)), t => t.credit);
     if (!income) continue;
     const spend = list.filter(t => isAnalyticalSpend(t)).sort((a, b) => a.date - b.date);
     const firstOfMonth = new Date(list[0].date.getFullYear(), list[0].date.getMonth(), 1);
@@ -1564,6 +1577,14 @@ function renderReport(r, meta) {
   const sqHasBalance = r.transactions.some(t => t.balance !== null && t.balance !== undefined);
   const sqBand = cov.coverageByAmountPct >= 90 ? { emoji: "🟢", label: "Excellent" }
     : cov.coverageByAmountPct >= 70 ? { emoji: "🟡", label: "Good" } : { emoji: "🔴", label: "Needs Review" };
+
+  const needsReview = (r.transactions || []).filter(t => 
+    t.category === "Uncategorized" || 
+    t.categoryConfidence < 75 || 
+    (t.credit > 0 && !isAnalyticalIncome(t) && t.category !== "Refund")
+  );
+  const totalNeedsReviewAmt = sum(needsReview, t => (t.debit > 0 ? t.debit : t.credit));
+
   html += `<div class="card" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding:16px 20px;">
     <div>
       <div style="font-weight:700; margin-bottom:6px;">Statement Quality</div>
@@ -1577,81 +1598,10 @@ function renderReport(r, meta) {
       <div class="muted" style="font-size:11px; text-transform:uppercase; letter-spacing:0.4px;">Parser Confidence</div>
       <div style="font-size:22px; font-weight:800; color:var(--navy);">${sqBand.emoji} ${fmtPct(cov.coverageByAmountPct, 0)}</div>
     </div>
+    ${needsReview.length > 0 ? `<div style="width:100%; margin-top:8px; padding-top:8px; border-top:1px dashed var(--border); font-size:12.5px; color:#B45309; display:flex; align-items:center; gap:6px;">
+      <span>🔍</span> <b>${needsReview.length} merchants need review (worth ${fmtMoney(totalNeedsReviewAmt)}).</b> Fixing them improves your Money DNA score and classification coverage.
+    </div>` : ""}
   </div>`;
-
-  // Action Required: Dedicated Review for Uncategorized & Low-Confidence Transactions
-  const needsReview = (r.transactions || []).filter(t => 
-    t.category === "Uncategorized" || 
-    t.categoryConfidence < 75 || 
-    (t.credit > 0 && t.category !== "Income" && t.category !== "Passive Income" && t.category !== "Refund")
-  );
-
-  if (needsReview.length > 0) {
-    const totalNeedsReviewAmt = sum(needsReview, t => (t.debit > 0 ? t.debit : t.credit));
-    const uncatCredits = needsReview.filter(t => t.credit > 0);
-    const uncatDebits = needsReview.filter(t => t.debit > 0);
-
-    html += `
-    <div class="card action-card-alert" id="action-required-review-card">
-      <div class="action-card-header">
-        <div>
-          <div class="action-card-title">
-            <span>⚠️</span> Action Required: Review Uncategorized Transactions (${needsReview.length} items)
-          </div>
-          <div class="action-card-subtitle">
-            Found <b>${needsReview.length}</b> transaction(s) worth <b>${fmtMoney(totalNeedsReviewAmt)}</b> (${uncatCredits.length} Inflows, ${uncatDebits.length} Outflows) needing review.
-            Assigning them sharpens your Money DNA score, Income Analysis, and Savings Rate instantly.
-          </div>
-        </div>
-        <div style="display:flex; gap:8px;">
-          <button type="button" class="btn" id="toggleReviewTableBtn" style="background:#D97706; padding:8px 16px; font-size:13px; box-shadow:none;">
-            Toggle Review List (${needsReview.length})
-          </button>
-        </div>
-      </div>
-
-      <div id="reviewTableCollapse" class="review-table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Description / Merchant</th>
-              <th class="num">Type &amp; Amount</th>
-              <th>Current Category</th>
-              <th>Reassign Category</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${needsReview.map(t => `
-              <tr id="review-row-${t._id}">
-                <td style="white-space:nowrap;">${fmtDate(t.date)}</td>
-                <td>
-                  <div style="font-weight:600; color:var(--navy);">${esc(titleCase(t.merchant))}</div>
-                  <div class="muted" style="font-size:11.5px;">${esc(t.description)}</div>
-                </td>
-                <td class="num" style="white-space:nowrap;">
-                  ${t.credit > 0 
-                    ? `<span style="color:var(--green); font-weight:700;">+${fmtMoney(t.credit)}</span> <span class="pill healthy" style="font-size:10.5px; padding:2px 6px;">INFLOW</span>`
-                    : `<span style="color:var(--warn); font-weight:700;">-${fmtMoney(t.debit)}</span> <span class="pill deficit" style="font-size:10.5px; padding:2px 6px;">OUTFLOW</span>`
-                  }
-                </td>
-                <td>
-                  <span class="pill ${t.category === 'Uncategorized' ? 'deficit' : 'moderate'}" style="font-size:11.5px;">
-                    ${esc(catLabel(t.category))} (${t.categoryConfidence}%)
-                  </span>
-                </td>
-                <td>
-                  <select class="cat-edit-select inline-review-select" data-txid="${t._id}">
-                    ${CATEGORY_LIST.map(cat => `<option value="${esc(cat)}" ${cat === t.category ? 'selected' : ''}>${esc(cat)}</option>`).join('')}
-                  </select>
-                </td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>`;
-  }
 
   // Hero — Money DNA score + identity + three headline callouts. Deliberately the first thing
   // shown, ahead of any table, since a single glanceable page is what actually gets shared —
@@ -1830,6 +1780,79 @@ function renderReport(r, meta) {
       [m.month, fmtMoney(m.income), fmtMoney(m.expense), fmtMoney(m.netSavings), m.savingsRatePct === null ? "-" : fmtPct(m.savingsRatePct, 0)]),
       [1, 2, 3, 4])}
   </div>`;
+
+  // Action Required: Dedicated Review for Uncategorized & Low-Confidence Transactions (Rendered right above Section 4)
+  if (needsReview.length > 0) {
+    const uncatCredits = needsReview.filter(t => t.credit > 0);
+    const uncatDebits = needsReview.filter(t => t.debit > 0);
+    const inflowOptions = ["Salary / Primary Income", "Secondary Inflow", "Income", "Passive Income", "Refund", "Bank Transfers"];
+    const otherOptions = CATEGORY_LIST.filter(c => !inflowOptions.includes(c));
+
+    html += `
+    <div class="card action-card-alert" id="action-required-review-card">
+      <div class="action-card-header">
+        <div>
+          <div class="action-card-title">
+            <span>⚠️</span> Action Required: Review Uncategorized Transactions (${needsReview.length} items)
+          </div>
+          <div class="action-card-subtitle">
+            Found <b>${needsReview.length}</b> transaction(s) worth <b>${fmtMoney(totalNeedsReviewAmt)}</b> (${uncatCredits.length} Inflow${uncatCredits.length === 1 ? '' : 's'}, ${uncatDebits.length} Outflow${uncatDebits.length === 1 ? '' : 's'}) needing classification.
+            Tagging them (especially salary or income inflows) sharpens your Money DNA score, Income Analysis, and Savings Rate instantly.
+          </div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="btn" id="toggleReviewTableBtn" style="background:#D97706; padding:8px 16px; font-size:13px; box-shadow:none;">
+            Toggle Review List (${needsReview.length})
+          </button>
+        </div>
+      </div>
+
+      <div id="reviewTableCollapse" class="review-table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description / Merchant</th>
+              <th class="num">Type &amp; Amount</th>
+              <th>Current Category</th>
+              <th>Reassign Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${needsReview.map(t => {
+              const selectOptions = t.credit > 0 
+                ? [...inflowOptions, ...otherOptions] 
+                : CATEGORY_LIST;
+              return `
+              <tr id="review-row-${t._id}">
+                <td style="white-space:nowrap;">${fmtDate(t.date)}</td>
+                <td>
+                  <div style="font-weight:600; color:var(--navy);">${esc(titleCase(t.merchant))}</div>
+                  <div class="muted" style="font-size:11.5px;">${esc(t.description)}</div>
+                </td>
+                <td class="num" style="white-space:nowrap;">
+                  ${t.credit > 0 
+                    ? `<span style="color:var(--green); font-weight:700;">+${fmtMoney(t.credit)}</span> <span class="pill healthy" style="font-size:10.5px; padding:2px 6px;">INFLOW</span>`
+                    : `<span style="color:var(--warn); font-weight:700;">-${fmtMoney(t.debit)}</span> <span class="pill deficit" style="font-size:10.5px; padding:2px 6px;">OUTFLOW</span>`
+                  }
+                </td>
+                <td>
+                  <span class="pill ${t.category === 'Uncategorized' ? 'deficit' : 'moderate'}" style="font-size:11.5px;">
+                    ${esc(catLabel(t.category))} (${t.categoryConfidence}%)
+                  </span>
+                </td>
+                <td>
+                  <select class="cat-edit-select inline-review-select" data-txid="${t._id}">
+                    ${selectOptions.map(cat => `<option value="${esc(cat)}" ${cat === t.category ? 'selected' : ''}>${esc(cat)}</option>`).join('')}
+                  </select>
+                </td>
+              </tr>
+            `;}).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+  }
 
   // 4. Top merchants
   html += `<div class="card">
@@ -2691,6 +2714,9 @@ document.addEventListener("change", (e) => {
 });
 
 document.addEventListener("click", (e) => {
+  if (e.target && (e.target.id === "regenerateReportBtn" || e.target.closest("#regenerateReportBtn"))) {
+    regenerateReport();
+  }
   if (e.target && (e.target.id === "toggleReviewTableBtn" || e.target.closest("#toggleReviewTableBtn"))) {
     const tableDiv = document.getElementById("reviewTableCollapse");
     if (tableDiv) {
