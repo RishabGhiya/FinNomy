@@ -38,9 +38,6 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
-    height: 100vh;
-    overflow-y: scroll;
 }
 
 body {
@@ -49,6 +46,17 @@ body {
     background-color: var(--color-light-background);
     line-height: 1.6;
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Home page full-screen snap container strictly on desktop landscape */
+@media (min-width: 969px) and (orientation: landscape) {
+    body.home-page {
+        scroll-snap-type: y mandatory;
+        height: 100vh;
+        overflow-y: scroll;
+    }
 }
 
 a {
@@ -232,20 +240,28 @@ p {
     width: 100%;
 }
 
-/* Main Sections (Scroll Snap) */
+/* Main Sections - Standard Base Layout */
 section {
-    min-height: 100vh;
     width: 100%;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    display: flex;
-    align-items: center;
     position: relative;
-    padding-top: 60px;
-    /* Reduced specific offset */
-    padding-bottom: 0;
+    padding: 60px 0;
     margin: 0;
-    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Homepage Scroll Snap Slides (strictly desktop landscape) */
+@media (min-width: 969px) and (orientation: landscape) {
+    body.home-page section {
+        min-height: 100vh;
+        width: 100%;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+        display: flex;
+        align-items: center;
+        padding-top: 60px;
+        padding-bottom: 0;
+        overflow: hidden;
+    }
 }
 
 /* Alternating Layout Grid */
@@ -653,24 +669,26 @@ footer {
     color: var(--color-primary-green);
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 968px) {
+/* Mobile Responsiveness & Portrait Orientation (fixes Desktop Mode on phones) */
+@media (max-width: 968px), (orientation: portrait) {
     :root {
         --spacing-lg: 3rem;
     }
 
-    /* Disable scroll-snap on mobile/tablet — stacked content is shorter than 100vh */
-    html {
-        scroll-snap-type: none;
+    /* Disable scroll-snap on mobile/tablet/portrait — stacked content is shorter than 100vh */
+    html, body, body.home-page {
+        scroll-snap-type: none !important;
+        height: auto !important;
+        overflow-y: visible !important;
     }
 
-    section {
-        min-height: auto;
-        height: auto;
-        scroll-snap-align: none;
-        scroll-snap-stop: unset;
-        padding-top: 100px;
-        padding-bottom: 3rem;
+    section, body.home-page section {
+        min-height: auto !important;
+        height: auto !important;
+        scroll-snap-align: none !important;
+        scroll-snap-stop: unset !important;
+        padding-top: 80px;
+        padding-bottom: 2.5rem;
     }
 
     h1 {

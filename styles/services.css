@@ -4,7 +4,9 @@
 html,
 body {
     height: auto !important;
-    overflow: visible !important;
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
     scroll-snap-type: none !important;
 }
 
@@ -18,7 +20,7 @@ body {
     padding-top: 140px;
     padding-bottom: 80px;
     background-color: #ffffff;
-    /* User requested white */
+    overflow: hidden;
 }
 
 .services-hero .container {
@@ -41,13 +43,12 @@ body {
 }
 
 .services-hero .illustration-img {
-    max-width: 1100px;
+    max-width: 100%;
     width: 100%;
     height: auto;
     display: block;
     margin-left: auto;
-    /* mix-blend-mode and filter removed to ensure pure white background transparency */
-    transform: scale(1.45) translateX(60px);
+    transform: scale(1.15);
     transform-origin: right center;
 }
 
