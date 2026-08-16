@@ -37,11 +37,7 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-body {
+html, body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -52,6 +48,9 @@ body {
   background: #FFFFFF;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  scroll-snap-type: none !important;
+  height: auto !important;
+  min-height: 100%;
 }
 
 /* Full-Width Section Containers */
