@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ITR Computation Generator | FinNomy™</title>
-<meta name="description" content="Generate a clean, bank-ready Computation of Total Income from your filed ITR PDF instantly. Calculate tax under Old vs New Regime, verify deductions, and export official PDF. 100% private and client-side.">
-<meta name="keywords" content="ITR computation, computation of total income, income tax computation generator, ITR 1 computation, ITR 2 computation, ITR 3 computation, ITR 4 computation, old vs new regime tax calculator, tax summary for loan, bank statement computation">
+<meta name="description" content="Convert your ITR-V, ITR acknowledgement, or tax JSON into a clean, bank-ready Income Tax Computation summary in seconds. 100% private and in-browser.">
+<meta name="keywords" content="ITR computation generator, computation of total income, income tax computation, ITR-V to computation, bank ready tax summary, old vs new regime tax optimizer, ITR 1 computation, ITR 2 computation, ITR 3 computation, ITR 4 computation">
 <link rel="canonical" href="https://finnomy.com/finnomy-itr-computation.html">
 <link rel="icon" type="image/png" href="assets/logo-nav.png">
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
-<!-- Open Graph -->
+<!-- Open Graph Meta Tags -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://finnomy.com/finnomy-itr-computation.html">
 <meta property="og:title" content="ITR Computation Generator | FinNomy™">
@@ -35,11 +35,10 @@
 <link rel="stylesheet" href="styles/main.css">
 <link rel="stylesheet" href="styles/itr-computation.css">
 <script src="js/main.js" defer></script>
-<script src="js/itr-computation.js" defer></script>
 </head>
 <body>
 
-    <!-- Navbar -->
+    <!-- 1. Navbar -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo"><img src="assets/logo-nav.png" alt="FinNomy Logo" class="nav-logo"></a>
@@ -66,80 +65,523 @@
         </div>
     </nav>
 
-<div class="wrap">
+    <!-- SECTION 1: HERO SECTION (White Background - Clean Direct Embedded Illustration) -->
+    <section class="hero-section" id="hero-section">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-eyebrow">IN-BROWSER TAX COMPUTATION</div>
+                <h1 class="hero-title">Instant Income Tax Computation from your ITR.</h1>
+                <p class="hero-subtitle">Turn complex ITR files and tax acknowledgements into a clean, bank-ready computation of total income, deductions, and tax liabilities — in seconds.</p>
+                <div class="hero-btn-group">
+                    <a href="#tax-tool-section" class="btn-hero-primary" onclick="scrollToTaxTool(); return false;">Generate Tax Computation ↓</a>
+                    <a href="#tax-output-preview" class="btn-hero-secondary" onclick="scrollToTaxPreview(); return false;">See Sample Computation</a>
+                </div>
+                <div class="hero-trust-badges">
+                    <span>🔒 100% In-Browser</span>
+                    <span>•</span>
+                    <span>⚡ Zero Server Uploads</span>
+                    <span>•</span>
+                    <span>✨ Free &amp; Instant</span>
+                </div>
+            </div>
+            <div class="hero-visual-wrap">
+                <img src="assets/tax_wealth_hero_final.png" alt="Income Tax Computation Generator Illustration">
+            </div>
+        </div>
+    </section>
 
-  <h1 class="page-title">ITR Computation Generator</h1>
-  <p class="subtitle">Turn your downloaded ITR Form into a clean, certified-format "Computation of Total Income" — the official document banks, lenders, and visa authorities ask for.</p>
-
-  <div class="privacy-banner">
-    <div class="icon">🔒</div>
-    <div>
-      <b>Your tax return never leaves your browser.</b> All parsing, extraction, and tax computations run 100% locally on your device in memory. No financial numbers or documents are stored or uploaded to any server. Closing or refreshing this page clears everything.
-    </div>
-  </div>
-
-  <!-- Step 1: Upload Card -->
-  <div class="card" id="upload-card">
-    <div class="upload-zone" id="dropzone" role="button" tabindex="0">
-      <div class="upload-icon">📄</div>
-      <div style="font-weight:700; font-size:16px; margin-bottom:4px; color:var(--navy);">Drop your ITR Return PDF here, or click to browse</div>
-      <div class="muted">Supports ITR-1 (Sahaj), ITR-2, ITR-3, and ITR-4 (Sugam) forms for AY 2024-25, 2025-26 &amp; 2026-27</div>
-    </div>
-    <input type="file" id="fileInput" accept=".pdf" style="display:none;">
-
-    <div id="fileChipHolder"></div>
-
-    <!-- Password Modal Box for encrypted ITR PDFs -->
-    <div id="pdfPasswordHolder" class="password-box" style="display:none;">
-      <label id="passwordPromptLabel" for="pdfPasswordInput">This PDF is password-protected. Please enter password (usually PAN in lowercase/uppercase + DOB as DDMMYYYY):</label>
-      <div class="password-input-row">
-        <input type="password" id="pdfPasswordInput" placeholder="e.g. abcde1234f01011990">
-        <button type="button" class="btn" id="submitPdfPasswordBtn">Unlock &amp; Extract</button>
-      </div>
-    </div>
-
-    <div id="errorHolder"></div>
-
-    <div class="actions">
-      <button class="btn" id="extractBtn" disabled>Extract &amp; Generate Computation</button>
-      <button class="btn ghost" id="howToDownloadBtn" type="button">How do I download my ITR Form?</button>
-    </div>
-  </div>
-
-  <!-- Loading Box -->
-  <div class="loading" id="loadingBox">
-    <div class="spinner"></div>
-    <div style="font-weight:600;">Analyzing your ITR return securely on your device…</div>
-    <div class="muted" style="font-size:13px; margin-top:4px;">Extracting income heads, deductions, taxes paid, and preparing your Computation of Total Income…</div>
-  </div>
-
-  <!-- Step 2: Interactive Review & Tax Optimizer Section (rendered dynamically by JS) -->
-  <div id="reviewSection" style="display:none;"></div>
-
-  <!-- Step 3: Computation of Total Income Document Section (rendered dynamically by JS) -->
-  <div id="finalSection" style="display:none;"></div>
-
-</div>
-
-<!-- Footer -->
-<footer id="footer">
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <div class="logo"><img src="assets/logo-footer.png" alt="FinNomy Logo" class="footer-logo"></div>
+    <!-- SECTION 2: REAL USE CASES — WHO THIS TOOL IS FOR (Subtle Slate/Grey Background) -->
+    <section class="landing-section-full section-grey" id="use-cases-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Real Use Cases</span>
+                <h2 class="section-main-title">Who this tool is for</h2>
+                <p class="section-main-subtitle">Designed for clarity across every financial, loan, and visa scenario.</p>
             </div>
 
-            <div class="footer-links">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="index.html" class="footer-link-home">Home</a></li>
-                    <li><a href="about.html" class="footer-link-about">About Us</a></li>
-                    <li><a href="services.html" class="footer-link-services">Services</a></li>
-                    <li><a href="calculators.html" class="footer-link-calculators">Calculators</a></li>
-                </ul>
+            <div class="usecases-grid">
+                <!-- 1. Salaried Employees -->
+                <div class="usecase-card">
+                    <div class="usecase-icon-wrap" style="background:#EEF4FE; color:#0B63D8;">
+                        💼
+                    </div>
+                    <div class="usecase-badge">Personal Lending</div>
+                    <h3 class="usecase-title">For Salaried Employees</h3>
+                    <p class="usecase-desc">Apply for home loans, vehicle loans, or credit cards with a standardized income computation summary without depending on external agents.</p>
+                    <div class="usecase-points">
+                        <span>✓ Standard Form 16 &amp; ITR-1 reconciliation</span>
+                        <span>✓ Accepted by top banks &amp; NBFC underwriters</span>
+                    </div>
+                </div>
+
+                <!-- 2. Business Founders & Directors -->
+                <div class="usecase-card">
+                    <div class="usecase-icon-wrap" style="background:#E6F8F2; color:#00B37E;">
+                        📈
+                    </div>
+                    <div class="usecase-badge" style="background:#E6F8F2; color:#065F46;">Corporate Underwriting</div>
+                    <h3 class="usecase-title">For Business Founders &amp; Directors</h3>
+                    <p class="usecase-desc">Present a clear breakdown of business profits, director remuneration, and dividend income for credit underwriting and commercial loans.</p>
+                    <div class="usecase-points">
+                        <span>✓ Multi-entity income segregation</span>
+                        <span>✓ Clear audit trail for P&amp;L turnover &amp; drawings</span>
+                    </div>
+                </div>
+
+                <!-- 3. Freelancers & Consultants -->
+                <div class="usecase-card">
+                    <div class="usecase-icon-wrap" style="background:#FEF3C7; color:#B45309;">
+                        💻
+                    </div>
+                    <div class="usecase-badge" style="background:#FEF3C7; color:#92400E;">Global Mobility</div>
+                    <h3 class="usecase-title">For Freelancers &amp; Consultants</h3>
+                    <p class="usecase-desc">Consolidate 44ADA presumptive income, professional receipts, and advance tax details into an embassy-approved format for visa applications.</p>
+                    <div class="usecase-points">
+                        <span>✓ Section 44ADA 50% presumptive net income</span>
+                        <span>✓ Standard Schengen, US &amp; UK visa documentation</span>
+                    </div>
+                </div>
+
+                <!-- 4. Accounting Professionals & CAs -->
+                <div class="usecase-card">
+                    <div class="usecase-icon-wrap" style="background:#F3E8FF; color:#7E22CE;">
+                        📑
+                    </div>
+                    <div class="usecase-badge" style="background:#F3E8FF; color:#6B21A8;">Professional Practice</div>
+                    <h3 class="usecase-title">For Accounting Professionals &amp; CAs</h3>
+                    <p class="usecase-desc">Generate instant, client-ready computation sheets for 50+ clients during peak tax season without manual data entry.</p>
+                    <div class="usecase-points">
+                        <span>✓ Bulk batch preparation in seconds</span>
+                        <span>✓ ICAI standard presentation formatting</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: HOW FINNOMY TAX COMPUTATION WORKS (White Background - Seamless Zig-Zag Layout) -->
+    <section class="landing-section-full section-white" id="workflow-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Step-by-Step Precision</span>
+                <h2 class="section-main-title">How FinNomy Tax Computation Works</h2>
+                <p class="section-main-subtitle">From filed tax return to bank-ready computation in 5 automated steps.</p>
             </div>
 
-            <div class="footer-links">
+            <div class="zigzag-container">
+                <!-- Step 01: Upload File (Text Left, Visual Right) -->
+                <div class="zigzag-step">
+                    <div class="zigzag-text">
+                        <h3 class="step-heading"><span class="step-num">01.</span> Upload Your ITR Return File</h3>
+                        <p class="zigzag-desc">Upload your downloaded ITR JSON, ITR-V PDF, or filled return form directly from the Income Tax e-Filing portal.</p>
+                        <div class="zigzag-bullet-list">
+                            <div class="zigzag-bullet-item">
+                                <span style="color:var(--green); font-weight:700;">✓</span>
+                                <span>Supports ITR-1 (Sahaj), ITR-2, ITR-3, and ITR-4 (Sugam) forms</span>
+                            </div>
+                            <div class="zigzag-bullet-item">
+                                <span style="color:var(--green); font-weight:700;">✓</span>
+                                <span>Zero password decryption risk — 100% processed in local browser memory</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="zigzag-visual">
+                        <div class="zigzag-visual-card" style="text-align:center;">
+                            <div style="display:inline-flex; align-items:center; justify-content:center; width:56px; height:56px; border-radius:14px; background:#EEF4FE; color:#0B63D8; margin-bottom:14px;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 0 0 0 2 2h12a2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="12" y2="12"/><line x1="15" y1="15" x2="12" y2="12"/></svg>
+                            </div>
+                            <div style="font-weight:700; color:var(--navy); font-size:15px; margin-bottom:4px;">ITR Return Form / Ack PDF</div>
+                            <div style="font-size:12.5px; color:var(--grey); margin-bottom:12px;">AY 2024-25 · 2025-26 · 2026-27</div>
+                            <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap;">
+                                <span style="background:#E6F8F2; color:#00B37E; font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:6px;">🔒 100% In-Browser</span>
+                                <span style="background:#F1F5F9; color:#475569; font-size:11.5px; font-weight:600; padding:4px 10px; border-radius:6px;">Zero Server Upload</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 02: Automated Extraction (Visual Left, Text Right) -->
+                <div class="zigzag-step flip">
+                    <div class="zigzag-text">
+                        <h3 class="step-heading"><span class="step-num">02.</span> Automated Multi-Head Extraction</h3>
+                        <p class="zigzag-desc">FinNomy automatically parses and segregates all 5 statutory heads of income from your return schedules in memory.</p>
+                        <div class="zigzag-bullet-list">
+                            <div class="zigzag-bullet-item">
+                                <span style="color:var(--green); font-weight:700;">✓</span>
+                                <span>Extracts Salary, House Property, Capital Gains, Business &amp; Other Sources</span>
+                            </div>
+                            <div class="zigzag-bullet-item">
+                                <span style="color:var(--green); font-weight:700;">✓</span>
+                                <span>Captures gross earnings, exempt allowances, and employer TDS schedules</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="zigzag-visual">
+                        <div class="zigzag-visual-card">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                                <span style="font-size:12px; font-weight:700; text-transform:uppercase; color:var(--blue);">Income Extraction Engine</span>
+                                <span style="font-size:11.5px; background:#E6F8F2; color:#065F46; font-weight:700; padding:2px 8px; border-radius:10px;">5 Heads Parsed</span>
+                            </div>
+                            <div style="display:flex; flex-direction:column; gap:8px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; background:#FFFFFF; padding:8px 12px; border-radius:8px; border:1px solid #E2E8F0; font-size:12.5px;">
+                                    <span style="font-weight:600; color:var(--navy);">I. Income from Salary</span>
+                                    <span style="color:var(--navy); font-weight:700;">₹16,50,000</span>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; align-items:center; background:#FFFFFF; padding:8px 12px; border-radius:8px; border:1px solid #E2E8F0; font-size:12.5px;">
+                                    <span style="font-weight:600; color:var(--navy);">II. House Property Loss</span>
+                                    <span style="color:var(--blue); font-weight:700;">-₹1,20,000</span>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; align-items:center; background:#FFFFFF; padding:8px 12px; border-radius:8px; border:1px solid #E2E8F0; font-size:12.5px;">
+                                    <span style="font-weight:600; color:var(--navy);">III. Capital Gains &amp; Other Sources</span>
+                                    <span style="color:var(--green); font-weight:700;">+₹3,20,000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 03: Chapter VI-A Deductions & Regrouping (Text Left, Visual Right - ACCENT HIGHLIGHTED) -->
+                <div class="zigzag-step step-highlight">
+                    <div class="zigzag-text">
+                        <div class="step-tag-pill pill-green" style="margin-bottom:8px;">✨ You Stay In Control</div>
+                        <h3 class="step-heading"><span class="step-num" style="color:var(--green);">03.</span> Chapter VI-A Deductions &amp; Regrouping</h3>
+                        <p class="zigzag-desc">Review extracted 80C, 80D, 80G, and HRA exemptions with complete authority to adjust figures before final compilation.</p>
+                        <div style="background:#E6F8F2; border-left:3px solid var(--green); padding:10px 14px; border-radius:0 8px 8px 0; font-size:13.5px; font-weight:600; color:#065F46; margin-top:8px;">
+                            ✨ <em>“Inspect every statutory deduction line-item. Staged edits update net taxable income in real time.”</em>
+                        </div>
+                    </div>
+                    <div class="zigzag-visual">
+                        <div class="zigzag-visual-card" style="background:#FFFFFF; border:1.5px solid var(--green-border);">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                                <span style="font-weight:700; font-size:13px; color:var(--navy);">Chapter VI-A Deduction Controls</span>
+                                <span style="background:#FEF3C7; color:#92400E; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px;">Editable</span>
+                            </div>
+                            <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px 12px; margin-bottom:10px; display:flex; flex-direction:column; gap:6px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; font-size:12.5px;">
+                                    <span style="font-weight:600; color:var(--navy);">Section 80C (PPF, ELSS, EPF)</span>
+                                    <span style="background:#EEF4FE; color:#0B63D8; border:1px dashed #0B63D8; padding:2px 8px; border-radius:6px; font-weight:600;">₹1,50,000 ✏️</span>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; align-items:center; font-size:12.5px;">
+                                    <span style="font-weight:600; color:var(--navy);">Section 80D (Health Insurance)</span>
+                                    <span style="background:#EEF4FE; color:#0B63D8; border:1px dashed #0B63D8; padding:2px 8px; border-radius:6px; font-weight:600;">₹25,000 ✏️</span>
+                                </div>
+                            </div>
+                            <div style="font-size:12px; color:#065F46; font-weight:600; display:flex; align-items:center; gap:6px;">
+                                <span>⚡</span> Dynamic recalculation across Old &amp; New Tax Regimes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 04: Surcharge & Rebate Calculation (Visual Left, Text Right) -->
+                <div class="zigzag-step flip">
+                    <div class="zigzag-text">
+                        <h3 class="step-heading"><span class="step-num">04.</span> Surcharge, Rebate &amp; Regime Optimizer</h3>
+                        <p class="zigzag-desc">Automatic assessment under Old vs. New Tax Regimes, including Section 87A rebate, marginal relief, and statutory education cess.</p>
+                        <div class="zigzag-bullet-list">
+                            <div class="zigzag-bullet-item">
+                                <span style="color:var(--green); font-weight:700;">✓</span>
+                                <span>Full Budget 2024 revised New Regime slabs &amp; enhanced ₹75,000 std deduction</span>
+                            </div>
+                            <div class="zigzag-bullet-item">
+                                <span style="color:var(--green); font-weight:700;">✓</span>
+                                <span>Automated optimal regime recommendation with tax savings comparison</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="zigzag-visual">
+                        <div class="zigzag-visual-card" style="text-align:center;">
+                            <div style="font-size:11.5px; font-weight:700; text-transform:uppercase; color:var(--grey); letter-spacing:0.5px;">Regime Optimization</div>
+                            <div style="font-size:32px; font-weight:800; color:var(--navy); line-height:1.1; margin:6px 0;">New Regime</div>
+                            <div style="font-size:13px; font-weight:700; color:#065F46; margin-bottom:12px;">🟢 Recommended · Save ₹42,500</div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; text-align:left; font-size:12px;">
+                                <div style="background:#FFFFFF; padding:8px 10px; border-radius:6px; border:1.5px solid var(--blue); box-shadow:0 0 0 2px rgba(11,99,216,0.1);">
+                                    <div style="color:var(--blue); font-weight:700;">New Regime Tax</div>
+                                    <div style="font-weight:800; color:var(--navy); font-size:14px;">₹1,87,200</div>
+                                </div>
+                                <div style="background:#FFFFFF; padding:8px 10px; border-radius:6px; border:1px solid #E2E8F0;">
+                                    <div style="color:var(--grey);">Old Regime Tax</div>
+                                    <div style="font-weight:700; color:var(--navy); font-size:14px;">₹2,29,700</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 05: Download Bank-Ready PDF (Text Left, Visual Right) -->
+                <div class="zigzag-step">
+                    <div class="zigzag-text">
+                        <h3 class="step-heading"><span class="step-num">05.</span> Download Bank-Ready PDF</h3>
+                        <p class="zigzag-desc">Export a clean, professional computation summary formatted strictly to Institute of Chartered Accountants (ICAI) norms for banks and visa officers.</p>
+                        <div class="zigzag-bullet-list">
+                            <div class="zigzag-bullet-item">
+                                <span style="color:var(--green); font-weight:700;">✓</span>
+                                <span>Audit-ready computation document with verification schedules</span>
+                            </div>
+                            <div class="zigzag-bullet-item">
+                                <span style="color:var(--green); font-weight:700;">✓</span>
+                                <span>High-resolution PDF export with custom watermark &amp; direct print</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="zigzag-visual">
+                        <div class="zigzag-visual-card">
+                            <div style="font-weight:700; font-size:13.5px; color:var(--navy); margin-bottom:10px;">One-Click Document Export</div>
+                            <div style="display:flex; flex-direction:column; gap:8px;">
+                                <div style="display:flex; align-items:center; gap:10px; background:#FFFFFF; padding:10px 12px; border-radius:8px; border:1px solid #E2E8F0; font-size:13px; font-weight:600; color:var(--navy);">
+                                    <span style="font-size:16px;">📄</span>
+                                    <span>Download Certified PDF Computation</span>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:10px; background:#FFFFFF; padding:10px 12px; border-radius:8px; border:1px solid #E2E8F0; font-size:13px; font-weight:600; color:var(--navy);">
+                                    <span style="font-size:16px;">🖨️</span>
+                                    <span>Print Official Summary</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: COMPUTATION OUTPUT PREVIEW (Subtle Slate/Grey Background) -->
+    <section class="landing-section-full section-grey" id="tax-output-preview">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Tax Intelligence</span>
+                <h2 class="section-main-title">See your tax computation clearly.</h2>
+                <p class="section-main-subtitle">A certified, audit-ready document formatted to institutional underwriting standards.</p>
+            </div>
+
+            <div class="mockup-preview-card">
+                <!-- Mockup Header -->
+                <div class="mockup-header">
+                    <div class="mockup-header-left">
+                        <span class="mockup-pill-badge">CERTIFIED COMPUTATION FORMAT</span>
+                        <h3 class="mockup-title">Computation of Total Income · AY 2024-25</h3>
+                        <p class="mockup-subtitle">Rajesh Kumar Sharma • PAN: ABCDE1234F • Individual / Resident</p>
+                    </div>
+                    <div class="mockup-header-right">
+                        <span class="badge-status-green">🟢 Optimized: New Regime u/s 115BAC</span>
+                    </div>
+                </div>
+
+                <!-- Mockup Metric Summary Grid -->
+                <div class="tax-metric-preview-grid">
+                    <div class="tax-metric-tile">
+                        <div class="tax-metric-lbl">Gross Total Income (GTI)</div>
+                        <div class="tax-metric-num">₹18,50,000</div>
+                        <div class="tax-metric-sub">Sum of all 5 Heads</div>
+                    </div>
+                    <div class="tax-metric-tile">
+                        <div class="tax-metric-lbl">Total Deductions (VI-A)</div>
+                        <div class="tax-metric-num" style="color:var(--blue);">₹2,00,000</div>
+                        <div class="tax-metric-sub">80C, 80D &amp; 80CCD</div>
+                    </div>
+                    <div class="tax-metric-tile">
+                        <div class="tax-metric-lbl">Net Taxable Income</div>
+                        <div class="tax-metric-num">₹16,50,000</div>
+                        <div class="tax-metric-sub">Assessed Base</div>
+                    </div>
+                    <div class="tax-metric-tile" style="background:#E6F8F2; border-color:#A7F3D0;">
+                        <div class="tax-metric-lbl" style="color:#065F46;">Net Tax Payable</div>
+                        <div class="tax-metric-num" style="color:#047857;">₹1,87,200</div>
+                        <div class="tax-metric-sub" style="color:#065F46; font-weight:700;">+₹42,500 New Regime Advantage</div>
+                    </div>
+                </div>
+
+                <!-- Head-wise Breakdown Table -->
+                <div class="mockup-body">
+                    <div class="mockup-table-title">Head-Wise Income &amp; Tax Assessment Breakdown</div>
+                    <div style="overflow-x:auto;">
+                        <table class="mockup-overview-table">
+                            <thead>
+                                <tr>
+                                    <th>Income Head / Statutory Section</th>
+                                    <th style="text-align:right;">Gross Amount</th>
+                                    <th style="text-align:right;">Deduction / Exemption</th>
+                                    <th style="text-align:right;">Net Taxable Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>I. Income from Salaries</strong> (Sec. 15-17)</td>
+                                    <td style="text-align:right;">₹16,50,000</td>
+                                    <td style="text-align:right; color:var(--grey);">-₹75,000 (Std. Ded.)</td>
+                                    <td style="text-align:right; font-weight:700; color:var(--navy);">₹15,75,000</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>II. Income from House Property</strong> (Sec. 22-27)</td>
+                                    <td style="text-align:right;">₹0</td>
+                                    <td style="text-align:right; color:var(--grey);">-₹1,20,000 (Interest 24b)</td>
+                                    <td style="text-align:right; font-weight:700; color:var(--blue);">-₹1,20,000</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>III. Capital Gains</strong> (STCG &amp; LTCG)</td>
+                                    <td style="text-align:right;">₹1,80,000</td>
+                                    <td style="text-align:right; color:var(--grey);">Nil</td>
+                                    <td style="text-align:right; font-weight:700; color:var(--navy);">₹1,80,000</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>IV. Income from Other Sources</strong> (Dividends &amp; Interest)</td>
+                                    <td style="text-align:right;">₹1,40,000</td>
+                                    <td style="text-align:right; color:var(--grey);">Nil</td>
+                                    <td style="text-align:right; font-weight:700; color:var(--navy);">₹1,40,000</td>
+                                </tr>
+                                <tr style="background:#F8FAFC; font-weight:800;">
+                                    <td>Gross Total Income (GTI)</td>
+                                    <td style="text-align:right;">₹19,70,000</td>
+                                    <td style="text-align:right; color:var(--grey);">-₹1,95,000</td>
+                                    <td style="text-align:right; color:var(--navy); font-size:14px;">₹17,75,000</td>
+                                </tr>
+                                <tr style="background:#F1F5F9; font-weight:800; border-top:2px solid var(--navy); border-bottom:2px solid var(--navy);">
+                                    <td>Total Tax Payable (incl. 4% Cess)</td>
+                                    <td colspan="2" style="text-align:right; color:var(--grey); font-weight:600;">Optimal Regime Delta:</td>
+                                    <td style="text-align:right; color:#047857; font-size:15px;">₹1,87,200</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: WHY CHOOSE FINNOMY TAX COMPUTATION? (White Background) -->
+    <section class="landing-section-full section-white" id="why-choose-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Institutional Quality</span>
+                <h2 class="section-main-title">Why choose FinNomy Tax Computation?</h2>
+                <p class="section-main-subtitle">Built for individuals, founders, and professionals who value precision and privacy.</p>
+            </div>
+
+            <div class="reveal-grid">
+                <!-- 1. Instant Summary in Seconds -->
+                <div class="reveal-card">
+                    <div class="reveal-icon-wrap" style="background:#EEF4FE; color:#0B63D8;">⚡</div>
+                    <h3 class="reveal-card-title">Instant Summary in Seconds</h3>
+                    <p class="reveal-card-desc">Zero manual forms. Direct file-to-report generation converts complex multi-page ITR schedules into plain-language summaries in under 3 seconds.</p>
+                </div>
+
+                <!-- 2. 100% Client-Side Privacy -->
+                <div class="reveal-card">
+                    <div class="reveal-icon-wrap" style="background:#E6F8F2; color:#00B37E;">🔒</div>
+                    <h3 class="reveal-card-title">100% Client-Side Privacy</h3>
+                    <p class="reveal-card-desc">Your ITR data never leaves your device. All parsing and tax math happen strictly in browser memory with zero server databases.</p>
+                </div>
+
+                <!-- 3. Bank & Visa Ready -->
+                <div class="reveal-card">
+                    <div class="reveal-icon-wrap" style="background:#EEF4FE; color:#0B63D8;">🏛️</div>
+                    <h3 class="reveal-card-title">Bank &amp; Visa Ready</h3>
+                    <p class="reveal-card-desc">Formatted strictly to ICAI presentation standards accepted by top underwriting banks, NBFCs, and global embassy visa officers.</p>
+                </div>
+
+                <!-- 4. Old vs. New Regime Comparison -->
+                <div class="reveal-card">
+                    <div class="reveal-icon-wrap" style="background:#FEF3C7; color:#B45309;">⚖️</div>
+                    <h3 class="reveal-card-title">Old vs. New Regime Comparison</h3>
+                    <p class="reveal-card-desc">Instantly compare exact tax liabilities under both regimes with automatic optimal recommendation and rebate calculation.</p>
+                </div>
+
+                <!-- 5. Zero Registration Required -->
+                <div class="reveal-card">
+                    <div class="reveal-icon-wrap" style="background:#F3E8FF; color:#7E22CE;">✨</div>
+                    <h3 class="reveal-card-title">Zero Registration Required</h3>
+                    <p class="reveal-card-desc">Start immediately without phone numbers, OTPs, passwords, or account creation. Absolute friction-free access.</p>
+                </div>
+
+                <!-- 6. Free Forever -->
+                <div class="reveal-card">
+                    <div class="reveal-icon-wrap" style="background:#E0F2FE; color:#0284C7;">🎁</div>
+                    <h3 class="reveal-card-title">Free Forever</h3>
+                    <p class="reveal-card-desc">A free public financial utility with unlimited, unrestricted high-resolution PDF exports for all taxpayers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: GENERATE YOUR TAX COMPUTATION (The Interactive Tool Section) -->
+    <section class="landing-section-full section-tool" id="tax-tool-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">In-Browser Generator</span>
+                <h2 class="section-main-title">Generate Your Tax Computation</h2>
+                <p class="section-main-subtitle">Drop your filed ITR PDF below for instant, secure computation.</p>
+            </div>
+
+            <div style="max-width: 960px; margin: 0 auto;">
+                <div class="privacy-banner">
+                    <div class="icon">🔒</div>
+                    <div>
+                        <b>Your tax return never leaves your browser.</b> All parsing, extraction, and tax computations run 100% locally on your device in memory. No financial numbers or documents are stored or uploaded to any server. Closing or refreshing this page clears everything.
+                    </div>
+                </div>
+
+                <!-- Step 1: Upload Card -->
+                <div class="card" id="upload-card">
+                    <div class="upload-zone" id="dropzone" role="button" tabindex="0">
+                        <div class="upload-icon">📄</div>
+                        <div style="font-weight:700; font-size:16px; margin-bottom:4px; color:var(--navy);">Drop your ITR Return PDF here, or click to browse</div>
+                        <div class="muted" style="color:var(--grey); font-size:13px;">Supports ITR-1 (Sahaj), ITR-2, ITR-3, and ITR-4 (Sugam) forms for AY 2024-25, 2025-26 &amp; 2026-27</div>
+                    </div>
+                    <input type="file" id="fileInput" accept=".pdf" style="display:none;">
+
+                    <div id="fileChipHolder"></div>
+
+                    <!-- Password Modal Box for encrypted ITR PDFs -->
+                    <div id="pdfPasswordHolder" class="password-box" style="display:none;">
+                        <label id="passwordPromptLabel" for="pdfPasswordInput">This PDF is password-protected. Please enter password (usually PAN in lowercase/uppercase + DOB as DDMMYYYY):</label>
+                        <div class="password-input-row">
+                            <input type="password" id="pdfPasswordInput" placeholder="e.g. abcde1234f01011990">
+                            <button type="button" class="btn" id="submitPdfPasswordBtn">Unlock &amp; Extract</button>
+                        </div>
+                    </div>
+
+                    <div id="errorHolder"></div>
+
+                    <div class="actions">
+                        <button class="btn" id="extractBtn" disabled>Extract &amp; Generate Computation</button>
+                        <button class="btn ghost" id="howToDownloadBtn" type="button">How do I download my ITR Form?</button>
+                    </div>
+                </div>
+
+                <!-- Loading Box -->
+                <div class="loading" id="loadingBox">
+                    <div class="spinner"></div>
+                    <div style="font-weight:600;">Analyzing your ITR return securely on your device…</div>
+                    <div class="muted" style="font-size:13px; margin-top:4px; color:var(--grey);">Extracting income heads, deductions, taxes paid, and preparing your Computation of Total Income…</div>
+                </div>
+
+                <!-- Step 2: Interactive Review & Tax Optimizer Section (rendered dynamically by JS) -->
+                <div id="reviewSection" style="display:none;"></div>
+
+                <!-- Step 3: Computation of Total Income Document Section (rendered dynamically by JS) -->
+                <div id="finalSection" style="display:none;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo"><img src="assets/logo-footer.png" alt="FinNomy Logo" class="footer-logo"></div>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html" class="footer-link-home">Home</a></li>
+                        <li><a href="about.html" class="footer-link-about">About Us</a></li>
+                        <li><a href="services.html" class="footer-link-services">Services</a></li>
+                        <li><a href="calculators.html" class="footer-link-calculators">Calculators</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
                     <h4>Resources</h4>
                     <ul>
                         <li class="footer-dropdown" style="position: relative; display: block;">
@@ -155,45 +597,69 @@
                     </ul>
                 </div>
 
-            <div class="footer-links">
-                <h4>Get in Touch</h4>
-                <ul>
-                    <li><a href="javascript:void(0)" onclick="openConnectModal()">Connect Us</a></li>
-                    <li><a href="javascript:void(0)" onclick="openPartnerModal()">Become a Partner</a></li>
-                    <li style="margin-top: 1rem;">
-                        <div class="social-icons" style="display: flex; gap: 10px;">
-                            <a href="mailto:info.finnomy@gmail.com" aria-label="Email Us" title="info.finnomy@gmail.com">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
-                                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                                </svg>
-                            </a>
-                            <a href="https://www.instagram.com/fin_nomy?igsh=MWExa2xxNmwzZ2QxYw==" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
-                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                                </svg>
-                            </a>
-                            <a href="https://x.com/Fin_Nomy" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
-                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                                </svg>
-                            </a>
-                            <a href="http://linkedin.com/company/fin-nomy" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
-                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                                </svg>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
+                <div class="footer-links">
+                    <h4>Get in Touch</h4>
+                    <ul>
+                        <li><a href="javascript:void(0)" onclick="openConnectModal()">Connect Us</a></li>
+                        <li><a href="javascript:void(0)" onclick="openPartnerModal()">Become a Partner</a></li>
+                        <li style="margin-top: 1rem;">
+                            <div class="social-icons" style="display: flex; gap: 10px;">
+                                <a href="mailto:info.finnomy@gmail.com" aria-label="Email Us" title="info.finnomy@gmail.com">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
+                                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                                    </svg>
+                                </a>
+                                <a href="https://www.instagram.com/fin_nomy?igsh=MWExa2xxNmwzZ2QxYw==" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
+                                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                                    </svg>
+                                </a>
+                                <a href="https://x.com/Fin_Nomy" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
+                                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                    </svg>
+                                </a>
+                                <a href="http://linkedin.com/company/fin-nomy" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
+                                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 FinNomy™. All rights reserved.</p>
+                <p>Certain services, including auditing, certifications, valuation, investment advisory, and other regulated activities, are performed exclusively by qualified professionals who hold the necessary licenses, registrations, or statutory approvals under applicable laws.</p>
             </div>
         </div>
+    </footer>
 
-        <div class="footer-bottom">
-            <p>&copy; 2025 FinNomy™. All rights reserved.</p>
-            <p>Certain services, including auditing, certifications, valuation, investment advisory, and other regulated activities, are performed exclusively by qualified professionals who hold the necessary licenses, registrations, or statutory approvals under applicable laws.</p>
-        </div>
-    </div>
-</footer>
+    <!-- Interactive Smooth Scroll Helpers -->
+    <script>
+      function scrollToTaxTool() {
+        const section = document.getElementById('tax-tool-section') || document.getElementById('upload-card');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          const dropzone = document.getElementById('dropzone');
+          if (dropzone) {
+            dropzone.classList.add('dragover');
+            setTimeout(() => dropzone.classList.remove('dragover'), 1200);
+          }
+        }
+      }
 
+      function scrollToTaxPreview() {
+        const section = document.getElementById('tax-output-preview');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    </script>
+
+    <!-- Tax Computation Engine Script -->
+    <script src="js/itr-computation.js" defer></script>
 </body>
 </html>
