@@ -1343,74 +1343,6 @@ input:checked + .slider:before {
 }
 
 /* =========================================================================
-   8. GLOBAL FOOTER (REFINEMENT 3 - MATCHING EXACT FINNOMY SITE FOOTER)
-   ========================================================================= */
-#footer {
-  background: var(--navy);
-  color: #FFFFFF;
-  padding: 60px 0 24px 0;
-  width: 100%;
-}
-
-#footer .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1.2fr repeat(3, 1fr);
-  gap: 40px;
-  margin-bottom: 40px;
-}
-
-.footer-logo {
-  max-height: 38px;
-  width: auto;
-}
-
-.footer-links h4 {
-  color: #FFFFFF;
-  font-size: 16px;
-  font-weight: 700;
-  margin: 0 0 16px 0;
-}
-
-.footer-links ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.footer-links a {
-  color: rgba(255, 255, 255, 0.7);
-  text-decoration: none;
-  font-size: 13.5px;
-  transition: color 0.2s ease;
-}
-
-.footer-links a:hover {
-  color: #FFFFFF;
-}
-
-.footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 24px;
-  text-align: center;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 1.6;
-}
-
-.footer-bottom p {
-  margin: 4px 0;
-}
-
-/* =========================================================================
    RESPONSIVE DESIGN (MOBILE & TABLET BREAKPOINTS)
    ========================================================================= */
 @media (max-width: 1024px) {
@@ -1463,10 +1395,6 @@ input:checked + .slider:before {
   .guide-grid-3 {
     grid-template-columns: 1fr;
   }
-
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 @media (max-width: 640px) {
@@ -1485,10 +1413,6 @@ input:checked + .slider:before {
   .zigzag-step-grid {
     grid-template-columns: 1fr;
     gap: 24px;
-  }
-
-  .tools-grid-suite {
-    grid-template-columns: 1fr;
   }
 
   .swp-inputs-pane, .swp-results-pane {
@@ -1512,10 +1436,5 @@ input:checked + .slider:before {
 
   .chart-container {
     flex-direction: column;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
   }
 }

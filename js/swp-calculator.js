@@ -708,6 +708,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Footer Dropdown Mobile Logic
+    const footerDropdowns = document.querySelectorAll('.footer-dropdown');
+    footerDropdowns.forEach(dropdown => {
+        const toggleSpan = dropdown.querySelector('span');
+        if (toggleSpan) {
+            toggleSpan.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                }
+            });
+        }
+    });
+
+    // Close footer dropdowns when clicking outside
+    document.addEventListener('click', (event) => {
+        footerDropdowns.forEach(dropdown => {
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+    });
+
     // Auto-Rotating Tools Carousel (1.5s interval identical to SIP calculator)
     initToolsCarousel();
 
