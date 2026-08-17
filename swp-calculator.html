@@ -905,107 +905,102 @@
         </div>
     </section>
 
-    <!-- SECTION 6: EXPLORE THE FINNOMY FINANCIAL SUITE (STATIC RESPONSIVE GRID - REFINEMENT 2) -->
+    <!-- SECTION 6: AUTO-ROTATING CIRCULAR TOOLS CAROUSEL -->
     <section class="landing-section-full section-grey" id="related-tools">
         <div class="section-container">
             <div class="section-header">
                 <span class="section-tag">Ecosystem Suite</span>
                 <h2 class="section-main-title">Explore the FinNomy Financial Suite</h2>
-                <p class="section-main-subtitle">Complement your retirement and wealth planning with our suite of free, private, in-browser financial calculators and intelligence analyzers.</p>
+                <p class="section-main-subtitle">Complement your wealth planning with our suite of free, private, in-browser financial calculators and analyzers.</p>
             </div>
 
-            <div class="tools-grid-suite">
-                
-                <!-- Tool 1: SIP Calculator -->
-                <a href="sip-calculator.html" class="suite-tool-card">
-                    <div>
-                        <div class="suite-tool-icon">🌱</div>
-                        <h3 class="suite-tool-title">SIP Calculator</h3>
-                        <p class="suite-tool-desc">Step-Up SIP &amp; Inflation Wealth Planner: Calculate exponential mutual fund compounding and goal shortfall deficits.</p>
-                    </div>
-                    <span class="suite-tool-cta">Calculate SIP &rarr;</span>
-                </a>
+            <div class="carousel-outer-wrapper">
+                <!-- Carousel Viewport -->
+                <div class="carousel-viewport">
+                    <div class="carousel-track" id="toolsCarouselTrack">
+                        
+                        <!-- Tool 1: SIP Calculator -->
+                        <a href="sip-calculator.html" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">🌱</div>
+                                <h3 class="carousel-card-title">SIP Calculator</h3>
+                                <p class="carousel-card-desc">Step-Up SIP &amp; Inflation Wealth Planner: Calculate exponential mutual fund compounding and goal shortfall deficits.</p>
+                            </div>
+                            <span class="carousel-card-cta">Calculate SIP &rarr;</span>
+                        </a>
 
-                <!-- Tool 2: SWP Calculator (Current Page) -->
-                <a href="swp-calculator.html" class="suite-tool-card" style="border-color: var(--green-border); background: #F0FDF4;">
-                    <div>
-                        <div class="suite-tool-icon">💪</div>
-                        <h3 class="suite-tool-title">SWP Calculator</h3>
-                        <p class="suite-tool-desc">Step-Up SWP &amp; Capital Preservation: Plan tax-efficient regular monthly income and long-term capital sustainability.</p>
-                    </div>
-                    <span class="suite-tool-cta" style="color: var(--green);">Explore SWP &rarr;</span>
-                </a>
+                        <!-- Tool 2: Retirement Planner -->
+                        <a href="calculators.html?calc=retirement" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">🏖️</div>
+                                <h3 class="carousel-card-title">Retirement Calculator</h3>
+                                <p class="carousel-card-desc">FIRE Corpus &amp; Post-Retirement Inflation: Determine your exact required nest egg corpus for lifelong financial freedom.</p>
+                            </div>
+                            <span class="carousel-card-cta">Plan Retirement &rarr;</span>
+                        </a>
 
-                <!-- Tool 3: Retirement Planner -->
-                <a href="calculators.html?calc=retirement" class="suite-tool-card">
-                    <div>
-                        <div class="suite-tool-icon">🏖️</div>
-                        <h3 class="suite-tool-title">Retirement Calculator</h3>
-                        <p class="suite-tool-desc">FIRE Corpus &amp; Post-Retirement Inflation: Determine your exact required nest egg corpus for lifelong financial freedom.</p>
-                    </div>
-                    <span class="suite-tool-cta">Plan Retirement &rarr;</span>
-                </a>
+                        <!-- Tool 3: Loan Prepayment Calculator -->
+                        <a href="calculators.html?calc=loan" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">📉</div>
+                                <h3 class="carousel-card-title">Loan Prepayment Calculator</h3>
+                                <p class="carousel-card-desc">Interest Saved &amp; Tenure Reduction: See the massive interest savings achieved through systematic early prepayments.</p>
+                            </div>
+                            <span class="carousel-card-cta">Calculate Savings &rarr;</span>
+                        </a>
 
-                <!-- Tool 4: Loan Prepayment Calculator -->
-                <a href="calculators.html?calc=loan" class="suite-tool-card">
-                    <div>
-                        <div class="suite-tool-icon">📉</div>
-                        <h3 class="suite-tool-title">Loan Prepayment Calculator</h3>
-                        <p class="suite-tool-desc">Interest Saved &amp; Tenure Reduction: See the massive interest savings achieved through systematic early prepayments.</p>
-                    </div>
-                    <span class="suite-tool-cta">Calculate Savings &rarr;</span>
-                </a>
+                        <!-- Tool 4: Financial Health Score -->
+                        <a href="calculators.html?calc=fhs" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">🩺</div>
+                                <h3 class="carousel-card-title">Financial Health Score</h3>
+                                <p class="carousel-card-desc">11-Pillar Financial Diagnostic: Comprehensive wellness check across savings, debt, liquidity, and goal preparedness.</p>
+                            </div>
+                            <span class="carousel-card-cta">Check Score &rarr;</span>
+                        </a>
 
-                <!-- Tool 5: Financial Health Score -->
-                <a href="calculators.html?calc=fhs" class="suite-tool-card">
-                    <div>
-                        <div class="suite-tool-icon">🩺</div>
-                        <h3 class="suite-tool-title">Financial Health Score</h3>
-                        <p class="suite-tool-desc">11-Pillar Financial Diagnostic: Comprehensive wellness check across savings, debt, liquidity, and goal preparedness.</p>
-                    </div>
-                    <span class="suite-tool-cta">Check Score &rarr;</span>
-                </a>
+                        <!-- Tool 5: Common Financial Mistakes -->
+                        <a href="calculators.html?calc=cfm" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">⚠️</div>
+                                <h3 class="carousel-card-title">Financial Mistakes Calculator</h3>
+                                <p class="carousel-card-desc">Daily Leaks &amp; Delay Costs: Uncover the true exponential opportunity cost of delay and under-invested cash.</p>
+                            </div>
+                            <span class="carousel-card-cta">Explore Cost &rarr;</span>
+                        </a>
 
-                <!-- Tool 6: Common Financial Mistakes -->
-                <a href="calculators.html?calc=cfm" class="suite-tool-card">
-                    <div>
-                        <div class="suite-tool-icon">⚠️</div>
-                        <h3 class="suite-tool-title">Financial Mistakes Calculator</h3>
-                        <p class="suite-tool-desc">Daily Leaks &amp; Delay Costs: Uncover the true exponential opportunity cost of delay and under-invested cash.</p>
-                    </div>
-                    <span class="suite-tool-cta">Explore Cost &rarr;</span>
-                </a>
+                        <!-- Tool 6: Multi-Goal Wealth Planner -->
+                        <a href="calculators.html?calc=mgse" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">🎯</div>
+                                <h3 class="carousel-card-title">Multi-Goal Wealth Planner</h3>
+                                <p class="carousel-card-desc">Consolidated Life Goals &amp; Cash Flow: Model, prioritize, and allocate systematic cash flows across multiple milestones.</p>
+                            </div>
+                            <span class="carousel-card-cta">Plan Multi-Goals &rarr;</span>
+                        </a>
 
-                <!-- Tool 7: Multi-Goal Wealth Planner -->
-                <a href="calculators.html?calc=mgse" class="suite-tool-card">
-                    <div>
-                        <div class="suite-tool-icon">🎯</div>
-                        <h3 class="suite-tool-title">Multi-Goal Wealth Planner</h3>
-                        <p class="suite-tool-desc">Consolidated Life Goals &amp; Cash Flow: Model, prioritize, and allocate systematic cash flows across multiple milestones.</p>
-                    </div>
-                    <span class="suite-tool-cta">Plan Multi-Goals &rarr;</span>
-                </a>
+                        <!-- Tool 7: Bank Statement Analyzer -->
+                        <a href="finnomy-bank-analyzer.html" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">📊</div>
+                                <h3 class="carousel-card-title">Bank Statement Analyzer</h3>
+                                <p class="carousel-card-desc">100% In-Browser Spending Intelligence: Private on-device statement parsing for instant income, expense, and cash flow insights.</p>
+                            </div>
+                            <span class="carousel-card-cta">Analyze Statement &rarr;</span>
+                        </a>
 
-                <!-- Tool 8: Bank Statement Analyzer -->
-                <a href="finnomy-bank-analyzer.html" class="suite-tool-card">
-                    <div>
-                        <div class="suite-tool-icon">📊</div>
-                        <h3 class="suite-tool-title">Bank Statement Analyzer</h3>
-                        <p class="suite-tool-desc">100% In-Browser Spending Intelligence: Private on-device statement parsing for instant income, expense, and cash flow insights.</p>
-                    </div>
-                    <span class="suite-tool-cta">Analyze Statement &rarr;</span>
-                </a>
+                        <!-- Tool 8: Income Tax Computation Generator -->
+                        <a href="finnomy-itr-computation.html" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">🧾</div>
+                                <h3 class="carousel-card-title">ITR Tax Computation</h3>
+                                <p class="carousel-card-desc">Instant ITR-V to PDF Summary: Convert ITR acknowledgements or tax JSON into certified, bank-ready computation sheets in seconds.</p>
+                            </div>
+                            <span class="carousel-card-cta">Generate ITR Summary &rarr;</span>
+                        </a>
 
-                <!-- Tool 9: Income Tax Computation Generator -->
-                <a href="finnomy-itr-computation.html" class="suite-tool-card">
-                    <div>
-                        <div class="suite-tool-icon">🧾</div>
-                        <h3 class="suite-tool-title">ITR Tax Computation</h3>
-                        <p class="suite-tool-desc">Instant ITR-V to PDF Summary: Convert ITR acknowledgements or tax JSON into certified, bank-ready computation sheets in seconds.</p>
                     </div>
-                    <span class="suite-tool-cta">Generate ITR Summary &rarr;</span>
-                </a>
-
+                </div>
             </div>
         </div>
     </section>

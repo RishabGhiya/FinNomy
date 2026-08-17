@@ -708,12 +708,56 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Auto-Rotating Tools Carousel (1.5s interval identical to SIP calculator)
+    initToolsCarousel();
+
     // Randomize initial fact
     displayRandomSwpFact();
 
     // Initial Calculation
     calculateSWP();
 });
+
+// Auto-Rotating Infinite Tools Carousel (1.5s Interval)
+function initToolsCarousel() {
+    const track = document.getElementById('toolsCarouselTrack');
+    if (!track) return;
+
+    let autoScrollInterval = null;
+    const scrollDelay = 1500; // 1.5 seconds
+
+    function stepNext() {
+        const firstCard = track.querySelector('.carousel-card');
+        const cardWidth = firstCard ? (firstCard.offsetWidth + 20) : 300;
+        const maxScroll = track.scrollWidth - track.clientWidth;
+
+        if (track.scrollLeft >= maxScroll - 5) {
+            track.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+            track.scrollBy({ left: cardWidth, behavior: 'smooth' });
+        }
+    }
+
+    function startTimer() {
+        if (!autoScrollInterval) {
+            autoScrollInterval = setInterval(stepNext, scrollDelay);
+        }
+    }
+
+    function stopTimer() {
+        if (autoScrollInterval) {
+            clearInterval(autoScrollInterval);
+            autoScrollInterval = null;
+        }
+    }
+
+    startTimer();
+
+    track.addEventListener('mouseenter', stopTimer);
+    track.addEventListener('mouseleave', startTimer);
+    track.addEventListener('touchstart', stopTimer, { passive: true });
+    track.addEventListener('touchend', startTimer, { passive: true });
+}
 
 // Global Send Dashboard Report for SWP Page
 window.sendDashboardReport = function(calcTypeRaw) {
