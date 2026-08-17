@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Prepayment Calculator — Calculate Interest Saved &amp; Tenure Reduction | FinNomy</title>
+    <meta name="description"
+        content="Calculate exact interest savings and tenure reduction on your home loan or mortgage with FinNomy's free Loan Prepayment Calculator. Model annual step-ups, payment frequencies, and penalty charges.">
+    <meta name="keywords"
+        content="loan prepayment calculator, home loan prepayment, tenure reduction vs emi reduction, prepay home loan savings, interest saved calculator, mortgage prepayment India, FinNomy debt optimization">
+    <link rel="canonical" href="https://finnomy.com/loan-prepayment-calculator.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://finnomy.com/loan-prepayment-calculator.html">
+    <meta property="og:title" content="Loan Prepayment Calculator — Calculate Interest Saved &amp; Tenure Reduction | FinNomy">
+    <meta property="og:description"
+        content="Free In-Browser Loan Prepayment Calculator: Calculate exact interest savings and loan closure timeline with Step-Up surplus prepayments and penalty charge adjustments.">
+    <meta property="og:image" content="https://finnomy.com/assets/logo.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://finnomy.com/loan-prepayment-calculator.html">
+    <meta property="twitter:title" content="Loan Prepayment Calculator — Calculate Interest Saved &amp; Tenure Reduction | FinNomy">
+    <meta property="twitter:description"
+        content="Model the power of prepayments on your home loan. Save lakhs in interest and become debt-free years ahead of schedule.">
+    <meta property="twitter:image" content="https://finnomy.com/assets/logo.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/loan-prepayment-calculator.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logo.png">
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "FinNomy Loan Prepayment Calculator",
+          "url": "https://finnomy.com/loan-prepayment-calculator.html",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "All",
+          "description": "Calculate interest savings, tenure reduction, and prepayment strategies with Step-Up increments and bank penalty adjustments.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "INR"
+          },
+          "featureList": [
+            "Month-by-month loan amortization simulation",
+            "Tenure Reduction vs EMI Reduction comparison",
+            "Annual Step-Up surplus prepayment logic",
+            "Prepayment penalty charge adjustment",
+            "100% In-Browser data privacy"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is it better to reduce loan tenure or reduce EMI when prepaying?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Reducing loan tenure yields significantly higher interest savings because it shortens the compound interest accumulation period. Reducing EMI provides immediate cash flow relief but saves less total interest over the lifetime of the loan."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Should I prepay my home loan or invest the surplus in an equity SIP?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Prepaying a home loan gives a guaranteed, risk-free post-tax return equal to your loan interest rate (typically 8.5–9.5%). Equity SIPs have historically yielded 12–14% over 10+ years but come with market volatility. A balanced approach of partial prepayment and partial SIP investing is often recommended."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are there prepayment penalties on home loans in India?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "As per Reserve Bank of India (RBI) guidelines, banks and Housing Finance Companies (HFCs) cannot levy prepayment or foreclosure charges on floating-rate home loans taken by individual borrowers. Fixed-rate loans or loans for business entities may incur a 2–4% prepayment charge."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does a Step-Up prepayment accelerate loan closure?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "As your income increases each year with salary hikes or business growth, increasing your extra prepayment by 5–10% annually dramatically shrinks the principal balance, compressing a 20-year mortgage to under 10–12 years."
+              }
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://finnomy.com/index.html"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Calculators",
+              "item": "https://finnomy.com/calculators.html"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Loan Prepayment Calculator",
+              "item": "https://finnomy.com/loan-prepayment-calculator.html"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+
+<body>
+
+    <!-- Header Navigation (Consistent FinNomy Navbar) -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="assets/logo.png" alt="FinNomy Logo" class="logo-img">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="calculators.html" class="active">Calculators</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="nav-link-tools">Tools</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="finnomy-bank-analyzer.html">Bank Statement Analyzer</a></li>
+                            <li><a href="finnomy-itr-computation.html">ITR Computation Generator</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="insights.html">Insights</a></li>
+                    <li><a href="connect_us.html">Connect Us</a></li>
+                </ul>
+                <button class="mobile-menu-btn" aria-label="Toggle Navigation Menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- SECTION 1: HERO SECTION -->
+    <section class="landing-section-full hero-section">
+        <div class="section-container">
+            <div class="hero-container">
+                <!-- Left Column: Copy & CTAs -->
+                <div class="hero-text-col">
+                    <span class="hero-eyebrow">⚡ FINNOMY™ DEBT OPTIMIZATION</span>
+                    <h1 class="hero-title">Loan Prepayment Calculator</h1>
+                    <p class="hero-subtitle">
+                        Calculate exact interest savings and tenure reduction — factor in annual prepayment step-ups, payment frequency, and bank penalty charges.
+                    </p>
+                    <div class="hero-btn-group">
+                        <a href="#loan-calculator-tool" class="btn-hero-primary">Calculate Interest Saved &darr;</a>
+                        <a href="sip-calculator.html" class="btn-hero-secondary">Explore SIP Wealth Planner &rarr;</a>
+                    </div>
+                    <div class="hero-trust-badges">
+                        <span>🔒 100% In-Browser</span>
+                        <span>•</span>
+                        <span>⚡ Accurate Amortization</span>
+                        <span>•</span>
+                        <span>✨ Free &amp; Instant</span>
+                    </div>
+                </div>
+
+                <!-- Right Column: Dedicated Debt Freedom & Interest Savings SVG Illustration -->
+                <div class="hero-visual-col">
+                    <svg viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg" class="hero-loan-svg" style="width: 100%; max-width: 580px; height: auto;">
+                        <!-- Background Glow Accents -->
+                        <circle cx="380" cy="240" r="160" fill="#ECFDF5" fill-opacity="0.6"/>
+                        <circle cx="180" cy="300" r="130" fill="#EFF6FF" fill-opacity="0.7"/>
+                        
+                        <!-- Accelerated Payoff Curve -->
+                        <path d="M 90 380 Q 240 370 340 240 T 490 120" stroke="#00B37E" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 6"/>
+                        <circle cx="490" cy="120" r="8" fill="#00B37E"/>
+                        <circle cx="490" cy="120" r="16" stroke="#00B37E" stroke-width="2" stroke-dasharray="4 4"/>
+
+                        <!-- Principal Knockdown & Savings Card -->
+                        <g transform="translate(80, 200)">
+                          <rect width="210" height="170" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="drop-shadow(0px 12px 24px rgba(15, 23, 42, 0.08))"/>
+                          <rect x="16" y="16" width="36" height="36" rx="8" fill="#ECFDF5"/>
+                          <text x="34" y="38" fill="#00B37E" font-size="16" font-weight="bold" text-anchor="middle">✂️</text>
+                          <text x="60" y="28" fill="#64748B" font-family="'Inter', sans-serif" font-size="10" font-weight="600">INTEREST SAVINGS</text>
+                          <text x="60" y="48" fill="#00B37E" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800">₹18.42 Lakhs</text>
+                          <line x1="16" y1="70" x2="194" y2="70" stroke="#F1F5F9" stroke-width="1.5"/>
+                          
+                          <!-- Timeline Reduction Metric -->
+                          <text x="16" y="94" fill="#0F172A" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700">Tenure Slashed by 5.2 Yrs</text>
+                          <text x="16" y="110" fill="#64748B" font-family="'Inter', sans-serif" font-size="9.5">20 Years ➔ 14.8 Years</text>
+                          
+                          <!-- Visual Progress Bar -->
+                          <rect x="16" y="126" width="178" height="8" rx="4" fill="#E2E8F0"/>
+                          <rect x="16" y="126" width="124" height="8" rx="4" fill="#0B63D8"/>
+                          <rect x="140" y="126" width="54" height="8" rx="4" fill="#00B37E"/>
+                        </g>
+
+                        <!-- Debt Freedom Floating Badge -->
+                        <g transform="translate(320, 90)">
+                          <rect width="190" height="60" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="drop-shadow(0px 10px 20px rgba(15, 23, 42, 0.08))"/>
+                          <rect x="14" y="14" width="32" height="32" rx="8" fill="#EFF6FF"/>
+                          <text x="30" y="35" fill="#0B63D8" font-size="15" text-anchor="middle">🔓</text>
+                          <text x="54" y="28" fill="#0F172A" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" font-weight="700">Debt Freedom</text>
+                          <text x="54" y="44" fill="#00B37E" font-family="'Inter', sans-serif" font-size="10" font-weight="600">Years Ahead of Schedule</text>
+                        </g>
+
+                        <!-- Extra Prepayment Floating Badge -->
+                        <g transform="translate(320, 290)">
+                          <rect width="180" height="56" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="drop-shadow(0px 10px 20px rgba(15, 23, 42, 0.08))"/>
+                          <circle cx="28" cy="28" r="14" fill="#FEF3C7"/>
+                          <text x="28" y="33" fill="#D97706" font-size="13" text-anchor="middle">⚡</text>
+                          <text x="50" y="24" fill="#0F172A" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700">Surplus Prepayment</text>
+                          <text x="50" y="40" fill="#0B63D8" font-family="'Inter', sans-serif" font-size="10" font-weight="600">+10% Step-Up Option</text>
+                        </g>
+
+                        <!-- Shield / Rupee Elements -->
+                        <g transform="translate(260, 140)">
+                          <circle cx="18" cy="18" r="18" fill="#0B63D8"/>
+                          <text x="18" y="24" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="800" text-anchor="middle">₹</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: WHY REGULAR EMIS KEEP YOU TRAPPED IN DEBT -->
+    <section class="landing-section-full section-grey" id="why-prepay">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Amortization Truths</span>
+                <h2 class="section-main-title">Why Regular EMIs Keep You Trapped in Debt</h2>
+                <p class="section-main-subtitle">Standard banking schedules front-load interest payments, ensuring the bank profits first before you build meaningful home equity.</p>
+            </div>
+
+            <div class="feature-grid-4">
+                <!-- Card 1 -->
+                <div class="feature-card">
+                    <div class="feature-card-icon">🪤</div>
+                    <h3 class="feature-card-title">The Front-Loaded Trap</h3>
+                    <p class="feature-card-desc">In the first 5–8 years of a home loan, up to 70–80% of every monthly EMI payment goes purely towards interest, hardly reducing the actual borrowed principal.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="feature-card">
+                    <div class="feature-card-icon">⚖️</div>
+                    <h3 class="feature-card-title">Tenure vs. EMI Choice</h3>
+                    <p class="feature-card-desc">Choose between slashing years off your loan to achieve lifelong debt freedom or reducing your monthly EMI burden to enhance immediate monthly liquidity.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="feature-card">
+                    <div class="feature-card-icon">📈</div>
+                    <h3 class="feature-card-title">The Step-Up Edge</h3>
+                    <p class="feature-card-desc">Incrementing your extra prepayment by just 5–10% each year aligns with your annual salary increments and knocks decade-long mortgages down to under 12 years.</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="feature-card">
+                    <div class="feature-card-icon">💰</div>
+                    <h3 class="feature-card-title">Total Net Interest Saved</h3>
+                    <p class="feature-card-desc">FinNomy visualizes the exact tens of lakhs in net interest saved, cleanly accounting for any bank prepayment charges or foreclosure processing fees.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: UNDERSTANDING PREPAYMENT IMPACT & COMPARISON TABLE -->
+    <section class="landing-section-full section-white" id="prepayment-impact">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Strategic Choices</span>
+                <h2 class="section-main-title">Understanding Your Prepayment Impact</h2>
+                <p class="section-main-subtitle">Every extra rupee paid against your loan principal changes future interest compounding. Compare how different prepayment methods perform.</p>
+            </div>
+
+            <div class="guide-grid-3">
+                <!-- Guide 1 -->
+                <div class="guide-card">
+                    <span class="guide-badge blue">Strategy 01</span>
+                    <h3 class="guide-card-title">Tenure Reduction (Recommended)</h3>
+                    <p class="guide-card-desc">Keep your monthly EMI constant while extra prepayments knock off months from the end of the loan. This minimizes total interest paid across the loan tenure.</p>
+                </div>
+
+                <!-- Guide 2 -->
+                <div class="guide-card">
+                    <span class="guide-badge green">Strategy 02</span>
+                    <h3 class="guide-card-title">EMI Reduction Mode</h3>
+                    <p class="guide-card-desc">Maintain the original maturity date but lower your mandatory monthly EMI. Ideal for borrowers anticipating lifestyle expenses, career transitions, or family commitments.</p>
+                </div>
+
+                <!-- Guide 3 -->
+                <div class="guide-card">
+                    <span class="guide-badge amber">Strategy 03</span>
+                    <h3 class="guide-card-title">1 Extra EMI per Year</h3>
+                    <p class="guide-card-desc">A simple discipline of paying 13 EMIs in 12 months using your annual bonus slashes over 3.5 years off a 20-year home loan without altering your monthly budget.</p>
+                </div>
+            </div>
+
+            <!-- Comparison Table: ₹50 Lakh Home Loan @ 8.5% for 20 Years -->
+            <div class="comparison-table-wrapper">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Prepayment Strategy</th>
+                            <th>Monthly Outflow</th>
+                            <th>Loan Tenure</th>
+                            <th>Total Interest Paid</th>
+                            <th>Net Interest Saved</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Standard Plan (No Prepayment)</strong></td>
+                            <td>₹43,391 / mo</td>
+                            <td>20 Years (240 Mo)</td>
+                            <td>₹54.14 Lakhs</td>
+                            <td>₹0 (Base Plan)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>₹5,000 / Mo Extra (Tenure Reduction)</strong></td>
+                            <td>₹48,391 / mo</td>
+                            <td><strong>14.8 Years (178 Mo)</strong></td>
+                            <td>₹35.72 Lakhs</td>
+                            <td class="comparison-highlight">₹18.42 Lakhs Saved (5.2 Yrs Early)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>1 Extra EMI / Year (₹43,391 Annually)</strong></td>
+                            <td>₹43,391 / mo + 1x</td>
+                            <td><strong>16.5 Years (198 Mo)</strong></td>
+                            <td>₹42.94 Lakhs</td>
+                            <td class="comparison-highlight">₹11.20 Lakhs Saved (3.5 Yrs Early)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>₹5,000 / Mo with 10% Annual Step-Up</strong></td>
+                            <td>Starts ₹48,391 / mo</td>
+                            <td><strong>11.6 Years (139 Mo)</strong></td>
+                            <td>₹26.50 Lakhs</td>
+                            <td class="comparison-highlight">₹27.64 Lakhs Saved (8.4 Yrs Early)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: HOW LOAN PREPAYMENT AMORTIZATION WORKS (OPEN ZIG-ZAG FLOW) -->
+    <section class="landing-section-full section-grey" id="how-it-works">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Amortization Engine</span>
+                <h2 class="section-main-title">How Loan Prepayment Amortization Works</h2>
+                <p class="section-main-subtitle">Unlike regular EMIs which are split between interest and principal, 100% of your extra prepayment targets the principal directly.</p>
+            </div>
+
+            <div class="zigzag-flow-container">
+                <!-- SVG Connecting Line -->
+                <svg class="zigzag-svg-connector" viewBox="0 0 1000 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 120 65 Q 250 10 370 20 T 620 65 T 870 20" stroke="#CBD5E1" stroke-width="2.5" stroke-dasharray="6 6" fill="none"/>
+                </svg>
+
+                <div class="zigzag-step-grid">
+                    <!-- Step 01: Down -->
+                    <div class="zigzag-step-item">
+                        <div class="step-num-badge">01</div>
+                        <h3 class="step-title">Direct Principal Knockdown</h3>
+                        <p class="step-desc">Extra prepayments completely bypass interest schedules, directly reducing your outstanding loan principal.</p>
+                    </div>
+
+                    <!-- Step 02: Up -->
+                    <div class="zigzag-step-item">
+                        <div class="step-num-badge">02</div>
+                        <h3 class="step-title">Interest Compounding Reset</h3>
+                        <p class="step-desc">Future monthly interest is recalculated instantly on the newly compressed remaining principal balance.</p>
+                    </div>
+
+                    <!-- Step 03: Down -->
+                    <div class="zigzag-step-item">
+                        <div class="step-num-badge">03</div>
+                        <h3 class="step-title">Accelerated Schedule</h3>
+                        <p class="step-desc">Shifts the amortization curve forward, rapidly advancing the month you become 100% debt-free.</p>
+                    </div>
+
+                    <!-- Step 04: Up -->
+                    <div class="zigzag-step-item">
+                        <div class="step-num-badge">04</div>
+                        <h3 class="step-title">Massive Net Savings</h3>
+                        <p class="step-desc">Translates the compressed repayment curve into tens of lakhs in retained wealth and financial freedom.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: INTERACTIVE LOAN PREPAYMENT CENTERPIECE -->
+    <section class="landing-section-full section-white" id="loan-calculator-tool">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Interactive Engine</span>
+                <h2 class="section-main-title">Loan Prepayment &amp; Debt Optimization Engine</h2>
+                <p class="section-main-subtitle">Fine-tune your loan balance, interest rate, surplus prepayments, and annual step-ups to calculate exact savings in real time.</p>
+            </div>
+
+            <div class="calculator-centerpiece-card">
+                <div class="loan-interactive-grid">
+                    
+                    <!-- Left Pane: Inputs -->
+                    <div class="loan-inputs-pane">
+                        
+                        <!-- Input 1: Loan Balance -->
+                        <div class="loan-control-group">
+                            <div class="loan-label-row">
+                                <label for="loanInputBalance">Current Loan Balance</label>
+                                <div class="loan-amount-wrapper">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="loanInputBalance" class="loan-number-input" value="5000000" min="100000" max="20000000" step="50000">
+                                </div>
+                            </div>
+                            <input type="range" id="loanRangeBalance" min="500000" max="20000000" step="100000" value="5000000" class="loan-range">
+                            <div class="loan-range-labels">
+                                <span>₹5 Lakhs</span>
+                                <span>₹2 Crores</span>
+                            </div>
+                        </div>
+
+                        <!-- Input 2: Interest Rate -->
+                        <div class="loan-control-group">
+                            <div class="loan-label-row">
+                                <label for="loanInputRate">Interest Rate (p.a.)</label>
+                                <div class="loan-amount-wrapper blue-wrap">
+                                    <input type="number" id="loanInputRate" class="loan-number-input" value="8.5" min="5" max="20" step="0.1">
+                                    <span class="unit-symbol">%</span>
+                                </div>
+                            </div>
+                            <input type="range" id="loanRangeRate" min="5" max="20" step="0.1" value="8.5" class="loan-range">
+                            <div class="loan-range-labels">
+                                <span>5%</span>
+                                <span>20%</span>
+                            </div>
+                        </div>
+
+                        <!-- Input 3: Remaining Tenure -->
+                        <div class="loan-control-group">
+                            <div class="loan-label-row">
+                                <label for="loanInputTenure">Remaining Tenure (Months)</label>
+                                <div class="loan-amount-wrapper blue-wrap">
+                                    <input type="number" id="loanInputTenure" class="loan-number-input" value="240" min="12" max="360" step="6">
+                                    <span class="unit-symbol">Mo</span>
+                                </div>
+                            </div>
+                            <input type="range" id="loanRangeTenure" min="12" max="360" step="6" value="240" class="loan-range">
+                            <div class="loan-range-labels">
+                                <span>12 Mo (1 Yr)</span>
+                                <span>360 Mo (30 Yrs)</span>
+                            </div>
+                        </div>
+
+                        <!-- Input 4: Surplus Amount -->
+                        <div class="loan-control-group">
+                            <div class="loan-label-row">
+                                <label for="loanInputExtraEmi">Surplus Prepayment Amount</label>
+                                <div class="loan-amount-wrapper">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="loanInputExtraEmi" class="loan-number-input" value="5000" min="500" max="100000" step="500">
+                                </div>
+                            </div>
+                            <input type="range" id="loanRangeExtraEmi" min="500" max="10000" step="500" value="5000" class="loan-range">
+                            <div class="loan-range-labels">
+                                <span>₹500</span>
+                                <span id="loanExtraMaxLabel">₹10K</span>
+                            </div>
+                        </div>
+
+                        <!-- Dropdowns: Frequency & Benefit Type -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+                            <div>
+                                <label for="loanExtraEmiFreq" style="font-size: 13px; font-weight: 600; color: var(--navy); display: block; margin-bottom: 6px;">Payment Frequency</label>
+                                <select id="loanExtraEmiFreq" class="loan-select-input">
+                                    <option value="monthly" selected>Monthly Extra</option>
+                                    <option value="yearly">Yearly Lump Sum</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="loanPrepayBenefit" style="font-size: 13px; font-weight: 600; color: var(--navy); display: block; margin-bottom: 6px;">Benefit Type</label>
+                                <select id="loanPrepayBenefit" class="loan-select-input">
+                                    <option value="tenure" selected>Reduce Tenure (Max Savings)</option>
+                                    <option value="emi">Reduce EMI (Lower Outflow)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Settings Accordion Box -->
+                        <div class="loan-advanced-box">
+                            <div class="loan-advanced-title">Advanced Prepayment Modifiers</div>
+
+                            <!-- Step Up Prepayment Toggle -->
+                            <div class="loan-control-group" style="margin-bottom: 14px;">
+                                <div class="loan-label-row">
+                                    <label for="loanToggleStepUp">Annual Step-Up Prepayment (%)</label>
+                                    <label class="switch">
+                                        <input type="checkbox" id="loanToggleStepUp" onchange="toggleLoanAdvanceInput('loanStepUpGroup')">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <div id="loanStepUpGroup" class="sub-slider-box" style="display: none;">
+                                    <div class="loan-label-row">
+                                        <span style="font-size: 12px; color: var(--grey); font-weight: 600;">Annual Prepayment Increase</span>
+                                        <div class="loan-amount-wrapper small">
+                                            <input type="number" id="loanInputStepUp" class="loan-number-input" value="10" min="1" max="50" style="width: 45px;">
+                                            <span class="unit-symbol">%</span>
+                                        </div>
+                                    </div>
+                                    <input type="range" id="loanRangeStepUp" min="1" max="50" value="10" class="loan-range">
+                                </div>
+                            </div>
+
+                            <!-- Prepayment Penalty Toggle -->
+                            <div class="loan-control-group" style="margin-bottom: 0;">
+                                <div class="loan-label-row">
+                                    <label for="loanTogglePenalty">Bank Prepayment Charges (%)</label>
+                                    <label class="switch">
+                                        <input type="checkbox" id="loanTogglePenalty" onchange="toggleLoanAdvanceInput('loanPenaltyGroup')">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <div id="loanPenaltyGroup" class="sub-slider-box" style="display: none;">
+                                    <div class="loan-label-row">
+                                        <span style="font-size: 12px; color: var(--grey); font-weight: 600;">Prepayment Penalty Rate</span>
+                                        <div class="loan-amount-wrapper small">
+                                            <input type="number" id="loanInputPenalty" class="loan-number-input" value="2.0" min="0.1" max="5.0" step="0.1" style="width: 45px;">
+                                            <span class="unit-symbol">%</span>
+                                        </div>
+                                    </div>
+                                    <input type="range" id="loanRangePenalty" min="0.1" max="5.0" step="0.1" value="2.0" class="loan-range">
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Right Pane: Results & Visualizer -->
+                    <div class="loan-results-pane">
+                        
+                        <!-- Normal Results State -->
+                        <div id="loanResultsState" style="width: 100%;">
+                            
+                            <!-- Hero Savings Banner -->
+                            <div class="saved-hero-banner">
+                                <div class="saved-hero-tag">Total Net Interest Saved</div>
+                                <div class="saved-hero-value" id="loanResInterestSaved">₹18,42,105</div>
+                            </div>
+
+                            <!-- Dual Donut Comparison Charts -->
+                            <div class="dual-donut-row" id="loanChartContainer">
+                                <div class="donut-wrapper">
+                                    <div class="donut-label-title">Standard Plan</div>
+                                    <div class="donut-chart-circle" id="loanDonutOld">
+                                        <div class="donut-hole-center">
+                                            <span class="donut-hole-subtext">Total Cost</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="donut-wrapper">
+                                    <div class="donut-label-title highlight">Smart Prepay</div>
+                                    <div class="donut-chart-circle" id="loanDonutNew">
+                                        <div class="donut-hole-center">
+                                            <span class="donut-hole-subtext highlight-text">Optimized</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Metrics Comparison Grid Table -->
+                            <div class="metrics-table-card">
+                                <div class="metrics-row metrics-header-row">
+                                    <div class="metrics-cell">Loan Parameter</div>
+                                    <div class="metrics-cell">Regular Plan</div>
+                                    <div class="metrics-cell">Smart Plan</div>
+                                </div>
+                                <div class="metrics-row">
+                                    <div class="metrics-cell">Monthly EMI</div>
+                                    <div class="metrics-cell regular-val" id="loanResOldEMI">₹43,391</div>
+                                    <div class="metrics-cell smart-val" id="loanResNewEMI">₹43,391</div>
+                                </div>
+                                <div class="metrics-row">
+                                    <div class="metrics-cell">Total Interest Paid</div>
+                                    <div class="metrics-cell regular-val" id="loanResOldInterest">₹54,13,879</div>
+                                    <div class="metrics-cell smart-val green-bold" id="loanResNewInterest">₹35,71,774</div>
+                                </div>
+                                <div class="metrics-row">
+                                    <div class="metrics-cell">Loan Tenure</div>
+                                    <div class="metrics-cell regular-val" id="loanResOldTenure">240 Mo (20.0 Yrs)</div>
+                                    <div class="metrics-cell smart-val green-bold" id="loanResNewTenureVal">178 Mo (14.8 Yrs)</div>
+                                </div>
+                                <div class="metrics-row" id="loanRowChargesLabel" style="display: none;">
+                                    <div class="metrics-cell">Prepayment Charges</div>
+                                    <div class="metrics-cell regular-val" id="loanResOldCharges">₹0</div>
+                                    <div class="metrics-cell smart-val red-bold" id="loanResNewCharges">₹0</div>
+                                </div>
+                                <div class="metrics-row">
+                                    <div class="metrics-cell">Estimated Debt-Free Date</div>
+                                    <div class="metrics-cell regular-val" id="loanResOldEndDate">Aug 2046</div>
+                                    <div class="metrics-cell smart-val green-bold" id="loanResNewEndDate">Jun 2041</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- High Value Priority Form (> 2 Cr Loan or High Surplus) -->
+                        <div id="loanHighValueForm" class="loan-hv-form-box" style="display: none;">
+                            <div class="hv-header">
+                                <span class="hv-icon">💎</span>
+                                <h3 class="hv-title">High-Value Loan Restructuring</h3>
+                            </div>
+                            <p class="hv-desc">For loans exceeding ₹2 Crores, customized balance transfer negotiations and institutional interest optimization yield significant savings. Connect with our debt advisory desk.</p>
+                            
+                            <div style="display: flex; flex-direction: column; gap: 12px;">
+                                <div class="lc-form-group">
+                                    <input type="text" id="loanHvName" class="form-input" placeholder="Your Full Name">
+                                    <span class="lc-error" style="display:none; color: #dc2626; font-size: 0.75rem; margin-top: 2px;">Name is required</span>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                    <div class="lc-form-group">
+                                        <input type="email" id="loanHvEmail" class="form-input" placeholder="Email Address">
+                                        <span class="lc-error" style="display:none; color: #dc2626; font-size: 0.75rem; margin-top: 2px;">Valid email is required</span>
+                                    </div>
+                                    <div class="lc-form-group">
+                                        <input type="tel" id="loanHvMobile" class="form-input" placeholder="Mobile Number (10 Digits)" maxlength="10">
+                                        <span class="lc-error" style="display:none; color: #dc2626; font-size: 0.75rem; margin-top: 2px;">10-digit number required</span>
+                                    </div>
+                                </div>
+                                <textarea id="loanHvDesc" rows="3" class="form-textarea" placeholder="Tell us about your current bank, interest rate, and balance transfer objectives..."></textarea>
+                                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                                    <input type="checkbox" id="loanHvPrivacy" style="margin-top: 3px;">
+                                    <label for="loanHvPrivacy" style="font-size: 12px; color: var(--grey);">I agree to FinNomy's <a href="javascript:void(0)" onclick="openPrivacyModal()" style="color: var(--blue);">Privacy Policy</a>.</label>
+                                </div>
+                                <button id="btnLoanHvSubmit" onclick="submitLoanPriorityForm()" class="btn-hero-primary" style="width: 100%; justify-content: center;" disabled>Submit Priority Request</button>
+                                <div id="loanHvSuccess" style="display: none; color: #059669; font-size: 0.85rem; text-align: center; font-weight: 700;">✅ Request sent! Our advisory team will connect within 24 hours.</div>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Fact Card -->
+                        <div id="loanFactCard" class="loan-fact-box">
+                            <div class="loan-fact-icon">💡</div>
+                            <div class="loan-fact-body">
+                                <strong>Did you know?</strong>
+                                <p id="loanFactText">Prepaying principal in the first 5 years yields the highest interest savings due to front-loaded amortization.</p>
+                            </div>
+                        </div>
+
+                        <!-- Lead Capture Form: "Send My Report" -->
+                        <div class="lead-capture-form" id="leadCapture-Loan">
+                            <div class="lc-title">
+                                <span>📩</span>
+                                <span>Send My Personalized Loan Report</span>
+                            </div>
+                            <p class="lc-desc">Get a detailed PDF copy of your loan amortization schedule, interest savings analysis, and debt freedom roadmap sent directly to your inbox.</p>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <div class="lc-form-group">
+                                    <input type="text" id="lcName-Loan" class="form-input" placeholder="Your Full Name" required>
+                                    <span class="lc-error" style="display:none; color: #dc2626; font-size: 0.75rem; margin-top: 2px;">Name required</span>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                    <div class="lc-form-group">
+                                        <input type="email" id="lcEmail-Loan" class="form-input" placeholder="Email Address" required>
+                                        <span class="lc-error" style="display:none; color: #dc2626; font-size: 0.75rem; margin-top: 2px;">Valid email required</span>
+                                    </div>
+                                    <div class="lc-form-group">
+                                        <input type="tel" id="lcPhone-Loan" class="form-input" placeholder="Mobile Number (10 Digits)" maxlength="10" pattern="[0-9]{10}" required>
+                                        <span class="lc-error" style="display:none; color: #dc2626; font-size: 0.75rem; margin-top: 2px;">10-digit number required</span>
+                                    </div>
+                                </div>
+                                <button onclick="sendDashboardReport('loan')" id="lcBtn-Loan" class="btn-submit-report">Send My Report Now</button>
+                                <div id="lcSuccess-Loan" style="display: none; color: #059669; font-size: 0.85rem; margin-top: 6px; text-align: center; font-weight: 700;">✅ Report sent successfully! Check your inbox.</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 6: AUTO-ROTATING CIRCULAR TOOLS CAROUSEL -->
+    <section class="landing-section-full section-grey" id="related-tools">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Ecosystem Suite</span>
+                <h2 class="section-main-title">Explore the FinNomy Financial Suite</h2>
+                <p class="section-main-subtitle">Complement your debt optimization with our suite of free, private, in-browser financial calculators and analyzers.</p>
+            </div>
+
+            <div class="carousel-outer-wrapper">
+                <!-- Carousel Viewport -->
+                <div class="carousel-viewport">
+                    <div class="carousel-track" id="toolsCarouselTrack">
+                        
+                        <!-- Tool 1: SIP Calculator -->
+                        <a href="sip-calculator.html" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">🌱</div>
+                                <h3 class="carousel-card-title">SIP Calculator</h3>
+                                <p class="carousel-card-desc">Step-Up SIP &amp; Inflation Wealth Planner: Calculate exponential mutual fund compounding and goal shortfall deficits.</p>
+                            </div>
+                            <span class="carousel-card-cta">Calculate SIP &rarr;</span>
+                        </a>
+
+                        <!-- Tool 2: SWP Calculator -->
+                        <a href="swp-calculator.html" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">💪</div>
+                                <h3 class="carousel-card-title">SWP Calculator</h3>
+                                <p class="carousel-card-desc">Step-Up SWP &amp; Capital Longevity: Plan tax-efficient regular monthly retirement cash flow and capital preservation.</p>
+                            </div>
+                            <span class="carousel-card-cta">Calculate SWP &rarr;</span>
+                        </a>
+
+                        <!-- Tool 3: Retirement Planner -->
+                        <a href="calculators.html?calc=retirement" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">🏖️</div>
+                                <h3 class="carousel-card-title">Retirement Calculator</h3>
+                                <p class="carousel-card-desc">FIRE Corpus &amp; Post-Retirement Inflation: Determine your exact required nest egg corpus for lifelong financial freedom.</p>
+                            </div>
+                            <span class="carousel-card-cta">Plan Retirement &rarr;</span>
+                        </a>
+
+                        <!-- Tool 4: Financial Health Score -->
+                        <a href="calculators.html?calc=fhs" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">🩺</div>
+                                <h3 class="carousel-card-title">Financial Health Score</h3>
+                                <p class="carousel-card-desc">11-Pillar Financial Diagnostic: Comprehensive wellness check across savings, debt, liquidity, and goal preparedness.</p>
+                            </div>
+                            <span class="carousel-card-cta">Check Score &rarr;</span>
+                        </a>
+
+                        <!-- Tool 5: Common Financial Mistakes -->
+                        <a href="calculators.html?calc=cfm" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">⚠️</div>
+                                <h3 class="carousel-card-title">Financial Mistakes Calculator</h3>
+                                <p class="carousel-card-desc">Daily Leaks &amp; Delay Costs: Uncover the true exponential opportunity cost of delay and under-invested cash.</p>
+                            </div>
+                            <span class="carousel-card-cta">Explore Cost &rarr;</span>
+                        </a>
+
+                        <!-- Tool 6: Multi-Goal Wealth Planner -->
+                        <a href="calculators.html?calc=mgse" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">🎯</div>
+                                <h3 class="carousel-card-title">Multi-Goal Wealth Planner</h3>
+                                <p class="carousel-card-desc">Consolidated Life Goals &amp; Cash Flow: Model, prioritize, and allocate systematic cash flows across multiple milestones.</p>
+                            </div>
+                            <span class="carousel-card-cta">Plan Multi-Goals &rarr;</span>
+                        </a>
+
+                        <!-- Tool 7: Bank Statement Analyzer -->
+                        <a href="finnomy-bank-analyzer.html" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">📊</div>
+                                <h3 class="carousel-card-title">Bank Statement Analyzer</h3>
+                                <p class="carousel-card-desc">100% In-Browser Spending Intelligence: Private on-device statement parsing for instant income, expense, and cash flow insights.</p>
+                            </div>
+                            <span class="carousel-card-cta">Analyze Statement &rarr;</span>
+                        </a>
+
+                        <!-- Tool 8: Income Tax Computation Generator -->
+                        <a href="finnomy-itr-computation.html" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">🧾</div>
+                                <h3 class="carousel-card-title">ITR Tax Computation</h3>
+                                <p class="carousel-card-desc">Instant ITR-V to PDF Summary: Convert ITR acknowledgements or tax JSON into certified, bank-ready computation sheets in seconds.</p>
+                            </div>
+                            <span class="carousel-card-cta">Generate ITR Summary &rarr;</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: FAQS ACCORDION -->
+    <section class="landing-section-full section-white" id="faq-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Clear Answers</span>
+                <h2 class="section-main-title">Frequently Asked Questions</h2>
+                <p class="section-main-subtitle">Everything you need to know about home loan prepayments, RBI guidelines, tenure reductions, and step-ups.</p>
+            </div>
+
+            <div class="faq-accordion-list">
+                <!-- FAQ 1 -->
+                <div class="faq-item active">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Is it better to reduce loan tenure or reduce EMI when prepaying?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Reducing loan tenure yields significantly higher interest savings because it shortens the compound interest accumulation period. When you keep your EMI constant and reduce tenure, each subsequent EMI repays a larger proportion of principal. Reducing EMI lowers your monthly cash outflow but saves considerably less total interest over the lifetime of the mortgage.
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Should I prepay my home loan or invest the surplus in an equity SIP?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Prepaying a home loan gives a guaranteed, risk-free post-tax return equal to your loan interest rate (typically 8.5%–9.5% p.a.). Equity SIPs have historically delivered 12%–14% annualized returns over 10+ year horizons but carry market volatility. A balanced strategy involves allocating 50% of surplus cash to loan prepayments for guaranteed interest savings and 50% to equity SIPs for long-term wealth creation.
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Are there prepayment penalties on home loans in India?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        As per Reserve Bank of India (RBI) regulations, banks and Housing Finance Companies (HFCs) are strictly prohibited from charging any prepayment or foreclosure penalties on floating-rate home loans availed by individual borrowers. However, fixed-rate home loans or loans taken in the name of a business entity / non-individual borrower may attract a 2% to 4% prepayment penalty.
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How does a Step-Up prepayment accelerate loan closure?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        As your salary or business revenues grow over time, increasing your monthly prepayment surplus by 5% to 10% each year (Step-Up) exponentially compounds your debt repayment velocity. For instance, stepping up a ₹5,000 monthly prepayment by 10% annually on a ₹50 Lakh loan reduces a 20-year tenure down to just 11.6 years, saving over ₹27 Lakhs in interest.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GLOBAL FOOTER (Matching All FinNomy Pages) -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo"><img src="assets/logo-footer.png" alt="FinNomy Logo" class="footer-logo"></div>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html" class="footer-link-home">Home</a></li>
+                        <li><a href="about.html" class="footer-link-about">About Us</a></li>
+                        <li><a href="services.html" class="footer-link-services">Services</a></li>
+                        <li><a href="calculators.html" class="footer-link-calculators">Calculators</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li class="footer-dropdown" style="position: relative; display: block;">
+                            <span class="footer-dropdown-trigger" style="color: rgba(255, 255, 255, 0.7); font-size: 14px; cursor: pointer; display: inline-block; line-height: 1.4;">Tools</span>
+                            <ul class="footer-dropdown-menu" style="position: absolute; bottom: 100%; left: 0; display: none; background-color: var(--color-dark-navy, #0F2A4A); min-width: 260px; box-shadow: 0 -4px 12px rgba(0,0,0,0.2); padding: 10px 0; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); list-style-type: none; z-index: 1000; margin-bottom: 6px;">
+                                <li><a href="finnomy-bank-analyzer.html" style="font-size: 14px; color: rgba(255,255,255,0.8); display: block; padding: 12px 24px; text-decoration: none;">Bank Statement Analyzer</a></li>
+                                <li><a href="finnomy-itr-computation.html" style="font-size: 14px; color: rgba(255,255,255,0.8); display: block; padding: 12px 24px; text-decoration: none;">ITR Computation Generator</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="insights.html" class="footer-link-insights">Insights</a></li>
+                        <li><a href="javascript:void(0)" onclick="openPrivacyModal()">Privacy Policy</a></li>
+                        <li><a href="javascript:void(0)" onclick="openTermsModal()">Terms and Conditions</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Get in Touch</h4>
+                    <ul>
+                        <li><a href="javascript:void(0)" onclick="openConnectModal()">Connect Us</a></li>
+                        <li><a href="javascript:void(0)" onclick="openPartnerModal()">Become a Partner</a></li>
+                        <li style="margin-top: 1rem;">
+                            <!-- Social Icons -->
+                            <div class="social-icons" style="display: flex; gap: 10px;">
+                                <a href="mailto:info.finnomy@gmail.com" aria-label="Email Us"
+                                    title="info.finnomy@gmail.com">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="white">
+                                        <path
+                                            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                                    </svg>
+                                </a>
+
+                                <a href="https://www.instagram.com/fin_nomy?igsh=MWExa2xxNmwzZ2QxYw=="
+                                    aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="white">
+                                        <path
+                                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                                    </svg>
+                                </a>
+
+                                <a href="https://x.com/Fin_Nomy" aria-label="X (Twitter)" target="_blank"
+                                    rel="noopener noreferrer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="white">
+                                        <path
+                                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                    </svg>
+                                </a>
+
+                                <a href="http://linkedin.com/company/fin-nomy" aria-label="LinkedIn" target="_blank"
+                                    rel="noopener noreferrer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
+                                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 FinNomy™. All rights reserved.</p>
+                <p>Certain services, including auditing, certifications, valuation, investment advisory, and other
+                    regulated activities, are performed exclusively by qualified professionals who hold the necessary
+                    licenses, registrations, or statutory approvals under applicable laws.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Global Policy Modals -->
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal-overlay" style="display: none;">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closePrivacyModal()">&times;</button>
+            <div class="modal-body">
+                <h2>Privacy Policy</h2>
+                <p><strong>Effective Date:</strong> January 1, 2025</p>
+                <p>FinNomy is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your personal information when you use our website and financial tools.</p>
+                <h3>1. In-Browser Privacy Guarantee</h3>
+                <p>All calculations and amortization simulations in our Loan Prepayment Calculator run 100% locally inside your web browser. We do not store or transmit your loan balance data to external servers without explicit user report submission.</p>
+                <h3>2. Information We Collect</h3>
+                <p>When you explicitly request a personalized report or consultation, we collect the contact details you provide (such as name, email, and phone number) solely to deliver the requested service.</p>
+                <h3>3. Contact Us</h3>
+                <p>If you have any questions, please contact us at <a href="mailto:info.finnomy@gmail.com">info.finnomy@gmail.com</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div id="termsModal" class="modal-overlay" style="display: none;">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeTermsModal()">&times;</button>
+            <div class="modal-body">
+                <h2>Terms &amp; Conditions</h2>
+                <p>By using FinNomy and its financial calculators, you agree to these Terms and Conditions.</p>
+                <p>Our calculators are provided for illustrative and educational purposes only and do not constitute formal investment or debt advisory advice.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Script -->
+    <script src="js/loan-prepayment-calculator.js"></script>
+
+</body>
+
+</html>
