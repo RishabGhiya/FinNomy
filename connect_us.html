@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -49,8 +49,14 @@
             align-items: center;
             background-color: #ffffff;
             /* Clean White */
-            padding: 4rem 0;
-            /* Add vertical padding to allow scrolling if tall */
+            padding: 130px 0 60px 0;
+            /* Safe offset from fixed navbar */
+        }
+
+        @media (max-width: 768px) {
+            .connect-hero-section {
+                padding: 110px 0 40px 0;
+            }
         }
 
         .hero-card {

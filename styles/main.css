@@ -984,6 +984,13 @@ button.btn {
 }
 
 
+/* About Page Specific Styles */
+#about-hero {
+    padding-top: 140px;
+    padding-bottom: 60px;
+    background-color: #FFFFFF;
+}
+
 /* Custom 50/50 Split for Hero */
 .hero-split {
     grid-template-columns: 1fr 1fr;
@@ -991,6 +998,11 @@ button.btn {
 }
 
 @media (max-width: 968px) {
+    #about-hero {
+        padding-top: 115px;
+        padding-bottom: 40px;
+    }
+
     .hero-split {
         grid-template-columns: 1fr;
         /* Stack on mobile */

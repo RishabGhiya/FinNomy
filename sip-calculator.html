@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L5E8Q0DRGN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-L5E8Q0DRGN');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIP Calculator with Step-Up & Inflation | Goal-Based SIP Planner | FinNomy™</title>
+    <meta name="description"
+        content="Free SIP Calculator with Annual Step-Up & Inflation Adjustment. Calculate mutual fund compounding, future purchasing power, and your exact extra SIP required for life goals on FinNomy.">
+    <meta name="keywords"
+        content="SIP calculator with annual step up, SIP calculator inflation adjusted, goal based SIP planner, how much extra SIP required, SIP returns calculator India, step up sip calculator, mutual fund sip calculator">
+    <link rel="canonical" href="https://finnomy.com/sip-calculator.html">
+    <link rel="icon" type="image/png" href="assets/logo-nav.png">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://finnomy.com/sip-calculator.html">
+    <meta property="og:title" content="SIP Calculator with Step-Up & Inflation | FinNomy™">
+    <meta property="og:description"
+        content="Plan your wealth creation with real-world accuracy. Factor in annual salary step-ups, inflation discounts, and existing mutual fund portfolios.">
+    <meta property="og:image" content="https://finnomy.com/assets/logo-nav.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://finnomy.com/sip-calculator.html">
+    <meta property="twitter:title" content="SIP Calculator with Step-Up & Inflation | FinNomy™">
+    <meta property="twitter:description"
+        content="Calculate mutual fund compounding, future real purchasing power, and your exact extra SIP required.">
+    <meta property="twitter:image" content="https://finnomy.com/assets/logo-nav.png">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "FinNomy SIP Calculator with Step-Up & Inflation",
+      "url": "https://finnomy.com/sip-calculator.html",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      },
+      "description": "Interactive SIP returns calculator with annual step-up compounding, inflation discounting, and Goal vs Reality shortfall math."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the difference between a normal SIP and a Step-Up SIP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A normal SIP keeps the monthly investment fixed for the entire tenure. A Step-Up SIP automatically increases your monthly investment by a fixed percentage (e.g., 10%) every year as your income grows, significantly multiplying your final wealth corpus."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is inflation adjustment critical for long-term equity mutual fund goals?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Inflation erodes the purchasing power of money over time. A target corpus of ₹1 Crore in 20 years with 6% inflation is equivalent to only about ₹31 Lakhs in today's money. Factoring in inflation helps you set an accurate target that meets real-world future expenses."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does FinNomy calculate extra SIP required in Super Advance mode?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "FinNomy compounds your existing mutual fund portfolio and active SIPs to the target horizon, compares the resulting projected wealth against your inflated goal corpus, and calculates the exact additional monthly SIP required today to bridge the deficit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my financial data saved or sent to any server when using this calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. All financial calculations, compounding simulations, and charts run 100% locally inside your browser in real time. Your numbers remain completely private."
+          }
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://finnomy.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Calculators",
+          "item": "https://finnomy.com/calculators.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SIP Calculator",
+          "item": "https://finnomy.com/sip-calculator.html"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/sip-calculator.css">
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("VlUqN_706wT8-7gS9");
+        })();
+    </script>
+</head>
+
+<body>
+
+    <!-- Standard FinNomy Fixed Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo-nav.png" alt="FinNomy Logo" class="nav-logo">
+            </a>
+            <div class="hamburger-menu" id="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="nav-link-home">Home</a></li>
+                <li><a href="about.html" class="nav-link-about">About FinNomy</a></li>
+                <li><a href="services.html" class="nav-link-services">Services</a></li>
+                <li><a href="calculators.html" class="active nav-link-calculators">Calculators</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="nav-link-tools">Tools</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="finnomy-bank-analyzer.html">Bank Statement Analyzer</a></li>
+                        <li><a href="finnomy-itr-computation.html">ITR Computation Generator</a></li>
+                    </ul>
+                </li>
+                <li><a href="insights.html" class="nav-link-insights">Insights</a></li>
+                <li><a href="connect_us.html" class="nav-link-connect">Connect Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- SECTION 1: HERO SECTION (White Background - Clean 2-Column Responsive Layout) -->
+    <section class="hero-section" id="hero-section">
+        <div class="hero-container">
+            <!-- Left Column: Copy & CTAs -->
+            <div class="hero-text-col">
+                <div class="hero-eyebrow">FINNOMY™ INVESTMENT INTELLIGENCE</div>
+                <h1 class="hero-title">SIP Calculator with Step-Up &amp; Inflation</h1>
+                <p class="hero-subtitle">Plan your wealth creation with real-world accuracy — factor in annual salary hikes, inflation impact, and existing portfolio values.</p>
+                
+                <div class="hero-btn-group">
+                    <a href="#sip-calculator-tool" class="btn-hero-primary" onclick="document.getElementById('sip-calculator-tool').scrollIntoView({behavior:'smooth'}); return false;">
+                        <span>Calculate My SIP ↓</span>
+                    </a>
+                </div>
+
+                <div class="hero-trust-badges">
+                    <span>🔒 100% In-Browser</span>
+                    <span>•</span>
+                    <span>⚡ Zero Data Storage</span>
+                    <span>•</span>
+                    <span>✨ Free &amp; Instant</span>
+                </div>
+            </div>
+
+            <!-- Right Column: Direct Embedded Illustration (No outer card box) -->
+            <div class="hero-visual-wrap">
+                <img src="assets/sip_hero_illustration.jpg" alt="SIP Calculator &amp; Wealth Growth Illustration">
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: WHY A BASIC SIP CALCULATION IS INACCURATE (Subtle Grey) -->
+    <section class="landing-section-full section-grey" id="why-step-up-matters">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Financial Reality</span>
+                <h2 class="section-main-title">Why a Basic SIP Calculation Is Often Inaccurate in Real Life</h2>
+                <p class="section-main-subtitle">Conventional calculators assume an unchanging world. FinNomy builds in the real economic forces that determine whether you actually reach your goals.</p>
+            </div>
+
+            <div class="feature-grid-4">
+                <!-- Card 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrap" style="background:#EEF4FE; color:#0B63D8;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="feature-card-title">The Step-Up Reality</h3>
+                        <p class="feature-card-desc">You don't invest the same ₹10,000 for 15 years. As your income and savings grow, stepping up your SIP by 10% annually can boost your final corpus by over 75%.</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrap" style="background:#FEF3C7; color:#D97706;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="feature-card-title">The Inflation Discount</h3>
+                        <p class="feature-card-desc">₹1 Crore in 20 years won't buy what ₹1 Crore buys today. At 6% inflation, ₹1 Crore shrinks to just ₹31 Lakhs in real purchasing power. We display your true future value.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrap" style="background:#E6F8F2; color:#00B37E;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="feature-card-title">Goal vs Reality Tracking</h3>
+                        <p class="feature-card-desc">Don't start your financial modeling from zero. Seamlessly factor in your existing mutual fund portfolio and active monthly contributions.</p>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrap" style="background:#F3E8FF; color:#9333EA;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="feature-card-title">Precision Shortfall Engine</h3>
+                        <p class="feature-card-desc">Computes the exact mathematical deficit between your current trajectory and your target life goal, giving you a clear action number today.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: WHAT THESE NUMBERS MEAN FOR YOUR FINANCIAL GOAL (White Background + Merged Comparison Math) -->
+    <section class="landing-section-full section-white" id="understanding-results">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Result Interpretation</span>
+                <h2 class="section-main-title">What These Numbers Mean for Your Financial Goal</h2>
+                <p class="section-main-subtitle">How to translate nominal compound projections into practical, actionable wealth planning decisions.</p>
+            </div>
+
+            <div class="guide-grid-3">
+                <!-- Column 1 -->
+                <div class="guide-card">
+                    <span class="guide-badge" style="background:#EEF4FE; color:#0B63D8;">Purchasing Power</span>
+                    <h3 class="guide-title">Nominal vs. Real Corpus</h3>
+                    <p class="guide-desc">The <strong>Nominal Value</strong> is the rupee amount in your bank account on maturity. The <strong>Real Value</strong> discounts this number by expected inflation to show what goods and lifestyle that money will actually buy.</p>
+                    <div class="guide-highlight">
+                        💡 <em>Always plan major retirement and higher education milestones using Inflation-Adjusted Real Value.</em>
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div class="guide-card">
+                    <span class="guide-badge" style="background:#E6F8F2; color:#00B37E;">Exponential Booster</span>
+                    <h3 class="guide-title">The Power of a 10% Step-Up</h3>
+                    <p class="guide-desc">By stepping up your monthly investment by just 10% each year, you align investments with salary appraisals. This small annual increment compounds exponentially, delivering 40% to 75% more maturity wealth.</p>
+                    <div class="guide-highlight">
+                        🚀 <em>₹10k/mo @ 12% for 15y = ₹50.4L. Stepping up 10% yearly makes it ₹88.35L (+₹37.9 Lakhs)!</em>
+                    </div>
+                </div>
+
+                <!-- Column 3 -->
+                <div class="guide-card">
+                    <span class="guide-badge" style="background:#FEF3C7; color:#92400E;">Deficit Resolution</span>
+                    <h3 class="guide-title">Closing the Shortfall Gap</h3>
+                    <p class="guide-desc">If Super Advance mode indicates an "Extra SIP Needed", you don't need to panic. You can bridge the gap by increasing your monthly SIP, extending your target horizon by 1–2 years, or stepping up contributions faster.</p>
+                    <div class="guide-highlight">
+                        🎯 <em>Staging disciplined increments early prevents last-minute retirement and child education funding panics.</em>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Merged Compact Comparison Table -->
+            <div class="scenarios-table-card" style="margin-top: 40px;">
+                <table class="scenarios-table">
+                    <thead>
+                        <tr>
+                            <th>Investment Strategy</th>
+                            <th>Monthly Investment</th>
+                            <th>Total Invested</th>
+                            <th>Final Maturity Value (Nominal)</th>
+                            <th>Real Value (6% Inflation Adjusted)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Standard Flat SIP</strong></td>
+                            <td>₹10,000 / mo</td>
+                            <td>₹18,00,000</td>
+                            <td><strong style="color: var(--navy);">₹50,45,760 (₹50.46 L)</strong></td>
+                            <td>₹21,05,420 (₹21.05 L)</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td><strong style="color: #047857;">10% Annual Step-Up SIP</strong></td>
+                            <td>₹10,000 / mo (+10% yearly)</td>
+                            <td>₹38,12,700</td>
+                            <td><strong style="color: #047857; font-size: 14.5px;">₹88,35,410 (₹88.35 L)</strong></td>
+                            <td>₹36,86,720 (₹36.87 L) — <span style="color:#047857; font-weight:700;">+75% wealth boost</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: var(--blue);">15% Annual Step-Up SIP</strong></td>
+                            <td>₹10,000 / mo (+15% yearly)</td>
+                            <td>₹57,10,000</td>
+                            <td><strong style="color: var(--blue); font-size: 14.5px;">₹1,18,52,900 (₹1.19 Cr)</strong></td>
+                            <td>₹49,45,800 (₹49.46 L) — <span style="color:var(--blue); font-weight:700;">+135% wealth boost</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size: 12px; color: var(--grey); margin-top: 12px; text-align: center;">
+                * Formula verified with monthly compounding: <em>FV = P &times; [((1 + i)<sup>n</sup> - 1) / i] &times; (1 + i)</em> and inflation discounted via <em>Real = FV / (1 + r<sub>inf</sub>)<sup>t</sup></em> (15-year horizon at 12% expected annual return).
+            </p>
+        </div>
+    </section>
+
+    <!-- SECTION 4: HOW THE SUPER ADVANCE GOAL PLANNER WORKS (Subtle Grey) -->
+    <section class="landing-section-full section-grey" id="super-advance-deep-dive">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Mathematical Engine</span>
+                <h2 class="section-main-title">How the Super Advance Goal Planner Works</h2>
+                <p class="section-main-subtitle">A transparent, 4-step engineering model that computes your exact investment deficit without guesswork.</p>
+            </div>
+
+            <div class="zigzag-flow-wrapper">
+                <!-- Curved SVG Connecting Wave (Down ➔ Up ➔ Down ➔ Up) -->
+                <svg class="zigzag-svg-connector" viewBox="0 0 1140 280" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 142 165 C 280 165, 280 65, 425 65 C 570 65, 570 165, 715 165 C 860 165, 860 65, 998 65" 
+                          stroke="url(#zigzag-grad)" stroke-width="3" stroke-dasharray="7 7" stroke-linecap="round"/>
+                    <defs>
+                        <linearGradient id="zigzag-grad" x1="0" y1="0" x2="1140" y2="0" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#0B63D8" stop-opacity="0.6"/>
+                            <stop offset="50%" stop-color="#00B37E" stop-opacity="0.8"/>
+                            <stop offset="100%" stop-color="#0B63D8" stop-opacity="0.6"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+
+                <div class="zigzag-step-grid">
+                    <!-- Step 01 (Down/Left) -->
+                    <div class="zigzag-step-item">
+                        <div class="zigzag-node-wrap">
+                            <div class="zigzag-node-badge">01</div>
+                            <span class="zigzag-tag">STEP</span>
+                        </div>
+                        <h3 class="zigzag-step-title">Existing Portfolio Growth</h3>
+                        <p class="zigzag-step-desc">Projects compounding of current investments forward to your target horizon using expected annual returns.</p>
+                    </div>
+
+                    <!-- Step 02 (Up/Right) -->
+                    <div class="zigzag-step-item">
+                        <div class="zigzag-node-wrap">
+                            <div class="zigzag-node-badge">02</div>
+                            <span class="zigzag-tag">STEP</span>
+                        </div>
+                        <h3 class="zigzag-step-title">Active SIP Accumulation</h3>
+                        <p class="zigzag-step-desc">Calculates ongoing SIP maturity with annual step-ups to mirror real-world salary increments.</p>
+                    </div>
+
+                    <!-- Step 03 (Down/Left) -->
+                    <div class="zigzag-step-item">
+                        <div class="zigzag-node-wrap">
+                            <div class="zigzag-node-badge">03</div>
+                            <span class="zigzag-tag">STEP</span>
+                        </div>
+                        <h3 class="zigzag-step-title">Net Goal Gap Isolation</h3>
+                        <p class="zigzag-step-desc">Deducts total wealth from target corpus (inflated to future prices) to reveal the true deficit.</p>
+                    </div>
+
+                    <!-- Step 04 (Up/Right) -->
+                    <div class="zigzag-step-item">
+                        <div class="zigzag-node-wrap">
+                            <div class="zigzag-node-badge">04</div>
+                            <span class="zigzag-tag">STEP</span>
+                        </div>
+                        <h3 class="zigzag-step-title">Precision Extra SIP Derivation</h3>
+                        <p class="zigzag-step-desc">Calculates the exact incremental monthly commitment needed today to reach your goal on time.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: INTERACTIVE SIP CALCULATOR CENTERPIECE (White) -->
+    <section class="landing-section-full section-white" id="sip-calculator-tool">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Interactive Simulation</span>
+                <h2 class="section-main-title">Calculate Your SIP Growth &amp; Goal Gap</h2>
+                <p class="section-main-subtitle">Switch between Standard mode and Super Advance mode to run your personalized wealth plan.</p>
+            </div>
+
+            <!-- Main Interactive Calculator Card -->
+            <div class="sip-app-card">
+                
+                <!-- Mode Switcher Bar -->
+                <div class="sip-mode-bar">
+                    <div class="mode-tab-group">
+                        <button type="button" class="mode-toggle-btn tab-btn mode-tab-btn active" id="btnModeStandard" data-mode="standard" onclick="setSipMode('standard')">
+                            <span>🌱 Standard Mode</span>
+                        </button>
+                        <button type="button" class="mode-toggle-btn tab-btn mode-tab-btn mode-super" id="btnModeSuper" data-mode="super-advance" onclick="setSipMode('super')">
+                            <span>✨ Super Advance (Goal vs Reality)</span>
+                        </button>
+                    </div>
+                    <div class="trust-micro-badge">
+                        <span>🔒</span> 100% In-Browser • Accurate Compounding • Free &amp; Instant
+                    </div>
+                </div>
+
+                <!-- 2-Column Interactive Workspace -->
+                <div class="sip-interactive-grid">
+                    
+                    <!-- Left Column: Inputs -->
+                    <div class="sip-inputs-pane">
+                        
+                        <!-- Standard Mode Container -->
+                        <div id="standard-mode-container">
+                            <!-- Input 1: Monthly Investment (Standard Mode) -->
+                            <div id="grpMonthlyInvestment" class="sip-control-group">
+                                <div class="sip-label-row">
+                                    <label for="inputInvestment">Monthly Investment</label>
+                                    <div class="sip-amount-wrapper">
+                                        <span class="currency-symbol">₹</span>
+                                        <input type="number" id="inputInvestment" class="sip-number-input" value="5000" min="500" max="100000" step="500">
+                                    </div>
+                                </div>
+                                <input type="range" id="rangeInvestment" min="500" max="100000" step="500" value="5000" class="sip-range">
+                                <div class="sip-range-labels">
+                                    <span>₹500</span>
+                                    <span>₹1,00,000+</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Super Advance Container -->
+                        <div id="super-advance-container" style="display: none;">
+                            <!-- Input 2: Desired Goal Amount (Super Advance Mode) -->
+                            <div id="grpGoalAmount" class="sip-control-group">
+                                <div class="sip-label-row">
+                                    <label for="inputGoalAmount" style="color: var(--green); font-weight: 700;">Desired Goal Corpus</label>
+                                    <div class="sip-amount-wrapper">
+                                        <span class="currency-symbol">₹</span>
+                                        <input type="number" id="inputGoalAmount" class="sip-number-input" value="10000000" min="1000000" max="20000000" step="100000">
+                                    </div>
+                                </div>
+                                <input type="range" id="rangeGoalAmount" min="1000000" max="20000000" step="100000" value="10000000" class="sip-range" style="accent-color: var(--green);">
+                                <div class="sip-range-labels">
+                                    <span>₹10 Lakhs</span>
+                                    <span>₹2 Crores+</span>
+                                </div>
+                            </div>
+
+                            <!-- Input 2b: Current Portfolio Value -->
+                            <div class="sip-control-group">
+                                <div class="sip-label-row">
+                                    <label for="inputCurrentPortfolio">Current Portfolio Value</label>
+                                    <div class="sip-amount-wrapper">
+                                        <span class="currency-symbol">₹</span>
+                                        <input type="number" id="inputCurrentPortfolio" class="sip-number-input" value="500000" min="0" max="5000000" step="25000">
+                                    </div>
+                                </div>
+                                <input type="range" id="rangeCurrentPortfolio" min="0" max="5000000" step="25000" value="500000" class="sip-range">
+                                <div class="sip-range-labels">
+                                    <span>₹0</span>
+                                    <span>₹50 Lakhs+</span>
+                                </div>
+                            </div>
+
+                            <!-- Input 2c: Existing Monthly SIP -->
+                            <div class="sip-control-group">
+                                <div class="sip-label-row">
+                                    <label for="inputExistingSip">Existing Monthly SIP</label>
+                                    <div class="sip-amount-wrapper">
+                                        <span class="currency-symbol">₹</span>
+                                        <input type="number" id="inputExistingSip" class="sip-number-input" value="5000" min="0" max="100000" step="500">
+                                    </div>
+                                </div>
+                                <input type="range" id="rangeExistingSip" min="0" max="100000" step="500" value="5000" class="sip-range">
+                                <div class="sip-range-labels">
+                                    <span>₹0</span>
+                                    <span>₹1,00,000+</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Input 3: Expected Return Rate -->
+                        <div class="sip-control-group">
+                            <div class="sip-label-row">
+                                <label for="inputRate">Expected Return (p.a)</label>
+                                <div class="sip-amount-wrapper blue-wrap">
+                                    <input type="number" id="inputRate" class="sip-number-input" value="12" min="1" max="30" step="0.5">
+                                    <span class="unit-symbol">%</span>
+                                </div>
+                            </div>
+                            <input type="range" id="rangeRate" min="1" max="30" step="0.5" value="12" class="sip-range">
+                            <div class="sip-range-labels">
+                                <span>1%</span>
+                                <span>30%</span>
+                            </div>
+                        </div>
+
+                        <!-- Input 4: Time Horizon -->
+                        <div class="sip-control-group">
+                            <div class="sip-label-row">
+                                <label for="inputYears" id="lblTimePeriod">Time Period (Years)</label>
+                                <div class="sip-amount-wrapper blue-wrap">
+                                    <input type="number" id="inputYears" class="sip-number-input" value="10" min="1" max="40" step="1">
+                                    <span class="unit-symbol">Yrs</span>
+                                </div>
+                            </div>
+                            <input type="range" id="rangeYears" min="1" max="40" step="1" value="10" class="sip-range">
+                            <div class="sip-range-labels">
+                                <span>1 Yr</span>
+                                <span>40 Yrs</span>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Settings Accordion Box -->
+                        <div class="sip-advanced-box">
+                            <div class="sip-advanced-title">Advanced Compounding Settings</div>
+
+                            <!-- Step Up SIP Toggle -->
+                            <div class="sip-control-group">
+                                <div class="sip-label-row">
+                                    <label for="checkStepUp">Annual Step-up SIP (%)</label>
+                                    <label class="switch">
+                                        <input type="checkbox" id="checkStepUp">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <div id="stepUpControl" class="sub-slider-box" style="display: none;">
+                                    <div class="sip-label-row">
+                                        <span style="font-size:12px; color:var(--grey); font-weight:600;">Yearly Increase Rate</span>
+                                        <div class="sip-amount-wrapper small">
+                                            <input type="number" id="inputStepUp" class="sip-number-input" value="10" min="1" max="50" style="width: 45px;">
+                                            <span class="unit-symbol">%</span>
+                                        </div>
+                                    </div>
+                                    <input type="range" id="rangeStepUp" min="1" max="50" value="10" class="sip-range">
+                                </div>
+                            </div>
+
+                            <!-- Inflation Toggle -->
+                            <div class="sip-control-group">
+                                <div class="sip-label-row">
+                                    <label for="checkInflation">Adjust for Inflation (%)</label>
+                                    <label class="switch">
+                                        <input type="checkbox" id="checkInflation">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <div id="inflationControl" class="sub-slider-box" style="display: none;">
+                                    <div class="sip-label-row">
+                                        <span style="font-size:12px; color:var(--grey); font-weight:600;">Expected Inflation Rate</span>
+                                        <div class="sip-amount-wrapper small">
+                                            <input type="number" id="inputInflation" class="sip-number-input" value="6" min="1" max="15" step="0.5" style="width: 45px;">
+                                            <span class="unit-symbol">%</span>
+                                        </div>
+                                    </div>
+                                    <input type="range" id="rangeInflation" min="1" max="15" step="0.5" value="6" class="sip-range">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Outputs & Charts -->
+                    <div class="sip-results-pane">
+                        
+                        <!-- Normal Results State -->
+                        <div id="resNormalState" style="width: 100%;">
+                            
+                            <!-- Visual Donut & Growth Charts -->
+                            <div class="chart-container">
+                                <div class="donut-chart" id="sipDonut">
+                                    <div class="donut-hole">
+                                        <span class="donut-label">Expected Total Value</span>
+                                        <span class="donut-value" id="resTotalValue">₹11,61,695</span>
+                                    </div>
+                                </div>
+
+                                <div id="sipComparisonChart" class="comparison-chart" style="display: none;">
+                                    <div class="bar-column" id="colStd">
+                                        <div class="bar-value" id="barValStandard"></div>
+                                        <div class="bar" id="barStandard"></div>
+                                        <span class="bar-label">Standard</span>
+                                    </div>
+                                    <div class="bar-column" id="colStep">
+                                        <div class="bar-value" id="barValStepUp"></div>
+                                        <div class="bar step-up" id="barStepUp"></div>
+                                        <span class="bar-label">Step-up</span>
+                                    </div>
+                                    <div class="bar-column" id="colStdReal" style="display:none;">
+                                        <div class="bar-value" id="barValStdReal"></div>
+                                        <div class="bar" id="barStdReal" style="background: #9CA3AF;"></div>
+                                        <span class="bar-label">Std (Real)</span>
+                                    </div>
+                                    <div class="bar-column" id="colStepReal" style="display:none;">
+                                        <div class="bar-value" id="barValStepReal"></div>
+                                        <div class="bar step-up" id="barStepReal" style="background: #60A5FA;"></div>
+                                        <span class="bar-label">Step (Real)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Stat Breakdown Rows -->
+                            <div class="res-stats">
+                                <div class="stat-row">
+                                    <div class="stat-label" id="lblInv"><span class="dot grey"></span> Invested Amount</div>
+                                    <div class="stat-val" id="resInvested">₹6,00,000</div>
+                                </div>
+                                <div class="stat-row">
+                                    <div class="stat-label" id="lblGain"><span class="dot green"></span> Est. Returns</div>
+                                    <div class="stat-val green-text" id="resGained">₹5,61,695</div>
+                                </div>
+                                <div class="stat-row" id="rowInflation" style="display: none;">
+                                    <div class="stat-label"><span class="dot" style="background: #F59E0B;"></span> Inflation Discount</div>
+                                    <div class="stat-val" id="resInflationVal" style="color: #F59E0B;">₹0</div>
+                                </div>
+                                <div class="stat-row total-row">
+                                    <div class="stat-label" id="lblTotal">Expected Total Value</div>
+                                    <div class="stat-val total-blue" id="resTotalValueBottom">₹11,61,695</div>
+                                </div>
+                            </div>
+
+                            <!-- Goal vs Reality Shortfall Dashboard -->
+                            <div id="resRealityCheckStats" style="display: none; margin-top: 20px;">
+                                <div id="resGapMsgContainer" class="gap-msg-box warning">
+                                    <span id="resGapStatusLabel" style="font-size: 0.8rem; color: #C0392B; font-weight: 700; text-transform: uppercase;">Extra SIP Needed Today</span>
+                                    <div style="font-size: 1.85rem; font-weight: 900; color: #E74C3C; margin-top: 4px;" id="resExtraSipNeeded">₹0</div>
+                                    <p id="resGapMsg" style="font-size: 0.85rem; color: #64748B; margin: 6px 0 0;">Increase your SIP by this amount to bridge the gap.</p>
+                                </div>
+
+                                <div class="reality-grid-2">
+                                    <div class="reality-metric-tile" style="background: #F0FDF4; border: 1px solid #DCFCE7;">
+                                        <span style="font-size: 0.7rem; color: #166534; font-weight: 700; text-transform: uppercase;">Projected Wealth</span>
+                                        <div style="font-size: 1.15rem; font-weight: 800; color: #15803D; margin-top: 4px;" id="resProjectedCorpus">₹0</div>
+                                    </div>
+                                    <div class="reality-metric-tile" style="background: #EFF6FF; border: 1px solid #DBEAFE;">
+                                        <span style="font-size: 0.7rem; color: #1E40AF; font-weight: 700; text-transform: uppercase;">Target Goal Corpus</span>
+                                        <div style="font-size: 1.15rem; font-weight: 800; color: #1D4ED8; margin-top: 4px;" id="resTargetGoal">₹0</div>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 12px; padding: 14px 16px; background: #FFFBEB; border: 1px solid #FEF3C7; border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-size: 0.85rem; color: #92400E; font-weight: 600;">Net Wealth Shortfall (Gap)</span>
+                                    <span style="font-size: 1.25rem; font-weight: 800; color: #D97706;" id="resShortfall">₹0</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- High Value Priority Form (> 1 Lakh) -->
+                        <div id="sipHighValueForm" style="display: none; padding: 24px; text-align: left; width: 100%;">
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <div style="width: 40px; height: 40px; border-radius: 10px; background: #E0F2FE; color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 20px;">💎</div>
+                                <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--navy); margin: 0;">Priority Wealth Advisory</h3>
+                            </div>
+                            <p style="color: var(--grey); font-size: 13.5px; margin-bottom: 20px;">For high-value portfolios, structured multi-asset allocation and personalized tax optimization deliver the best results. Connect with our senior advisors.</p>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                                <div>
+                                    <input type="text" id="sipHvName" class="form-input" placeholder="Your Name *">
+                                </div>
+                                <div>
+                                    <input type="text" id="sipHvCompany" class="form-input" placeholder="Company (Optional)">
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                                <div>
+                                    <input type="email" id="sipHvEmail" class="form-input" placeholder="Email Address *">
+                                </div>
+                                <div>
+                                    <input type="tel" id="sipHvMobile" class="form-input" placeholder="Mobile Number *">
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 12px;">
+                                <input type="text" id="sipHvService" class="form-input" value="Planning for Systematic Investment Plan" disabled style="background: #F1F5F9; color: #64748B;">
+                            </div>
+                            <div style="margin-bottom: 14px;">
+                                <textarea id="sipHvDesc" rows="3" class="form-input" style="height: auto;" placeholder="Any specific requirements or target timeframe?"></textarea>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 16px;">
+                                <input type="checkbox" id="sipHvPrivacy" style="margin-top: 4px;">
+                                <label for="sipHvPrivacy" style="font-size: 12px; color: var(--grey);">I agree to FinNomy's Privacy Policy and consent to being contacted.</label>
+                            </div>
+                            <button id="btnHvSubmit" class="btn-submit-report" disabled style="opacity: 0.6; cursor: not-allowed;">Submit Consultation Request</button>
+                            <div id="sipHvSuccess" style="display: none; color: #059669; font-size: 13px; font-weight: 700; margin-top: 10px; text-align: center;">✅ Request sent successfully! Our team will connect with you shortly.</div>
+                        </div>
+
+                        <!-- Dynamic Did You Know Insight Box -->
+                        <div id="sipFactCard" class="sip-fact-card">
+                            <div class="fact-icon">💡</div>
+                            <div class="fact-content">
+                                <strong>Did you know?</strong>
+                                <p id="sipFactText">Compounding is the 8th wonder of the world.</p>
+                            </div>
+                        </div>
+
+                        <!-- Lead Capture Form: "Send My Report" -->
+                        <div class="lead-capture-form" id="leadCapture-SIP">
+                            <div class="lc-title">
+                                <span>📩</span>
+                                <span>Send My Personalized SIP Report</span>
+                            </div>
+                            <p class="lc-desc">Get a detailed PDF copy of your compounding projection, annual step-up schedule, and action plan sent directly to your inbox.</p>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <div class="lc-form-group">
+                                    <input type="text" id="lcName-SIP" class="form-input" placeholder="Your Full Name" required>
+                                    <span class="lc-error" style="display:none; color: #dc2626; font-size: 0.75rem; margin-top: 2px;">Name required</span>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                    <div class="lc-form-group">
+                                        <input type="email" id="lcEmail-SIP" class="form-input" placeholder="Email Address" required>
+                                        <span class="lc-error" style="display:none; color: #dc2626; font-size: 0.75rem; margin-top: 2px;">Valid email required</span>
+                                    </div>
+                                    <div class="lc-form-group">
+                                        <input type="tel" id="lcPhone-SIP" class="form-input" placeholder="Mobile Number (10 Digits)" maxlength="10" pattern="[0-9]{10}" required>
+                                        <span class="lc-error" style="display:none; color: #dc2626; font-size: 0.75rem; margin-top: 2px;">10-digit number required</span>
+                                    </div>
+                                </div>
+                                <button onclick="sendDashboardReport('sip')" id="lcBtn-SIP" class="btn-submit-report">Send My Report Now</button>
+                                <div id="lcSuccess-SIP" style="display: none; color: #059669; font-size: 0.85rem; margin-top: 6px; text-align: center; font-weight: 700;">✅ Report sent successfully! Check your inbox.</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 6: AUTO-ROTATING CIRCULAR TOOLS CAROUSEL -->
+    <section class="landing-section-full section-grey" id="related-tools">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Ecosystem Suite</span>
+                <h2 class="section-main-title">Explore the FinNomy Financial Suite</h2>
+                <p class="section-main-subtitle">Complement your wealth planning with our suite of free, private, in-browser financial calculators and analyzers.</p>
+            </div>
+
+            <div class="carousel-outer-wrapper">
+                <!-- Carousel Viewport -->
+                <div class="carousel-viewport">
+                    <div class="carousel-track" id="toolsCarouselTrack">
+                        
+                        <!-- Tool 1: SWP Calculator -->
+                        <a href="calculators.html?calc=swp" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">💪</div>
+                                <h3 class="carousel-card-title">SWP Calculator</h3>
+                                <p class="carousel-card-desc">Step-Up SWP &amp; Capital Preservation: Plan tax-efficient regular monthly income and long-term capital sustainability.</p>
+                            </div>
+                            <span class="carousel-card-cta">Calculate SWP &rarr;</span>
+                        </a>
+
+                        <!-- Tool 2: Retirement Planner -->
+                        <a href="calculators.html?calc=retirement" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">🏖️</div>
+                                <h3 class="carousel-card-title">Retirement Calculator</h3>
+                                <p class="carousel-card-desc">FIRE Corpus &amp; Post-Retirement Inflation: Determine your exact required nest egg corpus for lifelong financial freedom.</p>
+                            </div>
+                            <span class="carousel-card-cta">Plan Retirement &rarr;</span>
+                        </a>
+
+                        <!-- Tool 3: Loan Prepayment Calculator -->
+                        <a href="calculators.html?calc=loan" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">📉</div>
+                                <h3 class="carousel-card-title">Loan Prepayment Calculator</h3>
+                                <p class="carousel-card-desc">Interest Saved &amp; Tenure Reduction: See the massive interest savings achieved through systematic early prepayments.</p>
+                            </div>
+                            <span class="carousel-card-cta">Calculate Savings &rarr;</span>
+                        </a>
+
+                        <!-- Tool 4: Financial Health Score -->
+                        <a href="calculators.html?calc=fhs" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">🩺</div>
+                                <h3 class="carousel-card-title">Financial Health Score</h3>
+                                <p class="carousel-card-desc">11-Pillar Financial Diagnostic: Comprehensive wellness check across savings, debt, liquidity, and goal preparedness.</p>
+                            </div>
+                            <span class="carousel-card-cta">Check Score &rarr;</span>
+                        </a>
+
+                        <!-- Tool 5: Common Financial Mistakes -->
+                        <a href="calculators.html?calc=cfm" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">⚠️</div>
+                                <h3 class="carousel-card-title">Financial Mistakes Calculator</h3>
+                                <p class="carousel-card-desc">Daily Leaks &amp; Delay Costs: Uncover the true exponential opportunity cost of delay and under-invested cash.</p>
+                            </div>
+                            <span class="carousel-card-cta">Explore Cost &rarr;</span>
+                        </a>
+
+                        <!-- Tool 6: Multi-Goal Wealth Planner -->
+                        <a href="calculators.html?calc=mgse" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">🎯</div>
+                                <h3 class="carousel-card-title">Multi-Goal Wealth Planner</h3>
+                                <p class="carousel-card-desc">Consolidated Life Goals &amp; Cash Flow: Model, prioritize, and allocate systematic cash flows across multiple milestones.</p>
+                            </div>
+                            <span class="carousel-card-cta">Plan Multi-Goals &rarr;</span>
+                        </a>
+
+                        <!-- Tool 7: Bank Statement Analyzer -->
+                        <a href="finnomy-bank-analyzer.html" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">📊</div>
+                                <h3 class="carousel-card-title">Bank Statement Analyzer</h3>
+                                <p class="carousel-card-desc">100% In-Browser Spending Intelligence: Private on-device statement parsing for instant income, expense, and cash flow insights.</p>
+                            </div>
+                            <span class="carousel-card-cta">Analyze Statement &rarr;</span>
+                        </a>
+
+                        <!-- Tool 8: Income Tax Computation Generator -->
+                        <a href="finnomy-itr-computation.html" class="carousel-card">
+                            <div>
+                                <div class="carousel-card-icon">🧾</div>
+                                <h3 class="carousel-card-title">ITR Tax Computation</h3>
+                                <p class="carousel-card-desc">Instant ITR-V to PDF Summary: Convert ITR acknowledgements or tax JSON into certified, bank-ready computation sheets in seconds.</p>
+                            </div>
+                            <span class="carousel-card-cta">Generate ITR Summary &rarr;</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: FAQS ACCORDION -->
+    <section class="landing-section-full section-white" id="faq-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Clear Answers</span>
+                <h2 class="section-main-title">Frequently Asked Questions</h2>
+                <p class="section-main-subtitle">Everything you need to know about SIP compounding, step-ups, inflation, and goal planning.</p>
+            </div>
+
+            <div class="faq-accordion-list">
+                <!-- FAQ 1 -->
+                <div class="faq-item active">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>What is the difference between a normal SIP and a Step-Up SIP?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        A standard SIP maintains a fixed monthly contribution throughout the investment tenure. A Step-Up (or Top-Up) SIP automatically raises your monthly allocation by a designated percentage (e.g. 10%) every year. This mimics annual salary appraisals and compounds substantially more wealth over 10 to 20 years.
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Why is inflation adjustment critical for long-term equity mutual fund goals?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Inflation continuously reduces the real purchasing power of money. For example, ₹1 Crore accumulated 20 years from now at 6% annual inflation will have the purchasing power of only ₹31.18 Lakhs today. Evaluating your investments in inflation-adjusted terms prevents underestimating target goals.
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How does FinNomy calculate the Extra SIP Required in Super Advance mode?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        FinNomy compounds your existing mutual fund portfolio and active SIP contributions to your target maturity date. It then isolates the net gap between this projected wealth and your inflated target goal, and solves for the exact additional monthly installment needed today to close that deficit.
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Is my financial data saved or sent to any server when using this calculator?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        No. All mathematical simulations, slider calculations, charts, and shortfall evaluations run 100% locally inside your web browser. FinNomy never saves or uploads your personal financial data to any external server.
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>What expected annual return rate should I assume for equity mutual funds in India?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Historically, diversified broad-market Indian equity mutual funds (such as Nifty 50 and Nifty 500 Index/Flexi-Cap funds) have delivered long-term annualized returns in the range of 11% to 14% over 10+ year horizons. A conservative estimate of 11%–12% is widely recommended for planning.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: GLOBAL FOOTER -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo"><img src="assets/logo-footer.png" alt="FinNomy Logo" class="footer-logo"></div>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html" class="footer-link-home">Home</a></li>
+                        <li><a href="about.html" class="footer-link-about">About Us</a></li>
+                        <li><a href="services.html" class="footer-link-services">Services</a></li>
+                        <li><a href="calculators.html" class="footer-link-calculators">Calculators</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li class="footer-dropdown" style="position: relative; display: block;">
+                            <span class="footer-dropdown-trigger" style="color: rgba(255, 255, 255, 0.7); font-size: 14px; cursor: pointer; display: inline-block; line-height: 1.4;">Tools</span>
+                            <ul class="footer-dropdown-menu" style="position: absolute; bottom: 100%; left: 0; display: none; background-color: var(--color-dark-navy, #0F2A4A); min-width: 260px; box-shadow: 0 -4px 12px rgba(0,0,0,0.2); padding: 10px 0; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); list-style-type: none; z-index: 1000; margin-bottom: 6px;">
+                                <li><a href="finnomy-bank-analyzer.html" style="font-size: 14px; color: rgba(255,255,255,0.8); display: block; padding: 12px 24px; text-decoration: none;">Bank Statement Analyzer</a></li>
+                                <li><a href="finnomy-itr-computation.html" style="font-size: 14px; color: rgba(255,255,255,0.8); display: block; padding: 12px 24px; text-decoration: none;">ITR Computation Generator</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="insights.html" class="footer-link-insights">Insights</a></li>
+                        <li><a href="javascript:void(0)" onclick="openPrivacyModal()">Privacy Policy</a></li>
+                        <li><a href="javascript:void(0)" onclick="openTermsModal()">Terms and Conditions</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Get in Touch</h4>
+                    <ul>
+                        <li><a href="javascript:void(0)" onclick="openConnectModal()">Connect Us</a></li>
+                        <li><a href="javascript:void(0)" onclick="openPartnerModal()">Become a Partner</a></li>
+                        <li style="margin-top: 1rem;">
+                            <!-- Social Icons -->
+                            <div class="social-icons" style="display: flex; gap: 10px;">
+                                <a href="mailto:info.finnomy@gmail.com" aria-label="Email Us"
+                                    title="info.finnomy@gmail.com">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="white">
+                                        <path
+                                            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                                    </svg>
+                                </a>
+
+                                <a href="https://www.instagram.com/fin_nomy?igsh=MWExa2xxNmwzZ2QxYw=="
+                                    aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="white">
+                                        <path
+                                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                                    </svg>
+                                </a>
+
+                                <a href="https://x.com/Fin_Nomy" aria-label="X (Twitter)" target="_blank"
+                                    rel="noopener noreferrer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="white">
+                                        <path
+                                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                    </svg>
+                                </a>
+
+                                <a href="http://linkedin.com/company/fin-nomy" aria-label="LinkedIn" target="_blank"
+                                    rel="noopener noreferrer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="white">
+                                        <path
+                                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 FinNomy™. All rights reserved.</p>
+                <p>Certain services, including auditing, certifications, valuation, investment advisory, and other
+                    regulated activities, are performed exclusively by qualified professionals who hold the necessary
+                    licenses, registrations, or statutory approvals under applicable laws.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core Script -->
+    <script src="js/sip-calculator.js"></script>
+
+</body>
+
+</html>
