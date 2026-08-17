@@ -648,4 +648,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 6. Initial Calculation Run
     calculateLoanPrepayment();
+
+    // 7. Backdrop Click Listeners for Modals
+    ['privacyModal', 'termsModal'].forEach(id => {
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+    });
 });
+
+// Global Policy Modals
+window.openPrivacyModal = function () {
+    const modal = document.getElementById('privacyModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+};
+
+window.closePrivacyModal = function () {
+    const modal = document.getElementById('privacyModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+};
+
+window.openTermsModal = function () {
+    const modal = document.getElementById('termsModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+};
+
+window.closeTermsModal = function () {
+    const modal = document.getElementById('termsModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+};
+
+window.openConnectModal = function () {
+    window.location.href = 'connect_us.html';
+};
+
+window.openPartnerModal = function () {
+    window.location.href = 'connect_us.html#partner';
+};

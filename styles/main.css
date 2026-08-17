@@ -1218,9 +1218,11 @@ button.btn {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     /* Dimmed background */
-    z-index: 1000;
+    z-index: 99999;
     align-items: center;
     justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .modal-box {
@@ -1453,9 +1455,11 @@ button.btn {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     /* Dimmed background */
-    z-index: 1000;
+    z-index: 99999;
     align-items: center;
     justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .modal-box {

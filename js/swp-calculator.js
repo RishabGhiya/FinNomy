@@ -913,36 +913,58 @@ window.sendDashboardReport = function(calcTypeRaw) {
     }
 };
 
-// Global Modals
+// Global Policy Modals
 window.openPrivacyModal = function () {
     const modal = document.getElementById('privacyModal');
-    if (modal) { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
 };
+
 window.closePrivacyModal = function () {
     const modal = document.getElementById('privacyModal');
-    if (modal) { modal.style.display = 'none'; document.body.style.overflow = 'auto'; }
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
 };
+
 window.openTermsModal = function () {
     const modal = document.getElementById('termsModal');
-    if (modal) { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
 };
+
 window.closeTermsModal = function () {
     const modal = document.getElementById('termsModal');
-    if (modal) { modal.style.display = 'none'; document.body.style.overflow = 'auto'; }
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
 };
+
 window.openConnectModal = function () {
-    const modal = document.getElementById('connectModal');
-    if (modal) { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+    window.location.href = 'connect_us.html';
 };
-window.closeConnectModal = function () {
-    const modal = document.getElementById('connectModal');
-    if (modal) { modal.style.display = 'none'; document.body.style.overflow = 'auto'; }
-};
+
 window.openPartnerModal = function () {
-    const modal = document.getElementById('partnerModal');
-    if (modal) { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+    window.location.href = 'connect_us.html#partner';
 };
-window.closePartnerModal = function () {
-    const modal = document.getElementById('partnerModal');
-    if (modal) { modal.style.display = 'none'; document.body.style.overflow = 'auto'; }
-};
+
+// Backdrop click listeners
+document.addEventListener('DOMContentLoaded', () => {
+    ['privacyModal', 'termsModal'].forEach(id => {
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+    });
+});
