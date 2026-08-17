@@ -331,6 +331,15 @@ html, body {
   padding: 28px 24px;
   display: flex;
   flex-direction: column;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.guide-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--blue-border);
+  box-shadow: var(--shadow-md);
+  background: #FFFFFF;
 }
 
 .guide-badge {
@@ -343,6 +352,11 @@ html, body {
   padding: 4px 10px;
   border-radius: 6px;
   margin-bottom: 14px;
+  transition: transform 0.2s ease;
+}
+
+.guide-card:hover .guide-badge {
+  transform: scale(1.05);
 }
 
 .guide-title {
@@ -351,6 +365,11 @@ html, body {
   color: var(--navy);
   margin: 0 0 10px 0;
   font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: color 0.2s ease;
+}
+
+.guide-card:hover .guide-title {
+  color: var(--blue);
 }
 
 .guide-desc {
@@ -370,6 +389,12 @@ html, body {
   font-size: 12.5px;
   color: var(--navy);
   line-height: 1.5;
+  transition: all 0.25s ease;
+}
+
+.guide-card:hover .guide-highlight {
+  border-left-color: var(--blue);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
 }
 
 /* Compact Comparison Table Card */
@@ -379,6 +404,12 @@ html, body {
   border-radius: var(--radius-lg);
   overflow-x: auto;
   box-shadow: var(--shadow-sm);
+  transition: all 0.25s ease;
+}
+
+.scenarios-table-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--blue-border);
 }
 
 .scenarios-table {
@@ -404,12 +435,16 @@ html, body {
   color: var(--slate);
 }
 
+.scenarios-table tbody tr {
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
 .scenarios-table tbody tr:last-child td {
   border-bottom: none;
 }
 
 .scenarios-table tbody tr:hover {
-  background: #F8FAFC;
+  background: #F1F5F9;
 }
 
 .scenarios-table .highlight-row {
