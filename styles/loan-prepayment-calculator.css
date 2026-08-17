@@ -235,6 +235,20 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   position: relative;
 }
 
+.hero-illustration-img {
+  width: 100%;
+  max-width: 580px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 20px 35px rgba(15, 23, 42, 0.08));
+  border-radius: var(--radius-lg);
+  transition: transform 0.3s ease;
+}
+
+.hero-illustration-img:hover {
+  transform: translateY(-4px);
+}
+
 .hero-loan-svg {
   width: 100%;
   max-width: 580px;
