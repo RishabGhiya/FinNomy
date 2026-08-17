@@ -1017,6 +1017,423 @@
         </div>
     </footer>
 
+    <!-- Simple Modal Structure */ -->
+    <div id="connectModalOverlay" class="modal-overlay">
+        <div class="modal-box">
+            <!-- Left Column: 40% Sidebar (Green) -->
+            <div class="modal-left">
+                <h2 class="modal-header-text text-fin">Fin</h2>
+            </div>
+
+            <!-- Right Column: 70% Content (White) -->
+            <div class="modal-right">
+                <button class="close-modal-btn" onclick="closeConnectModal()">&times;</button>
+
+                <div class="modal-header-wrapper">
+                    <h2 class="modal-header-text text-nomy">Nomy Connect</h2>
+                    <p class="modal-subline">A bridge between you and financial clarity</p>
+                </div>
+
+                <div class="modal-scroll-content">
+                    <!-- Section A: Personal Details -->
+                    <div class="form-grid">
+                        <div>
+                            <label class="form-label">Full Name*</label>
+                            <input type="text" id="inputName" class="form-input" placeholder="Your Name" required>
+                            <span class="error-message">Name is required</span>
+                        </div>
+                        <div>
+                            <label class="form-label">Company</label>
+                            <input type="text" id="inputCompany" class="form-input" placeholder="Company Name">
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div>
+                            <label class="form-label">Email*</label>
+                            <input type="email" id="inputEmail" class="form-input" placeholder="name@example.com"
+                                required>
+                            <span class="error-message">Enter a valid email</span>
+                        </div>
+                        <div>
+                            <label class="form-label">Mobile Number*</label>
+                            <div class="input-group">
+                                <span class="prefix-box">+91</span>
+                                <input type="tel" id="inputMobile" class="form-input" placeholder="9876543210"
+                                    maxlength="10" required>
+                            </div>
+                            <span class="error-message" style="margin-top: -1.2rem; margin-bottom: 1.2rem;">Mobile is
+                                required</span>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div>
+                            <label class="form-label">Social Media Link</label>
+                            <input type="text" class="form-input" placeholder="LinkedIn, Instagram, Twitter, etc.">
+                        </div>
+                        <div>
+                            <label class="form-label">Website URL</label>
+                            <input type="url" class="form-input" placeholder="https://...">
+                        </div>
+                    </div>
+
+                    <!-- Section B: Services Required -->
+                    <label class="form-label" style="margin-top: 1rem;">Service Required*</label>
+                    <div style="margin-bottom: 1.5rem;">
+                        <select id="inputService" class="form-input" style="appearance: auto;" required>
+                            <option value="" disabled selected>Select a Service</option>
+
+                            <optgroup label="Accounting & Financial Management">
+                                <option>Accounting & Bookkeeping</option>
+                                <option>Financial Planning & Analysis (FP&A)</option>
+                                <option>Cost Management</option>
+                                <option>MIS & Reporting</option>
+                                <option>Internal Controls</option>
+                                <option>Business Management Support</option>
+                            </optgroup>
+
+                            <optgroup label="Compliance & Legal">
+                                <option>GST Compliance</option>
+                                <option>Income Tax Compliance</option>
+                                <option>ROC / MCA Filings</option>
+                                <option>Audit & Certifications</option>
+                                <option>Litigation Support</option>
+                            </optgroup>
+
+                            <optgroup label="Tax & Wealth Planning">
+                                <option>Tax Planning</option>
+                                <option>Investment Planning</option>
+                                <option>Retirement Planning</option>
+                            </optgroup>
+
+                            <optgroup label="Business & Growth Services">
+                                <option>Startup Services</option>
+                                <option>Business Growth & Strategy</option>
+                                <option>Valuation</option>
+                                <option>Subsidy Advisory</option>
+                                <option>Virtual CFO & Strategic Advisory</option>
+                            </optgroup>
+                        </select>
+                        <span class="error-message">Please select a service</span>
+                    </div> <!-- Closing form-container -->
+
+                    <!-- Section C: Description & Submit -->
+                    <div style="margin-top: 1.5rem;">
+                        <label class="form-label">Brief Description*</label>
+                        <textarea id="inputDescription" class="form-textarea"
+                            placeholder="Please describe your requirement in detail. The more clearly you explain, the better we can assist you."
+                            required></textarea>
+                        <span class="error-message">Description is required</span>
+                    </div>
+
+                    <!-- Consent Checkbox -->
+                    <div class="consent-container">
+                        <input type="checkbox" id="inputConsent" class="consent-checkbox" required>
+                        <label for="inputConsent" class="consent-label">I agree to FinNomy’s Privacy Policy and consent
+                            to being contacted.</label>
+                    </div>
+
+                    <button id="btnSubmit" class="btn-submit-request" disabled>Submit Request</button>
+                </div> <!-- Closing modal-scroll-content -->
+
+                <!-- Success Screen (Hidden by Default) -->
+                <div id="successScreen" class="success-container" style="display: none;">
+                    <h2 class="success-title">Thank you <span id="user-name-display"></span> for contacting FinNomy.
+                    </h2>
+                    <p class="success-body">Your request has been received successfully, and our team will reach out
+                        within 2-3 hours.</p>
+
+                    <div class="success-cta-row">
+                        <a href="index.html#home" class="btn-success-cta" onclick="closeConnectModal()">Home</a>
+                        <a href="index.html#services" class="btn-success-cta" onclick="closeConnectModal()">Explore our
+                            Services</a>
+                        <a href="index.html#calculators" class="btn-success-cta" onclick="closeConnectModal()">Explore
+                            Calculators</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Partner Modal Structure (Mirrors Client Modal) -->
+    <div id="partnerModalOverlay" class="modal-overlay">
+        <div class="modal-box">
+            <!-- Left Column -->
+            <div class="modal-left">
+                <h2 class="modal-header-text text-fin">Fin</h2>
+            </div>
+
+            <!-- Right Column -->
+            <div class="modal-right">
+                <!-- Sticky Header -->
+                <div class="modal-header-wrapper">
+                    <span class="close-modal-btn" onclick="closePartnerModal()">&times;</span>
+                    <h2 class="modal-header-text text-nomy">Nomy Connect</h2>
+                    <p class="modal-subline">Aligning your expertise to deliver financial clarity</p>
+                </div>
+
+                <!-- Scrollable Content -->
+                <div class="modal-scroll-content" id="partnerFormContent">
+                    <div class="form-container">
+                        <!-- Partner Form Fields -->
+                        <div class="form-grid">
+                            <div>
+                                <label for="partnerName" class="form-label">Full Name*</label>
+                                <input type="text" class="form-input" id="partnerName" placeholder="Enter your name">
+                                <span class="error-message">Name is required</span>
+                            </div>
+                            <div>
+                                <label for="partnerCompany" class="form-label">Company Name*</label>
+                                <input type="text" class="form-input" id="partnerCompany"
+                                    placeholder="Enter company name">
+                                <span class="error-message">Company is required</span>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div>
+                                <label for="partnerEmail" class="form-label">Email*</label>
+                                <input type="email" class="form-input" id="partnerEmail"
+                                    placeholder="Work email preferred">
+                                <span class="error-message">Valid email is required</span>
+                            </div>
+
+                            <!-- Mobile Number with Flex Layout for Prefix -->
+                            <div>
+                                <label for="partnerMobile" class="form-label">Mobile Number*</label>
+                                <div class="input-group">
+                                    <span class="prefix-box">
+                                        <img src="https://flagcdn.com/w20/in.png" alt="India Flag"
+                                            style="width: 20px; height: 15px; margin-right: 5px;">
+                                        +91
+                                    </span>
+                                    <input type="tel" class="form-input" id="partnerMobile"
+                                        placeholder="Enter mobile number" style="margin-bottom: 0;">
+                                </div>
+                                <span class="error-message">Valid 10-digit number is required</span>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div>
+                                <label for="partnerSocial" class="form-label">Social Media Link</label>
+                                <input type="url" class="form-input" id="partnerSocial"
+                                    placeholder="Paste your LinkedIn or Twitter URL">
+                            </div>
+
+                            <div>
+                                <label for="partnerWebsite" class="form-label">Website URL</label>
+                                <input type="url" class="form-input" id="partnerWebsite"
+                                    placeholder="https://yourwebsite.com">
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div>
+                                <label for="partnerProfession" class="form-label">Profession*</label>
+                                <select class="form-input" id="partnerProfession" style="background-color: #f8f9fa;">
+                                    <option value="" disabled selected>Select Profession</option>
+                                    <option value="CA">Chartered Accountant (CA)</option>
+                                    <option value="CS">Company Secretary (CS)</option>
+                                    <option value="Legal">Legal Expert</option>
+                                    <option value="Business Consultant">Business Consultant</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <span class="error-message">Profession is required</span>
+                            </div>
+
+                            <!-- Conditionally Enabled "Others" Input -->
+                            <div>
+                                <label class="form-label">&nbsp;</label>
+                                <!-- Empty label to align input with adjacent dropdown -->
+                                <input type="text" class="form-input" id="partnerOtherInput"
+                                    placeholder="Please specify if Other" disabled style="border-color: #ddd;">
+                                <span class="error-message">Please specify your profession</span>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label class="form-label">Primary Services Offered* <span
+                                    style="font-weight: 400; font-size: 0.8rem; color: #666;">(Select max 3 in order of
+                                    priority)</span></label>
+                            <div id="services-checkbox-container" class="services-checkbox-grid">
+                                <!-- Accounting & Financial Management -->
+                                <div class="service-category">
+                                    <h4 class="category-title">Accounting & Financial Management</h4>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Accounting & Bookkeeping">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Accounting & Bookkeeping</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Financial Planning & Analysis (FP&A)">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Financial Planning & Analysis (FP&A)</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Cost Management">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Cost Management</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="MIS & Reporting">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">MIS & Reporting</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Internal Controls">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Internal Controls</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Business Management Support">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Business Management Support</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                </div>
+
+                                <!-- Compliance & Legal -->
+                                <div class="service-category">
+                                    <h4 class="category-title">Compliance & Legal</h4>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="GST Compliance">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">GST Compliance</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Income Tax Compliance">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Income Tax Compliance</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="ROC / MCA Filings">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">ROC / MCA Filings</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Audit & Certifications">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Audit & Certifications</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Litigation Support">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Litigation Support</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                </div>
+
+                                <!-- Tax & Wealth Planning -->
+                                <div class="service-category">
+                                    <h4 class="category-title">Tax & Wealth Planning</h4>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Tax Planning">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Tax Planning</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Investment Planning">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Investment Planning</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Retirement Planning">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Retirement Planning</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                </div>
+
+                                <!-- Business & Growth Services -->
+                                <div class="service-category">
+                                    <h4 class="category-title">Business & Growth Services</h4>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Startup Services">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Startup Services</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Business Growth & Strategy">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Business Growth & Strategy</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Valuation">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Valuation</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Subsidy Advisory">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Subsidy Advisory</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                    <label class="service-checkbox-item">
+                                        <input type="checkbox" value="Virtual CFO & Strategic Advisory">
+                                        <span class="checkmark"></span>
+                                        <span class="service-name">Virtual CFO & Strategic Advisory</span>
+                                        <span class="rank-badge"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <span class="error-message" id="serviceErrorMsg">Select at least one service (Max 3)</span>
+                        </div>
+
+                        <div>
+                            <label for="partnerIntro" class="form-label">Brief Intro*</label>
+                            <textarea class="form-textarea" id="partnerIntro" style="height: 150px;"
+                                placeholder="Tell us about your expertise (Max 500 words)."></textarea>
+                            <span class="error-message">Intro is required</span>
+                        </div>
+
+                        <!-- Consent -->
+                        <div style="display: flex; align-items: center; gap: 10px; margin-top: 20px;">
+                            <input type="checkbox" id="partnerConsent" class="consent-checkbox">
+                            <label for="partnerConsent" class="consent-label"
+                                style="display: inline; margin-bottom: 0;">I agree to FinNomy’s Privacy Policy and
+                                consent to being contacted.</label>
+                        </div>
+
+                        <button id="btnPartnerSubmit" class="btn-submit-request" disabled
+                            style="margin-top: 30px;">Submit Partner Request</button>
+                    </div>
+                </div>
+
+                <!-- Partner Success Screen -->
+                <div id="partnerSuccessScreen" class="success-container" style="display: none;">
+                    <h2 class="success-title">Thank you <span id="partner-name-display"></span> for showing interest
+                        in
+                        FinNomy.</h2>
+                    <p class="success-body">We’ll email the next steps.</p>
+                    <div class="success-cta-row">
+                        <a href="index.html#home" class="btn-success-cta" onclick="closePartnerModal()">Home</a>
+                        <a href="index.html#services" class="btn-success-cta" onclick="closePartnerModal()">Explore our
+                            Services</a>
+                        <a href="index.html#calculators" class="btn-success-cta" onclick="closePartnerModal()">Explore
+                            Calculators</a>
+                    </div>
+                </div>
+            </div> <!-- End modal-right -->
+        </div> <!-- End modal-box -->
+    </div> <!-- End partnerModalOverlay -->
+
     <!-- Privacy Policy Modal -->
     <div id="privacyModal" class="modal-overlay" style="display: none;">
         <div class="privacy-modal-box">
@@ -1470,6 +1887,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Modals Logic -->
+    <script src="js/modals.js"></script>
 
     <!-- Core Script -->
     <script src="js/sip-calculator.js"></script>
