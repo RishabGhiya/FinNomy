@@ -136,36 +136,34 @@
 
 <body>
 
-    <!-- Header Navigation (Consistent FinNomy Navbar) -->
-    <header>
-        <div class="container">
-            <nav class="navbar">
-                <a href="index.html" class="logo">
-                    <img src="assets/logo.png" alt="FinNomy Logo" class="logo-img">
-                </a>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="calculators.html" class="active">Calculators</a></li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" class="nav-link-tools">Tools</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="finnomy-bank-analyzer.html">Bank Statement Analyzer</a></li>
-                            <li><a href="finnomy-itr-computation.html">ITR Computation Generator</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="insights.html">Insights</a></li>
-                    <li><a href="connect_us.html">Connect Us</a></li>
-                </ul>
-                <button class="mobile-menu-btn" aria-label="Toggle Navigation Menu">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </button>
-            </nav>
+    <!-- Standard FinNomy Fixed Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo-nav.png" alt="FinNomy Logo" class="nav-logo">
+            </a>
+            <div class="hamburger-menu" id="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="nav-link-home">Home</a></li>
+                <li><a href="about.html" class="nav-link-about">About FinNomy</a></li>
+                <li><a href="services.html" class="nav-link-services">Services</a></li>
+                <li><a href="calculators.html" class="active nav-link-calculators">Calculators</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="nav-link-tools">Tools</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="finnomy-bank-analyzer.html">Bank Statement Analyzer</a></li>
+                        <li><a href="finnomy-itr-computation.html">ITR Computation Generator</a></li>
+                    </ul>
+                </li>
+                <li><a href="insights.html" class="nav-link-insights">Insights</a></li>
+                <li><a href="connect_us.html" class="nav-link-connect">Connect Us</a></li>
+            </ul>
         </div>
-    </header>
+    </nav>
 
     <!-- SECTION 1: HERO SECTION -->
     <section class="landing-section-full hero-section">

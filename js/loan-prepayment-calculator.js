@@ -578,8 +578,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 4. Mobile Nav & Dropdown Handlers
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navLinks = document.querySelector('.nav-links');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn') || document.querySelector('.hamburger-menu') || document.querySelector('.mobile-menu-btn');
+    const navLinks = document.getElementById('nav-links') || document.querySelector('.nav-links');
     if (mobileMenuBtn && navLinks) {
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
