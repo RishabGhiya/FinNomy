@@ -1,0 +1,53 @@
+<svg viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg" class="hero-loan-svg" style="width: 100%; max-width: 580px; height: auto;">
+  <!-- Background Glow Accents -->
+  <circle cx="380" cy="240" r="160" fill="#ECFDF5" fill-opacity="0.6"/>
+  <circle cx="180" cy="300" r="130" fill="#EFF6FF" fill-opacity="0.7"/>
+  
+  <!-- Accelerated Payoff Curve -->
+  <path d="M 90 380 Q 240 370 340 240 T 490 120" stroke="#00B37E" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 6"/>
+  <circle cx="490" cy="120" r="8" fill="#00B37E"/>
+  <circle cx="490" cy="120" r="16" stroke="#00B37E" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- Principal Knockdown & Savings Card -->
+  <g transform="translate(80, 200)">
+    <rect width="210" height="170" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="drop-shadow(0px 12px 24px rgba(15, 23, 42, 0.08))"/>
+    <rect x="16" y="16" width="36" height="36" rx="8" fill="#ECFDF5"/>
+    <text x="34" y="38" fill="#00B37E" font-size="16" font-weight="bold" text-anchor="middle">✂️</text>
+    <text x="60" y="28" fill="#64748B" font-family="'Inter', sans-serif" font-size="10" font-weight="600">INTEREST SAVINGS</text>
+    <text x="60" y="48" fill="#00B37E" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800">₹18.42 Lakhs</text>
+    <line x1="16" y1="70" x2="194" y2="70" stroke="#F1F5F9" stroke-width="1.5"/>
+    
+    <!-- Timeline Reduction Metric -->
+    <text x="16" y="94" fill="#0F172A" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700">Tenure Slashed by 5.2 Yrs</text>
+    <text x="16" y="110" fill="#64748B" font-family="'Inter', sans-serif" font-size="9.5">20 Years ➔ 14.8 Years</text>
+    
+    <!-- Visual Progress Bar -->
+    <rect x="16" y="126" width="178" height="8" rx="4" fill="#E2E8F0"/>
+    <rect x="16" y="126" width="124" height="8" rx="4" fill="#0B63D8"/>
+    <rect x="140" y="126" width="54" height="8" rx="4" fill="#00B37E"/>
+  </g>
+
+  <!-- Debt Freedom Floating Badge -->
+  <g transform="translate(320, 90)">
+    <rect width="190" height="60" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="drop-shadow(0px 10px 20px rgba(15, 23, 42, 0.08))"/>
+    <rect x="14" y="14" width="32" height="32" rx="8" fill="#EFF6FF"/>
+    <text x="30" y="35" fill="#0B63D8" font-size="15" text-anchor="middle">🔓</text>
+    <text x="54" y="28" fill="#0F172A" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" font-weight="700">Debt Freedom</text>
+    <text x="54" y="44" fill="#00B37E" font-family="'Inter', sans-serif" font-size="10" font-weight="600">Years Ahead of Schedule</text>
+  </g>
+
+  <!-- Extra Prepayment Floating Badge -->
+  <g transform="translate(320, 290)">
+    <rect width="180" height="56" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="drop-shadow(0px 10px 20px rgba(15, 23, 42, 0.08))"/>
+    <circle cx="28" cy="28" r="14" fill="#FEF3C7"/>
+    <text x="28" y="33" fill="#D97706" font-size="13" text-anchor="middle">⚡</text>
+    <text x="50" y="24" fill="#0F172A" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700">Surplus Prepayment</text>
+    <text x="50" y="40" fill="#0B63D8" font-family="'Inter', sans-serif" font-size="10" font-weight="600">+10% Step-Up Option</text>
+  </g>
+
+  <!-- Shield / Rupee Elements -->
+  <g transform="translate(260, 140)">
+    <circle cx="18" cy="18" r="18" fill="#0B63D8"/>
+    <text x="18" y="24" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="800" text-anchor="middle">₹</text>
+  </g>
+</svg>
