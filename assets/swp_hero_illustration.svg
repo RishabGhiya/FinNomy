@@ -1,0 +1,55 @@
+<svg viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg" class="hero-swp-svg" style="width: 100%; max-width: 580px; height: auto;">
+  <!-- Background Glow Accents -->
+  <circle cx="380" cy="240" r="160" fill="#ECFDF5" fill-opacity="0.6"/>
+  <circle cx="200" cy="320" r="120" fill="#EFF6FF" fill-opacity="0.7"/>
+  
+  <!-- Main Perpetual Cashflow Arc -->
+  <path d="M 80 180 C 180 120 320 130 420 220 C 470 265 480 340 430 380 C 370 430 260 380 220 300 C 200 250 250 200 320 210" stroke="#00B37E" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 6"/>
+  <circle cx="320" cy="210" r="7" fill="#00B37E"/>
+
+  <!-- Corpus Reservoir Card (The Capital Base) -->
+  <g transform="translate(70, 220)">
+    <rect width="180" height="150" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="drop-shadow(0px 12px 24px rgba(15, 23, 42, 0.08))"/>
+    <rect x="16" y="16" width="36" height="36" rx="8" fill="#EFF6FF"/>
+    <text x="34" y="38" fill="#0B63D8" font-size="16" font-weight="bold" text-anchor="middle">🏦</text>
+    <text x="60" y="28" fill="#64748B" font-family="'Poppins', sans-serif" font-size="10" font-weight="600">STARTING CORPUS</text>
+    <text x="60" y="46" fill="#0F172A" font-family="'Poppins', sans-serif" font-size="15" font-weight="800">₹1.00 Crore</text>
+    <line x1="16" y1="68" x2="164" y2="68" stroke="#F1F5F9" stroke-width="1.5"/>
+    <text x="16" y="90" fill="#00B37E" font-family="'Poppins', sans-serif" font-size="10" font-weight="700">▲ Continues Compounding</text>
+    <text x="16" y="106" fill="#64748B" font-family="'Poppins', sans-serif" font-size="9.5">@ 10–12% Annual Growth</text>
+    <rect x="16" y="120" width="148" height="6" rx="3" fill="#E2E8F0"/>
+    <rect x="16" y="120" width="110" height="6" rx="3" fill="#00B37E"/>
+  </g>
+
+  <!-- Outflow Cash Flow Pipeline (Monthly Pension) -->
+  <g transform="translate(330, 90)">
+    <rect width="200" height="130" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="drop-shadow(0px 12px 24px rgba(15, 23, 42, 0.08))"/>
+    <rect x="16" y="16" width="36" height="36" rx="8" fill="#ECFDF5"/>
+    <text x="34" y="38" fill="#00B37E" font-size="16" font-weight="bold" text-anchor="middle">💸</text>
+    <text x="60" y="28" fill="#64748B" font-family="'Poppins', sans-serif" font-size="10" font-weight="600">MONTHLY WITHDRAWAL</text>
+    <text x="60" y="48" fill="#00B37E" font-family="'Poppins', sans-serif" font-size="16" font-weight="800">₹65,000 / mo</text>
+    <line x1="16" y1="68" x2="184" y2="68" stroke="#F1F5F9" stroke-width="1.5"/>
+    <rect x="16" y="82" width="70" height="20" rx="6" fill="#EFF6FF"/>
+    <text x="51" y="96" fill="#0B63D8" font-family="'Poppins', sans-serif" font-size="10" font-weight="700" text-anchor="middle">+6% Step-Up</text>
+    <text x="96" y="96" fill="#64748B" font-family="'Poppins', sans-serif" font-size="9.5">Annual Hike</text>
+  </g>
+
+  <!-- Floating Badge: Longevity & Inflation Shield -->
+  <g transform="translate(320, 290)">
+    <rect width="190" height="54" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="drop-shadow(0px 10px 20px rgba(15, 23, 42, 0.08))"/>
+    <circle cx="28" cy="27" r="14" fill="#FEF3C7"/>
+    <text x="28" y="32" fill="#D97706" font-size="13" text-anchor="middle">⏳</text>
+    <text x="50" y="23" fill="#0F172A" font-family="'Poppins', sans-serif" font-size="11" font-weight="700">Corpus Longevity</text>
+    <text x="50" y="39" fill="#00B37E" font-family="'Poppins', sans-serif" font-size="10" font-weight="600">30+ Years Sustainable</text>
+  </g>
+
+  <!-- Flowing Rupee Coins -->
+  <g transform="translate(260, 160)">
+    <circle cx="16" cy="16" r="16" fill="#0B63D8"/>
+    <text x="16" y="22" fill="#FFFFFF" font-family="'Poppins', sans-serif" font-size="13" font-weight="800" text-anchor="middle">₹</text>
+  </g>
+  <g transform="translate(290, 240)">
+    <circle cx="14" cy="14" r="14" fill="#00B37E"/>
+    <text x="14" y="19" fill="#FFFFFF" font-family="'Poppins', sans-serif" font-size="11" font-weight="800" text-anchor="middle">₹</text>
+  </g>
+</svg>
