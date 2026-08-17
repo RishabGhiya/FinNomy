@@ -443,6 +443,27 @@ window.submitLoanPriorityForm = function () {
 };
 
 /**
+ * Mode Switcher: Tenure Reduction vs EMI Reduction
+ */
+window.setLoanBenefitMode = function(mode) {
+    const hiddenInput = document.getElementById('loanPrepayBenefit');
+    const btnTenure = document.getElementById('btnBenefitTenure');
+    const btnEmi = document.getElementById('btnBenefitEmi');
+
+    if (hiddenInput) hiddenInput.value = mode;
+
+    if (mode === 'tenure') {
+        if (btnTenure) btnTenure.classList.add('active');
+        if (btnEmi) btnEmi.classList.remove('active');
+    } else {
+        if (btnEmi) btnEmi.classList.add('active');
+        if (btnTenure) btnTenure.classList.remove('active');
+    }
+
+    calculateLoanPrepayment();
+};
+
+/**
  * Toggle Advanced Settings Accordion Inputs
  */
 window.toggleLoanAdvanceInput = function (groupId) {

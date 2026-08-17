@@ -1,44 +1,45 @@
 /* =========================================================================
-   FINNOMY™ LOAN PREPAYMENT CALCULATOR STYLESHEET
-   Matching Design System: Primary Blue (#0B63D8), Emerald Green (#00B37E), Slate (#0F172A)
+   FinNomy Loan Prepayment Calculator - Dedicated Stylesheet
+   Brand Tokens: #0B63D8 (Primary Blue), #00B37E (Emerald Green), #0F2A4A (Dark Navy)
+   Design Standard: Edge-to-Edge Full Canvas with Centered 1200px Containers
    ========================================================================= */
 
 :root {
   --blue: #0B63D8;
-  --blue-hover: #0952B5;
-  --blue-light: #EFF6FF;
-  --blue-border: #BFDBFE;
-  
+  --blue-hover: #0952B3;
+  --blue-light: #EEF4FE;
+  --blue-border: #CFE0FA;
   --green: #00B37E;
-  --green-hover: #009669;
-  --green-light: #ECFDF5;
-  --green-border: #A7F3D0;
-  
-  --navy: #0F172A;
-  --slate: #334155;
+  --green-hover: #00996B;
+  --green-light: #E6F8F2;
+  --green-border: #BFE8D9;
+  --navy: #0F2A4A;
+  --dark-slate: #0F172A;
+  --slate: #1E293B;
   --grey: #64748B;
-  --grey-light: #94A3B8;
+  --grey-light: #F1F5F9;
   --border: #E2E8F0;
+  --border-light: #EDF2F7;
   --bg-page: #FFFFFF;
   --bg-subtle: #F8FAFC;
-  --bg-card: #FFFFFF;
-  
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.07);
-  --shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.08);
-  --shadow-glow: 0 0 25px rgba(11, 99, 216, 0.15);
-  
+  --warn: #DC2626;
+  --warn-light: #FEF2F2;
+  --warn-border: #FECACA;
+  --amber: #D97706;
+  --amber-light: #FFFBEB;
+  --amber-border: #FCD34D;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 24px;
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 36px -4px rgba(15, 23, 42, 0.1);
+  --shadow-glow: 0 0 24px rgba(11, 99, 216, 0.12);
 }
 
-/* Base Resets & Typography */
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 html, body {
@@ -47,22 +48,78 @@ html, body {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: var(--slate);
-  background-color: var(--bg-page);
+  background: var(--bg-page);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  scroll-snap-type: none !important;
+  height: auto !important;
+  min-height: 100%;
 }
 
-h1, h2, h3, h4, h5, h6, .font-heading {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  color: var(--navy);
+/* Full-Width Section Containers */
+.landing-section-full {
+  width: 100%;
+  margin: 0;
+  padding: 56px 0;
+}
+
+.section-white {
+  background: #FFFFFF;
+}
+
+.section-grey {
+  background: #F8FAFC;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 40px auto;
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: 11.5px;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--green);
+  background: var(--green-light);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.section-main-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.25;
+  margin: 0 0 12px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.section-main-subtitle {
+  font-size: 15px;
+  color: var(--grey);
+  margin: 0;
+  line-height: 1.6;
 }
 
 /* =========================================================================
-   GLOBAL NAVBAR (STICKY BLUR BACKDROP - IDENTICAL TO SITEWIDE STANDARD)
+   GLOBAL NAVBAR (FIXED STICKY BLUR - IDENTICAL TO SITEWIDE STANDARD)
    ========================================================================= */
 .navbar {
   position: fixed;
@@ -205,282 +262,214 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   }
 }
 
-/* Sections Layout */
-.landing-section-full {
-  width: 100%;
-  padding: 80px 0;
-  position: relative;
-}
-
-.section-white {
-  background-color: #FFFFFF;
-}
-
-.section-grey {
-  background-color: var(--bg-subtle);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-.section-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.section-header {
-  text-align: center;
-  max-width: 760px;
-  margin: 0 auto 48px auto;
-}
-
-.section-tag {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--green);
-  background: var(--green-light);
-  padding: 6px 14px;
-  border-radius: 30px;
-  margin-bottom: 14px;
-  border: 1px solid var(--green-border);
-}
-
-.section-main-title {
-  font-size: 32px;
-  font-weight: 800;
-  line-height: 1.25;
-  color: var(--navy);
-  margin-bottom: 14px;
-}
-
-.section-main-subtitle {
-  font-size: 16px;
-  color: var(--grey);
-  line-height: 1.6;
-}
-
 /* =========================================================================
-   1. SECTION 1: HERO SECTION
+   1. HERO SECTION (MATCHING HOMEPAGE & TOOL SUITE STANDARDS)
    ========================================================================= */
 .hero-section {
-  padding: 120px 0 60px 0;
-  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
-  overflow: hidden;
+  background-color: #FFFFFF;
+  padding: 130px 0 48px 0;
+  width: 100%;
 }
 
 .hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 48px;
+  grid-template-columns: 1.15fr 1fr;
   align-items: center;
+  gap: 48px;
 }
 
 .hero-text-col {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  text-align: left;
 }
 
 .hero-eyebrow {
-  font-size: 13px;
+  font-size: 0.92rem;
   font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 1.2px;
   color: var(--green);
-  background: var(--green-light);
-  border: 1px solid var(--green-border);
-  padding: 6px 14px;
-  border-radius: 20px;
-  margin-bottom: 18px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  margin-bottom: 12px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .hero-title {
-  font-size: 46px;
-  font-weight: 800;
-  line-height: 1.15;
+  font-size: clamp(2.1rem, 4.2vw, 3rem);
+  font-weight: 900;
   color: var(--navy);
-  margin-bottom: 18px;
-  letter-spacing: -0.03em;
+  line-height: 1.18;
+  margin: 0 0 18px 0;
+  letter-spacing: -0.02em;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .hero-subtitle {
-  font-size: 17px;
-  color: var(--slate);
-  line-height: 1.6;
-  margin-bottom: 28px;
+  font-size: 1.08rem;
+  color: var(--grey);
+  line-height: 1.65;
+  margin: 0 0 28px 0;
   max-width: 540px;
 }
 
 .hero-btn-group {
   display: flex;
-  gap: 14px;
+  align-items: center;
+  gap: 16px;
   margin-bottom: 24px;
   flex-wrap: wrap;
 }
 
 .btn-hero-primary {
-  background-color: var(--blue);
-  color: #FFFFFF;
-  padding: 14px 28px;
-  border-radius: var(--radius-md);
-  font-weight: 700;
-  font-size: 15px;
-  text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 14px rgba(11, 99, 216, 0.25);
-  transition: all 0.2s ease;
-  border: none;
+  justify-content: center;
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  background-color: var(--green);
+  border: 1px solid var(--green);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(0, 179, 126, 0.28);
   cursor: pointer;
 }
 
 .btn-hero-primary:hover {
-  background-color: var(--blue-hover);
+  background-color: var(--green-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(11, 99, 216, 0.35);
+  box-shadow: 0 8px 22px rgba(0, 179, 126, 0.38);
 }
 
-.btn-hero-secondary {
-  background-color: #FFFFFF;
-  color: var(--navy);
-  border: 1px solid var(--border);
-  padding: 14px 24px;
-  border-radius: var(--radius-md);
+.hero-secondary-link {
+  font-size: 0.92rem;
   font-weight: 600;
-  font-size: 15px;
+  color: var(--blue);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   transition: all 0.2s ease;
+  padding: 6px 0;
 }
 
-.btn-hero-secondary:hover {
-  background-color: var(--bg-subtle);
-  border-color: var(--grey-light);
+.hero-secondary-link:hover {
+  color: var(--blue-hover);
+  transform: translateX(3px);
+  text-decoration: underline;
 }
 
 .hero-trust-badges {
   display: flex;
   align-items: center;
-  gap: 16px;
-  font-size: 13px;
+  gap: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
   color: var(--grey);
-  font-weight: 500;
   flex-wrap: wrap;
+  padding-top: 4px;
 }
 
-.hero-visual-col {
+.hero-trust-badges span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Right Column Visual */
+.hero-visual-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
 }
 
-.hero-illustration-img {
+.hero-visual-wrap img {
   width: 100%;
   max-width: 580px;
   height: auto;
   display: block;
+  object-fit: contain;
+  background: transparent !important;
   filter: drop-shadow(0 20px 35px rgba(15, 23, 42, 0.08));
   border-radius: var(--radius-lg);
   transition: transform 0.3s ease;
 }
 
-.hero-illustration-img:hover {
+.hero-visual-wrap img:hover {
   transform: translateY(-4px);
 }
 
-.hero-loan-svg {
-  width: 100%;
-  max-width: 580px;
-  height: auto;
-  display: block;
-}
-
 /* =========================================================================
-   2. SECTION 2: WHY REGULAR EMIS KEEP YOU TRAPPED
+   2. SECTION 2: 4-CARD FEATURE GRID
    ========================================================================= */
 .feature-grid-4 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 20px;
 }
 
 .feature-card {
   background: #FFFFFF;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 28px 24px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-  box-shadow: var(--shadow-sm);
+  padding: 26px 22px;
   display: flex;
   flex-direction: column;
+  gap: 14px;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-sm);
 }
 
 .feature-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
   border-color: var(--blue-border);
+  box-shadow: var(--shadow-md);
 }
 
-.feature-card-icon {
-  width: 48px;
-  height: 48px;
+.feature-icon-wrap {
+  width: 46px;
+  height: 46px;
   border-radius: var(--radius-md);
-  background: var(--blue-light);
-  color: var(--blue);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 22px;
-  margin-bottom: 20px;
-}
-
-.feature-card:nth-child(2) .feature-card-icon {
-  background: var(--green-light);
-  color: var(--green);
-}
-
-.feature-card:nth-child(3) .feature-card-icon {
-  background: #FEF3C7;
-  color: #D97706;
-}
-
-.feature-card:nth-child(4) .feature-card-icon {
-  background: #F3E8FF;
-  color: #7E22CE;
+  flex-shrink: 0;
 }
 
 .feature-card-title {
-  font-size: 18px;
+  font-size: 16.5px;
   font-weight: 700;
   color: var(--navy);
-  margin-bottom: 10px;
-  line-height: 1.35;
+  margin: 0 0 6px 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .feature-card-desc {
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--grey);
+  margin: 0;
   line-height: 1.55;
 }
 
 /* =========================================================================
-   3. SECTION 3: UNDERSTANDING PREPAYMENT IMPACT & COMPARISON TABLE
+   3. SECTION 3: GUIDE GRID (3-COL) + COMPACT SCENARIOS TABLE
    ========================================================================= */
 .guide-grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
 }
 
 .guide-card {
@@ -488,118 +477,129 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 28px 24px;
-  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
 }
 
 .guide-badge {
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 4px 10px;
-  border-radius: 12px;
   display: inline-block;
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 4px 10px;
+  border-radius: 6px;
   margin-bottom: 14px;
 }
 
-.guide-badge.blue {
-  background: var(--blue-light);
-  color: var(--blue);
-}
-
-.guide-badge.green {
-  background: var(--green-light);
-  color: var(--green);
-}
-
-.guide-badge.amber {
-  background: #FEF3C7;
-  color: #D97706;
-}
-
-.guide-card-title {
-  font-size: 18px;
+.guide-title {
+  font-size: 17.5px;
   font-weight: 700;
   color: var(--navy);
-  margin-bottom: 10px;
+  margin: 0 0 10px 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-.guide-card-desc {
+.guide-desc {
   font-size: 14px;
   color: var(--slate);
-  line-height: 1.55;
+  margin: 0 0 16px 0;
+  line-height: 1.6;
+  flex-grow: 1;
 }
 
-/* Comparison Table */
-.comparison-table-wrapper {
+.guide-highlight {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--green);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 12.5px;
+  color: var(--navy);
+  line-height: 1.5;
+}
+
+/* Compact Comparison Table Card */
+.scenarios-table-card {
   background: #FFFFFF;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  overflow-x: auto;
   box-shadow: var(--shadow-sm);
 }
 
-.comparison-table {
+.scenarios-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
+  font-size: 13.5px;
 }
 
-.comparison-table th {
-  background: var(--bg-subtle);
-  padding: 16px 20px;
+.scenarios-table th {
+  background: var(--navy);
+  color: #FFFFFF;
+  padding: 14px 18px;
+  font-weight: 600;
   font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--navy);
-  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
 }
 
-.comparison-table td {
-  padding: 16px 20px;
-  font-size: 14px;
+.scenarios-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
   color: var(--slate);
-  border-bottom: 1px solid var(--border);
 }
 
-.comparison-table tr:last-child td {
+.scenarios-table tbody tr:last-child td {
   border-bottom: none;
 }
 
-.comparison-table tr:hover td {
-  background-color: #FAFCFE;
+.scenarios-table tbody tr:hover {
+  background: #F8FAFC;
 }
 
-.comparison-highlight {
-  font-weight: 700;
-  color: var(--green);
+.scenarios-table .highlight-row {
+  background: #F0FDF4;
+}
+
+.scenarios-table .highlight-row:hover {
+  background: #DCFCE7;
+}
+
+.scenarios-table .warn-row {
+  background: #FEF2F2;
+}
+
+.scenarios-table .warn-row:hover {
+  background: #FEE2E2;
 }
 
 /* =========================================================================
-   4. SECTION 4: HOW LOAN PREPAYMENT AMORTIZATION WORKS (OPEN ZIG-ZAG)
+   4. SECTION 4: SIP-IDENTICAL OPEN ZIG-ZAG FLOW (Down ➔ Up ➔ Down ➔ Up)
    ========================================================================= */
-.zigzag-flow-container {
+.zigzag-flow-wrapper {
   position: relative;
-  max-width: 1100px;
-  margin: 40px auto 0 auto;
-  padding: 20px 0;
+  max-width: 1140px;
+  margin: 40px auto 20px;
+  padding: 20px 0 40px;
 }
 
 .zigzag-svg-connector {
   position: absolute;
-  top: 70px;
-  left: 5%;
-  width: 90%;
-  height: 90px;
-  z-index: 1;
+  top: 10px;
+  left: 0;
+  width: 100%;
+  height: 180px;
   pointer-events: none;
+  z-index: 1;
 }
 
 .zigzag-step-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 28px;
   position: relative;
   z-index: 2;
 }
@@ -607,75 +607,183 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 .zigzag-step-item {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  background: transparent;
+  border: none;
+  padding: 0 8px;
+  transition: transform 0.3s ease;
 }
 
-/* Alternating Up and Down Offsets */
-.zigzag-step-item:nth-child(1) { margin-top: 50px; } /* Down */
-.zigzag-step-item:nth-child(2) { margin-top: 0px; }  /* Up */
-.zigzag-step-item:nth-child(3) { margin-top: 50px; } /* Down */
-.zigzag-step-item:nth-child(4) { margin-top: 0px; }  /* Up */
+.zigzag-step-item:nth-child(1),
+.zigzag-step-item:nth-child(3) {
+  margin-top: 55px;
+}
 
-.step-num-badge {
-  width: 52px;
-  height: 52px;
+.zigzag-step-item:nth-child(2),
+.zigzag-step-item:nth-child(4) {
+  margin-top: 0px;
+}
+
+.zigzag-step-item:hover {
+  transform: translateY(-4px);
+}
+
+.zigzag-node-wrap {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.zigzag-node-badge {
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   background: #FFFFFF;
-  border: 2.5px solid var(--blue);
-  color: var(--blue);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 17px;
-  font-weight: 800;
+  border: 3px solid var(--blue);
+  box-shadow: 0 4px 14px rgba(11, 99, 216, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(11, 99, 216, 0.15);
-  margin-bottom: 18px;
-  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--blue);
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-.zigzag-step-item:nth-child(2n) .step-num-badge {
+.zigzag-step-item:nth-child(2) .zigzag-node-badge {
   border-color: var(--green);
   color: var(--green);
-  box-shadow: 0 4px 14px rgba(0, 179, 126, 0.15);
+  box-shadow: 0 4px 14px rgba(0, 179, 126, 0.2);
 }
 
-.zigzag-step-item:hover .step-num-badge {
-  transform: scale(1.1);
-  background: var(--blue);
-  color: #FFFFFF;
+.zigzag-step-item:nth-child(3) .zigzag-node-badge {
+  border-color: #D97706;
+  color: #D97706;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.2);
 }
 
-.zigzag-step-item:nth-child(2n):hover .step-num-badge {
-  background: var(--green);
-  color: #FFFFFF;
+.zigzag-step-item:nth-child(4) .zigzag-node-badge {
+  border-color: var(--green);
+  color: var(--green);
+  box-shadow: 0 4px 14px rgba(0, 179, 126, 0.22);
 }
 
-.step-title {
-  font-size: 16px;
-  font-weight: 700;
+.zigzag-tag {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 5px 12px 5px 16px;
+  margin-left: -10px;
+  border-radius: 0 16px 16px 0;
+  background: #EEF4FE;
+  color: var(--blue);
+  border: 1px solid var(--blue-border);
+  border-left: none;
+  z-index: 1;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
+.zigzag-step-item:nth-child(2) .zigzag-tag {
+  background: #E6F8F2;
+  color: #047857;
+  border-color: var(--green-border);
+}
+
+.zigzag-step-item:nth-child(3) .zigzag-tag {
+  background: #FEF3C7;
+  color: #B45309;
+  border-color: #FCD34D;
+}
+
+.zigzag-step-item:nth-child(4) .zigzag-tag {
+  background: #E6F8F2;
+  color: #047857;
+  border-color: var(--green-border);
+}
+
+.zigzag-step-title {
+  font-size: 16.5px;
+  font-weight: 800;
   color: var(--navy);
-  margin-bottom: 8px;
+  margin: 0 0 8px;
   line-height: 1.35;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-.step-desc {
+.zigzag-step-desc {
   font-size: 13.5px;
-  color: var(--grey);
-  line-height: 1.5;
-  max-width: 230px;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.6;
 }
 
 /* =========================================================================
    5. SECTION 5: INTERACTIVE LOAN CALCULATOR CENTERPIECE
    ========================================================================= */
-.calculator-centerpiece-card {
+.loan-app-card {
   background: #FFFFFF;
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
+}
+
+/* Mode Switcher Bar */
+.loan-mode-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.mode-tab-group {
+  display: flex;
+  background: #E2E8F0;
+  padding: 4px;
+  border-radius: var(--radius-md);
+  gap: 4px;
+}
+
+.mode-toggle-btn {
+  border: none;
+  background: transparent;
+  padding: 9px 20px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--slate);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+}
+
+.mode-toggle-btn.active {
+  background: #FFFFFF;
+  color: var(--navy);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.1);
+}
+
+.trust-micro-badge {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--grey);
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 /* Interactive Grid */
@@ -964,7 +1072,7 @@ input:checked + .slider:before {
 }
 
 .saved-hero-value {
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 800;
   color: var(--green);
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -1088,6 +1196,7 @@ input:checked + .slider:before {
   font-weight: 700;
   color: var(--navy);
   margin: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .hv-desc {
@@ -1115,6 +1224,7 @@ input:checked + .slider:before {
   font-weight: 700;
   color: #166534;
   margin-bottom: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .lc-desc {
@@ -1249,6 +1359,7 @@ input:checked + .slider:before {
   font-weight: 700;
   color: var(--navy);
   margin: 0 0 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .carousel-card-desc {
@@ -1308,6 +1419,7 @@ input:checked + .slider:before {
   justify-content: space-between;
   gap: 14px;
   user-select: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .faq-question:hover {
