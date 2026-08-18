@@ -1,12 +1,14 @@
-# Temporary Python and test scripts
+# Temporary test scripts and scratch files
 *.py
 *.pyc
+*.ps1
 __pycache__/
 test_*.html
 test_*.py
 test-*.html
 test-*.txt
 *.tmp
+scratch/
 
 # VS Code Chrome debug data
 .vscode/chrome/

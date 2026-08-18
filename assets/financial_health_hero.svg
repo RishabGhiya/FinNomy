@@ -1,0 +1,56 @@
+<svg viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg" class="hero-health-svg" style="width: 100%; max-width: 580px; height: auto;">
+  <!-- Background Aura & Diagnostic Grid -->
+  <circle cx="380" cy="240" r="160" fill="#ECFDF5" fill-opacity="0.6"/>
+  <circle cx="200" cy="300" r="130" fill="#EFF6FF" fill-opacity="0.7"/>
+  
+  <!-- Pulse Line Accent -->
+  <path d="M 60 380 L 160 380 L 190 320 L 220 420 L 250 350 L 280 380 L 540 380" stroke="#00B37E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+
+  <!-- Main FinNomy Health Score Gauge Card -->
+  <g transform="translate(80, 160)">
+    <rect width="220" height="190" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="drop-shadow(0px 12px 24px rgba(15, 23, 42, 0.08))"/>
+    
+    <!-- Score Dial Header -->
+    <rect x="16" y="16" width="36" height="36" rx="8" fill="#ECFDF5"/>
+    <text x="34" y="38" fill="#00B37E" font-size="16" font-weight="bold" text-anchor="middle">⚡</text>
+    <text x="60" y="28" fill="#64748B" font-family="'Inter', sans-serif" font-size="10" font-weight="600">FINNOMY SCORE</text>
+    <text x="60" y="48" fill="#00B37E" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800">84 / 100</text>
+    <line x1="16" y1="68" x2="204" y2="68" stroke="#F1F5F9" stroke-width="1.5"/>
+    
+    <!-- Pillar Distribution Metric -->
+    <text x="16" y="90" fill="#0F172A" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700">Strong Liquidity &amp; Equity</text>
+    <text x="16" y="106" fill="#64748B" font-family="'Inter', sans-serif" font-size="9.5">11-Pillar Balance: Optimal</text>
+    
+    <!-- Progress Indicator Bar -->
+    <rect x="16" y="122" width="188" height="8" rx="4" fill="#E2E8F0"/>
+    <rect x="16" y="122" width="158" height="8" rx="4" fill="#00B37E"/>
+    
+    <!-- Action Status Tag -->
+    <rect x="16" y="142" width="188" height="32" rx="8" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <text x="26" y="162" fill="#0B63D8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700">✓ Action Plan Generated</text>
+  </g>
+
+  <!-- Floating Badge 1: 11-Pillar Diagnostic -->
+  <g transform="translate(340, 80)">
+    <rect width="190" height="60" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="drop-shadow(0px 10px 20px rgba(15, 23, 42, 0.08))"/>
+    <rect x="14" y="14" width="32" height="32" rx="8" fill="#EFF6FF"/>
+    <text x="30" y="35" fill="#0B63D8" font-size="15" text-anchor="middle">📊</text>
+    <text x="54" y="28" fill="#0F172A" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" font-weight="700">11-Pillar Diagnostic</text>
+    <text x="54" y="44" fill="#0B63D8" font-family="'Inter', sans-serif" font-size="10" font-weight="600">Liquidity, Debt &amp; Growth</text>
+  </g>
+
+  <!-- Floating Badge 2: Insurance Shield -->
+  <g transform="translate(330, 280)">
+    <rect width="190" height="58" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="drop-shadow(0px 10px 20px rgba(15, 23, 42, 0.08))"/>
+    <circle cx="28" cy="29" r="14" fill="#ECFDF5"/>
+    <text x="28" y="34" fill="#00B37E" font-size="13" text-anchor="middle">🛡️</text>
+    <text x="50" y="25" fill="#0F172A" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700">Safety &amp; Coverage</text>
+    <text x="50" y="41" fill="#00B37E" font-family="'Inter', sans-serif" font-size="10" font-weight="600">Emergency Buffer: 100%</text>
+  </g>
+
+  <!-- Balance Scales / Asset Elements -->
+  <g transform="translate(270, 110)">
+    <circle cx="18" cy="18" r="18" fill="#0B63D8"/>
+    <text x="18" y="24" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="800" text-anchor="middle">₹</text>
+  </g>
+</svg>

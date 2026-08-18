@@ -1,0 +1,1350 @@
+/* =========================================================================
+   FinNomy Retirement Calculator with Step-Up & Inflation - Dedicated Stylesheet
+   Brand Tokens: #0B63D8 (Primary Blue), #00B37E (Emerald Green), #0F2A4A (Dark Navy)
+   Design Standard: Edge-to-Edge Full Canvas with Centered 1200px Containers
+   ========================================================================= */
+
+:root {
+  --blue: #0B63D8;
+  --blue-hover: #0952B3;
+  --blue-light: #EEF4FE;
+  --blue-border: #CFE0FA;
+  --green: #00B37E;
+  --green-hover: #00996B;
+  --green-light: #E6F8F2;
+  --green-border: #BFE8D9;
+  --navy: #0F2A4A;
+  --dark-slate: #0F172A;
+  --slate: #1E293B;
+  --grey: #64748B;
+  --grey-light: #F1F5F9;
+  --border: #E2E8F0;
+  --border-light: #EDF2F7;
+  --bg-page: #FFFFFF;
+  --bg-subtle: #F8FAFC;
+  --warn: #DC2626;
+  --warn-light: #FEF2F2;
+  --warn-border: #FECACA;
+  --amber: #D97706;
+  --amber-light: #FFFBEB;
+  --amber-border: #FCD34D;
+  --gold: #F59E0B;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 36px -4px rgba(15, 23, 42, 0.1);
+  --shadow-glow: 0 0 24px rgba(11, 99, 216, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--slate);
+  background: var(--bg-page);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  scroll-snap-type: none !important;
+  height: auto !important;
+  min-height: 100%;
+}
+
+/* Full-Width Section Containers */
+.landing-section-full {
+  width: 100%;
+  margin: 0;
+  padding: 64px 0;
+}
+
+.section-white {
+  background: #FFFFFF;
+}
+
+.section-grey {
+  background: #F8FAFC;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 44px auto;
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--green);
+  background: var(--green-light);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.section-main-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.25;
+  margin: 0 0 12px;
+}
+
+.section-main-subtitle {
+  font-size: 15.5px;
+  color: var(--grey);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* =========================================================================
+   1. HERO SECTION (White Background - Clean 2-Column Responsive Layout)
+   ========================================================================= */
+.hero-section {
+  background-color: #FFFFFF;
+  padding: 130px 0 48px 0;
+  width: 100%;
+}
+
+.hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  align-items: center;
+  gap: 48px;
+}
+
+.hero-text-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.hero-eyebrow {
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #00B37E; /* Bold Green */
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-size: clamp(2.25rem, 3.6vw, 3.15rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #0F172A;
+  letter-spacing: -0.03em;
+  margin: 0 0 16px 0;
+  text-align: left;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0 0 28px 0;
+  text-align: left;
+  max-width: 540px;
+}
+
+.hero-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.btn-hero-primary {
+  background: #0B63D8;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(11, 99, 216, 0.25);
+  transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.btn-hero-primary:hover {
+  background: #094eb0;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(11, 99, 216, 0.35);
+}
+
+.hero-trust-badges {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748B;
+  flex-wrap: wrap;
+}
+
+/* Right Column Visual (Transparent, No outer box, No border shadow) */
+.hero-visual-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.hero-visual-wrap img,
+.hero-retirement-svg {
+  width: 100%;
+  max-width: 580px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* =========================================================================
+   2. SECTION 2: WHY BASIC RETIREMENT CALCULATORS FAIL (Subtle Slate #F8FAFC)
+   ========================================================================= */
+.feature-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.feature-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--blue-border);
+}
+
+.feature-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.feature-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 8px 0;
+  line-height: 1.35;
+}
+
+.feature-card-desc {
+  font-size: 13.5px;
+  color: var(--grey);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* =========================================================================
+   3. SECTION 3: UNDERSTANDING YOUR RETIREMENT NUMBER (White #FFFFFF)
+   ========================================================================= */
+.guide-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.guide-card {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.guide-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.guide-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  align-self: flex-start;
+  margin-bottom: 14px;
+}
+
+.guide-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 10px 0;
+  line-height: 1.35;
+}
+
+.guide-desc {
+  font-size: 14px;
+  color: var(--slate);
+  margin: 0 0 18px 0;
+  line-height: 1.6;
+}
+
+.guide-highlight {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 12.5px;
+  color: var(--slate);
+  line-height: 1.5;
+}
+
+/* Comparison Table */
+.scenarios-table-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.scenarios-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+.scenarios-table thead th {
+  background: #0F172A;
+  color: #FFFFFF;
+  padding: 16px 20px;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.scenarios-table tbody td {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--slate);
+  vertical-align: middle;
+}
+
+.scenarios-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.scenarios-table tbody tr.highlight-row {
+  background: #ECFDF5;
+}
+
+.scenarios-table tbody tr:hover:not(.highlight-row) {
+  background: var(--bg-subtle);
+}
+
+/* =========================================================================
+   4. SECTION 4: HOW FINNOMY RETIREMENT ENGINE WORKS (Zig-Zag Subtle Slate)
+   ========================================================================= */
+.zigzag-flow-wrapper {
+  position: relative;
+  max-width: 1140px;
+  margin: 40px auto 20px;
+  padding: 20px 0 40px;
+  width: 100%;
+}
+
+.zigzag-svg-connector {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 100%;
+  height: 180px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.zigzag-step-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+  position: relative;
+  z-index: 2;
+}
+
+.zigzag-step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: transparent;
+  border: none;
+  padding: 0 8px;
+  transition: transform 0.3s ease;
+}
+
+.zigzag-step-item:nth-child(1),
+.zigzag-step-item:nth-child(3) {
+  margin-top: 55px;
+}
+
+.zigzag-step-item:nth-child(2),
+.zigzag-step-item:nth-child(4) {
+  margin-top: 0px;
+}
+
+.zigzag-step-item:hover {
+  transform: translateY(-4px);
+}
+
+.zigzag-node-wrap {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.zigzag-node-badge {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 3px solid var(--blue);
+  box-shadow: 0 4px 14px rgba(11, 99, 216, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--blue);
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.zigzag-step-item:nth-child(2) .zigzag-node-badge {
+  border-color: var(--green);
+  color: var(--green);
+  box-shadow: 0 4px 14px rgba(0, 179, 126, 0.2);
+}
+
+.zigzag-step-item:nth-child(3) .zigzag-node-badge {
+  border-color: #D97706;
+  color: #D97706;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.2);
+}
+
+.zigzag-step-item:nth-child(4) .zigzag-node-badge {
+  border-color: var(--green);
+  color: var(--green);
+  box-shadow: 0 4px 14px rgba(0, 179, 126, 0.22);
+}
+
+.zigzag-tag {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 5px 12px 5px 16px;
+  margin-left: -10px;
+  border-radius: 0 16px 16px 0;
+  background: #EEF4FE;
+  color: var(--blue);
+  border: 1px solid var(--blue-border);
+  border-left: none;
+  z-index: 1;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
+.zigzag-step-item:nth-child(2) .zigzag-tag {
+  background: #E6F8F2;
+  color: #047857;
+  border-color: var(--green-border);
+}
+
+.zigzag-step-item:nth-child(3) .zigzag-tag {
+  background: #FEF3C7;
+  color: #B45309;
+  border-color: #FCD34D;
+}
+
+.zigzag-step-item:nth-child(4) .zigzag-tag {
+  background: #E6F8F2;
+  color: #047857;
+  border-color: var(--green-border);
+}
+
+.zigzag-step-title {
+  font-size: 16.5px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0 0 8px;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.zigzag-step-desc {
+  font-size: 13.5px;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* =========================================================================
+   5. SECTION 5: INTERACTIVE RETIREMENT CALCULATOR CENTERPIECE (White)
+   ========================================================================= */
+.retirement-app-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.retirement-header-bar {
+  background: #0F172A;
+  padding: 16px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.retirement-brand-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.retirement-brand-pill span.icon {
+  font-size: 18px;
+}
+
+.trust-micro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #94A3B8;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.trust-micro-badge span {
+  color: #38BDF8;
+}
+
+/* 2-Column Interactive Workspace */
+.retirement-interactive-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1.15fr;
+  width: 100%;
+}
+
+/* Left Column: Inputs */
+.retirement-inputs-pane {
+  padding: 36px 32px;
+  background: #FFFFFF;
+  border-right: 1px solid var(--border);
+}
+
+.calc-control-group {
+  margin-bottom: 22px;
+}
+
+.calc-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.calc-label-row label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.calc-amount-wrapper {
+  background: var(--green-light);
+  color: var(--green);
+  padding: 4px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid var(--green-border);
+}
+
+.calc-amount-wrapper.blue-wrap {
+  background: var(--blue-light);
+  color: var(--blue);
+  border-color: var(--blue-border);
+}
+
+.calc-amount-wrapper.amber-wrap {
+  background: var(--amber-light);
+  color: var(--amber);
+  border-color: var(--amber-border);
+}
+
+.calc-amount-wrapper.small {
+  padding: 2px 8px;
+}
+
+.calc-number-input {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-weight: 700;
+  font-size: 14.5px;
+  width: 95px;
+  text-align: right;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  font-family: inherit;
+}
+
+.calc-number-input::-webkit-outer-spin-button,
+.calc-number-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.currency-symbol,
+.unit-symbol {
+  font-weight: 700;
+  font-size: 13.5px;
+}
+
+/* Range Sliders */
+.calc-range {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 5px;
+  background: #E2E8F0;
+  outline: none;
+  margin: 8px 0 4px;
+  cursor: pointer;
+  accent-color: var(--blue);
+}
+
+.calc-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--blue);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(11, 99, 216, 0.3);
+  transition: transform 0.1s ease;
+}
+
+.calc-range::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.calc-range.green-accent {
+  accent-color: var(--green);
+}
+
+.calc-range.green-accent::-webkit-slider-thumb {
+  background: var(--green);
+  box-shadow: 0 2px 6px rgba(0, 179, 126, 0.3);
+}
+
+.calc-range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--grey);
+  font-weight: 500;
+}
+
+/* Advanced Compounding Box */
+.calc-advanced-box {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.calc-advanced-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--grey);
+  margin-bottom: 16px;
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider.round {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #CBD5E1;
+  transition: .25s;
+  border-radius: 24px;
+}
+
+.slider.round:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .25s;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+input:checked + .slider.round {
+  background-color: var(--blue);
+}
+
+input:checked + .slider.round:before {
+  transform: translateX(20px);
+}
+
+.sub-slider-box {
+  margin-top: 12px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+}
+
+/* Right Column: Results & Analytics */
+.retirement-results-pane {
+  padding: 36px 32px;
+  background: var(--bg-subtle);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+
+/* Hero Metric Card */
+.corpus-hero-card {
+  width: 100%;
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  color: #FFFFFF;
+  text-align: center;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.corpus-hero-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 179, 126, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.corpus-hero-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #34D399; /* Emerald */
+  margin-bottom: 6px;
+}
+
+.corpus-hero-value {
+  font-size: clamp(2rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+
+.corpus-hero-sub {
+  font-size: 13px;
+  color: #94A3B8;
+  font-weight: 500;
+}
+
+/* Chart Container & Donut */
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+
+.donut-chart {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: conic-gradient(var(--blue) 0% 10%, var(--gold) 10% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.donut-hole {
+  width: 128px;
+  height: 128px;
+  background: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.donut-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--grey);
+  letter-spacing: 0.4px;
+  margin-bottom: 3px;
+  line-height: 1.2;
+}
+
+.donut-value {
+  font-size: 15.5px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.2;
+}
+
+/* Result Stats Rows */
+.res-stats {
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13.5px;
+}
+
+.stat-label {
+  color: var(--grey);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stat-label .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.stat-label .dot.blue { background: var(--blue); }
+.stat-label .dot.green { background: var(--green); }
+.stat-label .dot.gold { background: var(--gold); }
+.stat-label .dot.amber { background: var(--amber); }
+
+.stat-val {
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 14.5px;
+}
+
+.stat-val.green-text {
+  color: var(--green);
+}
+
+.stat-val.blue-text {
+  color: var(--blue);
+}
+
+.stat-val.gold-text {
+  color: var(--gold);
+}
+
+.stat-row.total-row {
+  border-top: 1.5px solid var(--border);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+.stat-row.total-row .stat-label {
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 14px;
+}
+
+.stat-val.total-green {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--green);
+}
+
+/* Goal Analysis Box */
+.goal-analysis-card {
+  width: 100%;
+  margin-top: 18px;
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  font-size: 13px;
+  color: #065F46;
+  line-height: 1.55;
+}
+
+/* "Did You Know?" Fact Card */
+.retirement-fact-card {
+  width: 100%;
+  margin-top: 18px;
+  background: #FFFFFF;
+  border: 1px solid #E0F2FE;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.fact-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.fact-content strong {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.fact-content p {
+  font-size: 12.5px;
+  color: var(--slate);
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* Lead Capture Form: "Send My Report" */
+.lead-capture-form {
+  width: 100%;
+  margin-top: 18px;
+  padding: 20px;
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-radius: var(--radius-md);
+  text-align: left;
+}
+
+.lc-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #166534;
+  margin-bottom: 4px;
+}
+
+.lc-desc {
+  font-size: 12px;
+  color: #15803D;
+  margin: 0 0 14px 0;
+  line-height: 1.4;
+}
+
+.form-input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13.5px;
+  outline: none;
+  font-family: inherit;
+  background: #FFFFFF;
+}
+
+.form-input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(0, 179, 126, 0.15);
+}
+
+.btn-submit-report {
+  background: var(--green);
+  color: #FFFFFF;
+  border: none;
+  padding: 11px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-submit-report:hover:not(:disabled) {
+  background: var(--green-hover);
+  transform: translateY(-1px);
+}
+
+/* High Value Form */
+.hv-priority-box {
+  width: 100%;
+  padding: 24px;
+  background: #FFFFFF;
+  border: 1.5px solid #FCD34D;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+}
+
+/* =========================================================================
+   6. SECTION 6: AUTO-ROTATING CIRCULAR TOOLS CAROUSEL (Subtle Grey)
+   ========================================================================= */
+.carousel-outer-wrapper {
+  position: relative;
+  max-width: 1200px;
+  margin: 20px auto 0;
+  padding: 0 10px;
+}
+
+.carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 12px 4px 18px 4px;
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 #F1F5F9;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel-track::-webkit-scrollbar {
+  height: 6px;
+  display: block;
+}
+
+.carousel-track::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 10px;
+}
+
+.carousel-track::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.carousel-track::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+.carousel-card {
+  flex: 0 0 calc((100% - 60px) / 3.5);
+  min-width: 270px;
+  max-width: 320px;
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  user-select: none;
+}
+
+.carousel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--blue-border);
+}
+
+.carousel-card-icon {
+  font-size: 26px;
+  margin-bottom: 12px;
+}
+
+.carousel-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 8px 0;
+  line-height: 1.35;
+}
+
+.carousel-card-desc {
+  font-size: 13px;
+  color: var(--grey);
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+.carousel-card-cta {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--blue);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: auto;
+}
+
+.carousel-card:hover .carousel-card-cta {
+  color: var(--blue-hover);
+  text-decoration: underline;
+}
+
+/* =========================================================================
+   7. SECTION 7: FAQS ACCORDION & GLOBAL FOOTER (White #FFFFFF)
+   ========================================================================= */
+.faq-accordion-list {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  background: #FFFFFF;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.faq-item.active {
+  border-color: var(--blue);
+  background: #FAFCFF;
+  box-shadow: 0 4px 16px rgba(11, 99, 216, 0.08);
+}
+
+.faq-question {
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--navy);
+  gap: 16px;
+  user-select: none;
+}
+
+.faq-item.active .faq-question {
+  color: var(--blue);
+}
+
+.faq-icon {
+  font-size: 12px;
+  color: var(--grey);
+  transition: transform 0.3s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.faq-item.active .faq-icon {
+  transform: rotate(180deg);
+  color: var(--blue);
+}
+
+.faq-answer {
+  padding: 0 22px 20px 22px;
+  font-size: 14.5px;
+  color: var(--slate);
+  line-height: 1.65;
+  display: none;
+}
+
+.faq-item.active .faq-answer {
+  display: block;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 36px;
+  }
+
+  .hero-text-col {
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-title, .hero-subtitle {
+    text-align: center;
+  }
+
+  .retirement-interactive-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .retirement-inputs-pane {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .feature-grid-4, .suite-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .guide-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .zigzag-step-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px;
+  }
+
+  .zigzag-svg-connector {
+    display: none;
+  }
+
+  .zigzag-step-item:nth-child(even),
+  .zigzag-step-item:nth-child(odd) {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-section {
+    padding: 110px 0 36px 0;
+  }
+
+  .feature-grid-4, .suite-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .zigzag-step-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .retirement-inputs-pane, .retirement-results-pane {
+    padding: 24px 18px;
+  }
+
+  .retirement-header-bar {
+    padding: 14px 18px;
+  }
+}
